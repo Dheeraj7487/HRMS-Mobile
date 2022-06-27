@@ -36,8 +36,8 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
   Widget build(BuildContext context) {
     // Provider.of<EmployeeInOutProvider>(context).getInOutData();
 
-    final CollectionReference adminRef =
-    FirebaseFirestore.instance.collection("admin");
+    var adminRef =
+    FirebaseFirestore.instance.collection("admin").doc(FirebaseAuth.instance.currentUser!.uid).snapshots();
 
 
     Future<void> addInOutTime(
@@ -156,20 +156,21 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                 ),
               ),
               //StreamBuilder(
-              FutureBuilder<DocumentSnapshot<Object?>>(
+              StreamBuilder(
                   //stream: FirebaseFirestore.instance.collection('admin').snapshots(),
-                    future: adminRef.doc(FirebaseAuth.instance.currentUser?.email).get(),
+                  stream: adminRef,
+                    //future: adminRef.doc(FirebaseAuth.instance.currentUser?.email).get(),
                   //collection('InOutTime').doc('2022-06-23').get(),
-                  builder: (context, AsyncSnapshot futureSnapshot) {
+                  builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
                     //Map<String, dynamic> documentData = futureSnapshot.data;
-                    Map<String, dynamic> data = futureSnapshot.data as Map<String, dynamic>;
+                   // Map<String, dynamic> data = futureSnapshot.data as Map<String, dynamic>;
                     return ListView.builder(
-                        itemCount: 1,
+                        itemCount: snapshot.data?.data()?.length,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           //DocumentReference documentReference = futureSnapshot.data.docs[index];
-                          return Text("$data");
+                          return Text("${snapshot.data!.id}");
                          /* return Card(
                               color: index.isOdd == true
                                   ? AppColor.backgroundColor
