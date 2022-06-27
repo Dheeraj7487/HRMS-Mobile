@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:employee_attendance_app/admin/home/screen/admin_home_screen.dart';
 import 'package:employee_attendance_app/login/auth/fire_auth.dart';
-import 'package:employee_attendance_app/login/screen/admin_login_screen.dart';
+import 'package:employee_attendance_app/login/screen/login_screen.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:firebase_auth/firebase_auth.dart';
@@ -240,7 +240,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             GestureDetector(
               onTap: () {
-                Get.off(AdminLoginScreen());
+                Get.off(LoginScreen());
               },
               child: Container(
                 padding: const EdgeInsets.only(bottom: 25),

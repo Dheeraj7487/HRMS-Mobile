@@ -6,6 +6,7 @@ import 'package:get/state_manager.dart';
 import 'package:get/utils.dart';
 
 import '../screen/admin_employee_choose_login.dart';
+import '../screen/login_screen.dart';
 
 class OnboardingController extends GetxController {
   var selectedPageIndex = 0.obs;
@@ -14,7 +15,7 @@ class OnboardingController extends GetxController {
 
   forwardAction() {
     if (isLastPage) {
-      Get.off(const AdminEmployeeChooseLoginScreen());
+      Get.off(LoginScreen());
     } else {
       pageController.nextPage(duration: 300.milliseconds, curve: Curves.easeInOut);
     }

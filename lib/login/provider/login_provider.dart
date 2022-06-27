@@ -1,5 +1,3 @@
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
@@ -10,7 +8,7 @@ import '../../utils/app_utils.dart';
 
 class LoginProvider extends ChangeNotifier{
 
-  List<dynamic> loginData = [];
+  //List<dynamic> loginData = [];
   String? userEmail;
   bool dataFetch = false;
 
@@ -24,12 +22,12 @@ class LoginProvider extends ChangeNotifier{
     final iv = encrypt.IV.fromLength(16);
     final encrypter = encrypt.Encrypter(encrypt.AES(key));
 */
-    FirebaseFirestore.instance.collection("admin").get().then((querySnapshot) {
+   /* FirebaseFirestore.instance.collection("admin").get().then((querySnapshot) {
       querySnapshot.docs.forEach((result) {
         print(result.data());
           loginData.add(result.data());
           notifyListeners();
-      });
+      });*/
 
       if (FirebaseAuth.instance.currentUser?.email == email) {
         if (FirebaseAuth.instance.currentUser?.displayName == 'Admin') {
@@ -59,7 +57,11 @@ class LoginProvider extends ChangeNotifier{
         }
       }*/
       }
-    });
   }
 
+  Future resetPassword({required String email}) async {
+    await FirebaseAuth.instance
+        .sendPasswordResetEmail(email: email).then((value) => Get.snackbar('Reset Password', 'sent a reset password link on your gmail account'))
+        .catchError((e) => Get.snackbar('Reset Password', "failed sent a reset password link"));
+  }
 }

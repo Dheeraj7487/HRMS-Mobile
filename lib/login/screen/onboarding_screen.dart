@@ -5,6 +5,8 @@ import 'package:employee_attendance_app/utils/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'login_screen.dart';
+
 class OnBoardingScreen extends StatefulWidget{
   const OnBoardingScreen({Key? key}) : super(key: key);
 
@@ -56,7 +58,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>{
               right: 10,
               child: GestureDetector(
                   onTap: (){
-                    Get.off(const AdminEmployeeChooseLoginScreen());
+                    Get.off(LoginScreen());
                   },
                   child: Container(
                       height:40,width:70,child: Center(child: Text('Skip',style: TextStyle(fontFamily: AppFonts.semiBold),textAlign: TextAlign.center,))),

@@ -2,6 +2,7 @@ import 'package:employee_attendance_app/employee/attendance/view_attendance_scre
 import 'package:employee_attendance_app/employee/holiday/holiday_screen.dart';
 import 'package:employee_attendance_app/employee/reports/employee_reports_screen.dart';
 import 'package:employee_attendance_app/login/screen/admin_employee_choose_login.dart';
+import 'package:employee_attendance_app/login/screen/login_screen.dart';
 import 'package:employee_attendance_app/utils/app_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +87,7 @@ class EmployeeDrawerScreen extends StatelessWidget {
             title: const Text('Logout'),
             onTap: () {
               FirebaseAuth.instance.signOut();
-              AppUtils.instance.clearPref().then((value) => Get.offAll(const AdminEmployeeChooseLoginScreen()));
+              AppUtils.instance.clearPref().then((value) => Get.offAll(LoginScreen()));
             },
           ),
         ],

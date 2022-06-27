@@ -11,21 +11,24 @@ import '../../utils/app_preference_key.dart';
 import '../../utils/app_utils.dart';
 import '../auth/fire_auth.dart';
 import '../provider/login_provider.dart';
+import 'reset_password_screen.dart';
 
 
-class AdminLoginScreen extends StatefulWidget with ButtonMixin,TextFieldMixin{
-   AdminLoginScreen({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget with ButtonMixin,TextFieldMixin{
+   LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<AdminLoginScreen> createState() => _AdminLoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _AdminLoginScreenState extends State<AdminLoginScreen> {
+class _LoginScreenState extends State<LoginScreen> {
 
   var passwordController = TextEditingController();
   var emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool passwordVisibility = false;
+  String? chooseType;
+  bool chooseValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +45,44 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          Text("Employee"),
+                          Radio(
+                              value: "Employee",
+                              groupValue: chooseType,
+                              onChanged: (value){
+                                setState(() {
+                                  chooseType = value.toString();
+                                  chooseValue = false;
+                                });
+                              }),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text("Admin"),
+                          Radio(
+                              value: "Admin",
+                              groupValue: chooseType,
+                              onChanged: (value){
+                                setState(() {
+                                  chooseType = value.toString();
+                                  chooseValue = true;
+                                });
+                              }),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 50),
                 const Text(
                   "Login",
                   textAlign: TextAlign.center,
@@ -55,7 +96,7 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                 const SizedBox(height: 40),
                 TextFieldMixin().textFieldCardWidget(
                   controller: emailController,
-                  prefixIcon: const Icon(Icons.lock, color: AppColor.appColor),
+                  prefixIcon: const Icon(Icons.email, color: AppColor.appColor),
                   labelText: 'Email',
                   validator: (value) {
                     if (value!.isEmpty ||
@@ -97,14 +138,21 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                     return null;
                   },
                 ),
+                const SizedBox(height: 5),
+                GestureDetector(
+                  onTap: (){
+                    Get.to(ResetPasswordScreen());
+                  },
+                    child: Text('Reset Password')),
                 const SizedBox(height: 30),
+
                 Align(
                   alignment: Alignment.bottomRight,
                   child: GestureDetector(
                     onTap: () async {
                       User? user = await FireAuth.signInUsingEmailPassword(
-                        email: emailController.text,
-                        password: passwordController.text, context: context,
+                        email: emailController.text.trim(),
+                        password: passwordController.text.trim(), context: context,
                       );
                       if (user != null) {
                         AppUtils.instance.setPref(PreferenceKey.boolKey, PreferenceKey.prefLogin, true);
@@ -123,34 +171,37 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.only(bottom: 25),
-              child: const Text(
-                'Don' "'" 't Have An Account Yet? ',
-                style: TextStyle(
-                    decorationThickness: 2,
-                    decoration: TextDecoration.none,
-                    color:AppColor.appBlackColor),
-              ),
-            ),
-            GestureDetector(
-              onTap: (){Get.off(RegisterScreen());},
-              child: Container(
+        bottomNavigationBar: Visibility(
+          visible: chooseValue,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
                 padding: const EdgeInsets.only(bottom: 25),
                 child: const Text(
-                  'Sign Up',
+                  'Don' "'" 't Have An Account Yet? ',
                   style: TextStyle(
-                      fontSize: 16,
-                      decorationThickness: 1,
-                      decoration: TextDecoration.underline,
-                      color:AppColor.appColor),
+                      decorationThickness: 2,
+                      decoration: TextDecoration.none,
+                      color:AppColor.appBlackColor),
                 ),
               ),
-            ),
-          ],
+              GestureDetector(
+                onTap: (){Get.off(RegisterScreen());},
+                child: Container(
+                  padding: const EdgeInsets.only(bottom: 25),
+                  child: const Text(
+                    'Sign Up',
+                    style: TextStyle(
+                        fontSize: 16,
+                        decorationThickness: 1,
+                        decoration: TextDecoration.underline,
+                        color:AppColor.appColor),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -33,7 +33,7 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
   TextEditingController salaryController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   
-  CollectionReference profileData = FirebaseFirestore.instance.collection('admin');
+  CollectionReference profileData = FirebaseFirestore.instance.collection('employee');
 
   @override
   Widget build(BuildContext context) {

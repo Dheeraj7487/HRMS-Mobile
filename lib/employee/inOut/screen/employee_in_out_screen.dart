@@ -3,12 +3,11 @@ import 'package:employee_attendance_app/employee/inOut/provider/employee_in_out_
 import 'package:employee_attendance_app/mixin/button_mixin.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EmployeeInOutScreen extends StatefulWidget {
-  EmployeeInOutScreen({Key? key}) : super(key: key);
+  const EmployeeInOutScreen({Key? key}) : super(key: key);
 
   @override
   State<EmployeeInOutScreen> createState() => _EmployeeInOutScreenState();
@@ -18,27 +17,20 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
   bool buttonInOutDisable = false;
 
   final CollectionReference _mainCollection = FirebaseFirestore.instance
-      .collection('admin')
+      .collection('employee')
       .doc(FirebaseAuth.instance.currentUser?.email)
       .collection('InOutTime');
-  List<dynamic> inOutData = [];
+
+  var adminRef = FirebaseFirestore.instance
+      .collection("employee")
+      .doc(FirebaseAuth.instance.currentUser!.email)
+      .collection('InOutTime')
+      .snapshots();
+
   late String inTime, outTime, date, duration;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    //print('List length => ${entryExitData.length}');
-    print('List length1 => ${inOutData.length}');
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // Provider.of<EmployeeInOutProvider>(context).getInOutData();
-
-    var adminRef =
-    FirebaseFirestore.instance.collection("admin").doc(FirebaseAuth.instance.currentUser!.uid).snapshots();
-
 
     Future<void> addInOutTime(
         {required String currentDate,
@@ -59,19 +51,6 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
       };
       print('In Out Data=> $data');
 
-      FirebaseFirestore.instance.collection(
-          Provider.of<EmployeeInOutProvider>(context, listen: false)
-              .date
-              .toString()
-              .replaceAll("00:00:00.000", ""))
-        ..get().then((querySnapshot) {
-          for (var result in querySnapshot.docs) {
-            print(result.data());
-            setState(() {
-              inOutData.add(result.data());
-            });
-          }
-        });
       await documentReferencer
           .set(data)
           .whenComplete(() => print("Added In Out Data"))
@@ -108,7 +87,6 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                         : () {
                             snapshot.currentDate();
                             snapshot.entryTime();
-                            print(inOutData);
                             buttonInOutDisable = true;
                             addInOutTime(
                                 currentDate: snapshot.date
@@ -118,7 +96,6 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                                 outTime: snapshot.outTime.toString(),
                                 duration: snapshot.duration.toString());
                             snapshot.entryExitData.clear();
-                            snapshot.getInOutData();
                           },
                     child: ButtonMixin().stylishButton(text: 'In'),
                   ),
@@ -138,7 +115,6 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                                 outTime: snapshot.outTime.toString(),
                                 duration: snapshot.duration.toString());
                             snapshot.entryExitData.clear();
-                            snapshot.getInOutData();
                           },
                     child: ButtonMixin().stylishButton(text: 'Out'),
                   )
@@ -155,117 +131,88 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                   ),
                 ),
               ),
-              //StreamBuilder(
               StreamBuilder(
-                  //stream: FirebaseFirestore.instance.collection('admin').snapshots(),
                   stream: adminRef,
-                    //future: adminRef.doc(FirebaseAuth.instance.currentUser?.email).get(),
-                  //collection('InOutTime').doc('2022-06-23').get(),
-                  builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
-                    //Map<String, dynamic> documentData = futureSnapshot.data;
-                   // Map<String, dynamic> data = futureSnapshot.data as Map<String, dynamic>;
-                    return ListView.builder(
-                        itemCount: snapshot.data?.data()?.length,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          //DocumentReference documentReference = futureSnapshot.data.docs[index];
-                          return Text("${snapshot.data!.id}");
-                         /* return Card(
-                              color: index.isOdd == true
-                                  ? AppColor.backgroundColor
-                                  : AppColor.listingBgColor,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 5, bottom: 5),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        const Expanded(
-                                            flex: 1,
-                                            child: Center(child: Text('Date'))),
-                                        Expanded(
-                                            flex: 1,
-                                            child: Center(
-                                                child: Text(
-                                              snapshot.date == null
-                                                  ? ""
-                                                  : snapshot
-                                                          .entryExitData[index]
-                                                      ['currentDate'],
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold),
-                                            ))),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        const Expanded(
-                                            flex: 1,
-                                            child: Center(
-                                                child: Text(
-                                              'In Time',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ))),
-                                        Expanded(
-                                            flex: 1,
-                                            child: Center(
-                                                child: Text(snapshot.inTime ==
-                                                        null
-                                                    ? ""
-                                                    : snapshot.entryExitData[
-                                                        index]['inTime']))),
-                                        const Expanded(
-                                            flex: 1,
-                                            child: Center(
-                                                child: const Text(
-                                              'Out Time',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ))),
-                                        Expanded(
-                                            flex: 1,
-                                            child: Center(
-                                                child: Text(snapshot.outTime ==
-                                                        null
-                                                    ? ""
-                                                    : snapshot.entryExitData[
-                                                        index]['outTime']))),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Row(
-                                      children: [
-                                        const Expanded(
-                                            flex: 1,
-                                            child: const Center(
-                                                child: const Text(
-                                              'Duration',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ))),
-                                        Expanded(
-                                            flex: 1,
-                                            child: Center(
-                                                child: Text(snapshot.duration ==
-                                                        null
-                                                    ? ""
-                                                    : snapshot.entryExitData[
-                                                        index]['duration']))),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ));*/
-                        });
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> streamSnapshot) {
+                    if(streamSnapshot.connectionState == ConnectionState.waiting){
+                      return const Center(child: CircularProgressIndicator());
+                    }else{
+                      return ListView.builder(
+                          itemCount: streamSnapshot.data!.docs.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return Card(
+                                color: index.isOdd == true
+                                    ? AppColor.backgroundColor
+                                    : AppColor.listingBgColor,
+                                child: Padding(
+                                  padding:
+                                  const EdgeInsets.only(top: 5, bottom: 5,left: 10,right: 10),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                              //flex: 1,
+                                              child: Text('${streamSnapshot.data?.docs[index]['currentDate']}',
+                                                style: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold)
+                                              )),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          const Expanded(
+                                              flex: 1,
+                                              child: Text(
+                                                'In Time',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold),
+                                              )),
+                                          Expanded(
+                                              flex: 1,
+                                              child: Text(streamSnapshot.data?.docs[index]['inTime'])),
+                                          const Expanded(
+                                              //flex: 1,
+                                              child: Center(
+                                                  child: Text(
+                                                    'Out Time',
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.bold),
+                                                  ))),
+                                          Expanded(
+                                              //flex: 1,
+                                              child: Center(
+                                                  child: Text(streamSnapshot.data?.docs[index]['outTime']== null ?  '' : streamSnapshot.data?.docs[index]['outTime']))),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Row(
+                                        children: [
+                                          const Expanded(
+                                              flex: 1,
+                                              child: Text(
+                                                'Duration',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold),
+                                              )),
+                                          Expanded(
+                                              flex: 1,
+                                              child: Text(streamSnapshot.data?.docs[index]['duration']== null ? '' : streamSnapshot.data?.docs[index]['duration'])),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ));
+                          });
+                    }
                   })
             ],
           );

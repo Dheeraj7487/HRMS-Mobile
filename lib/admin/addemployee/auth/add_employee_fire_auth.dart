@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 class AddEmployeeFireAuth {
 
   final CollectionReference _mainCollection =
-  FirebaseFirestore.instance.collection('admin');
+  FirebaseFirestore.instance.collection('employee');
   List<dynamic> employeeData = [];
 
 

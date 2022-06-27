@@ -1,5 +1,4 @@
-import 'package:employee_attendance_app/login/screen/admin_login_screen.dart';
-import 'package:employee_attendance_app/login/screen/employee_login_screen.dart';
+import 'package:employee_attendance_app/login/screen/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -42,7 +41,7 @@ class AdminEmployeeChooseLoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: ()=> Get.to(AdminLoginScreen()),
+                  onTap: ()=> Get.to(LoginScreen()),
                   child: Container(
                     padding: const EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 15),
                     decoration: const BoxDecoration(
@@ -66,7 +65,7 @@ class AdminEmployeeChooseLoginScreen extends StatelessWidget {
                 ),
                 Container(width:1,height: 50,color: AppColor.appBlackColor),
                 GestureDetector(
-                  onTap: ()=> Get.to(EmployeeLoginScreen()),
+                  onTap: ()=> Get.to(LoginScreen()),
                   child: Container(
                     padding: const EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 15),
                     decoration: const BoxDecoration(
