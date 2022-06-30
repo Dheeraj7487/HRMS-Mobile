@@ -61,7 +61,8 @@ class ResetPasswordScreen extends StatelessWidget {
                     child: ButtonMixin()
                         .stylishButton(onPress: () {}, text: 'Reset Password'),
                   ),
-                )
+                ),
+                SizedBox(height: 20)
               ],
             ),
           ),

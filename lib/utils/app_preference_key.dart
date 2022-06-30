@@ -16,6 +16,8 @@ class PreferenceKey {
   static const String prefDeviceId = 'PREF_DEVICE_ID';
   static const String prefPageSkip = 'PREF_PAGE_SKIP';
   static const String prefGetStarted = 'PREF_GET_STARTED';
+  static const String prefInDisable = 'PREF_IN_DISABLE';
+  static const String prefInDisableBTN = 'PREF_IN_DISABLE_BTN';
 
 // preference type key
   static const String stringKey = "String";

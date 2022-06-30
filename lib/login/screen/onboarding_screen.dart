@@ -1,5 +1,4 @@
 import 'package:employee_attendance_app/login/controller/onboarding_controller.dart';
-import 'package:employee_attendance_app/login/screen/admin_employee_choose_login.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:employee_attendance_app/utils/app_fonts.dart';
 import 'package:flutter/material.dart';

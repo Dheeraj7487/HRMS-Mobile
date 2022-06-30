@@ -1,14 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:employee_attendance_app/admin/home/screen/admin_home_screen.dart';
 import 'package:employee_attendance_app/login/auth/fire_auth.dart';
+import 'package:employee_attendance_app/login/provider/login_provider.dart';
 import 'package:employee_attendance_app/login/screen/login_screen.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import '../../mixin/button_mixin.dart';
 import '../../mixin/textfield_mixin.dart';
+import '../../utils/app_preference_key.dart';
 import '../../utils/app_utils.dart';
 
 class RegisterScreen extends StatefulWidget with ButtonMixin,TextFieldMixin {
@@ -117,6 +120,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: emailController,
                       prefixIcon: Icon(Icons.email, color: AppColor.appColor),
                       labelText: 'Email',
+                      keyboardType: TextInputType.emailAddress,
                       validator: (value) {
                         if (value!.isEmpty ||
                             value.trim().isEmpty ||
@@ -133,6 +137,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: mobileController,
                       prefixIcon: Icon(Icons.phone, color: AppColor.appColor),
                       labelText: 'Mobile Number',
+                      keyboardType: TextInputType.phone,
                       validator: (value) {
                         if (value == null ||
                             value.isEmpty ||
@@ -195,6 +200,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       alignment: Alignment.bottomRight,
                       child: GestureDetector(
                         onTap: () async{
+                          FocusScope.of(context).unfocus();
                           if (_formKey.currentState!.validate()) {
                            // final encrypter = encrypt.Encrypter(encrypt.AES(encrypt.Key.fromUtf8('my 32 length key................')));
                             /*signUpAdmin(
@@ -208,17 +214,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               userType: 'Admin', mobile: mobileController.text,
                             );
                             if (user != null) {
+                              AppUtils.instance.setPref(PreferenceKey.boolKey, PreferenceKey.prefLogin, true);
+                              AppUtils.instance.setPref(PreferenceKey.stringKey, PreferenceKey.prefEmail, emailController.text);
+                              Provider.of<LoginProvider>(context,listen: false).getSharedPreferenceData(emailController.text);
                               Get.off(AdminHomeScreen());
                               AppUtils.instance.showToast(toastMessage: "Register Successfully");
-                              signUpAdmin(email: emailController.text, companyName: companyNameController.text,
-                                  mobile: mobileController.text,type: 'Admin');
+                              signUpAdmin(email: emailController.text.trim(), companyName: companyNameController.text.trim(),
+                                  mobile: mobileController.text.trim(),type: 'Admin');
                             }
                           }
                         },
                         child: ButtonMixin()
                             .stylishButton(onPress: () {}, text: 'Sign Up'),
                       ),
-                    )
+                    ),
+                    SizedBox(height: 20,)
                   ],
                 ),
               ),

@@ -5,6 +5,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'admin/addemployee/provider/add_employee_provider.dart';
+import 'admin/addholiday/provider/add_holiday_provider.dart';
 import 'login/splash_screen.dart';
 
 void main() async{
@@ -22,6 +24,8 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
           ChangeNotifierProvider<EmployeeInOutProvider>(create: (_) => EmployeeInOutProvider()),
+          ChangeNotifierProvider<AddHolidayProvider>(create: (_) => AddHolidayProvider()),
+         // ChangeNotifierProvider<AddEmployeeProvider>(create: (_) => AddEmployeeProvider()),
         ],
       child: GetMaterialApp(
         home: SplashScreen(),

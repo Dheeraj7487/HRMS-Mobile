@@ -62,6 +62,6 @@ class LoginProvider extends ChangeNotifier{
   Future resetPassword({required String email}) async {
     await FirebaseAuth.instance
         .sendPasswordResetEmail(email: email).then((value) => Get.snackbar('Reset Password', 'sent a reset password link on your gmail account'))
-        .catchError((e) => Get.snackbar('Reset Password', "failed sent a reset password link"));
+        .catchError((e) => Get.snackbar('Reset Password', "No user found that email"));
   }
 }

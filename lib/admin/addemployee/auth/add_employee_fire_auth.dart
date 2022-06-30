@@ -3,12 +3,11 @@ import 'package:employee_attendance_app/utils/app_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../firebase/firebase_collection.dart';
+
 class AddEmployeeFireAuth {
 
-  final CollectionReference _mainCollection =
-  FirebaseFirestore.instance.collection('employee');
   List<dynamic> employeeData = [];
-
 
   static Future<User?> registerEmployeeUsingEmailPassword({
     required String employeeName,
@@ -24,7 +23,6 @@ class AddEmployeeFireAuth {
       );
       user = userCredential.user;
       await user!.updateDisplayName(employeeName);
-      //await user!.updateProfile(displayName: mobile);
       await user.reload();
       user = auth.currentUser;
     } on FirebaseAuthException catch (e) {
@@ -66,7 +64,6 @@ class AddEmployeeFireAuth {
     return user;
   }
 
-
   Future<void> addEmployee(
       {required String email,
         required String employeeName,
@@ -80,9 +77,10 @@ class AddEmployeeFireAuth {
         required String employmentType,
         required String exprience,
         required String manager,
+        required String imageUrl,
         required String type}) async {
     DocumentReference documentReferencer =
-    _mainCollection.doc(email);
+    FirebaseCollection().employeeCollection.doc(email);
 
     Map<String, dynamic> data = <String, dynamic>{
       "email": email.toString(),
@@ -95,13 +93,14 @@ class AddEmployeeFireAuth {
       "branch": branch.toString(),
       "dateofjoining": dateOfJoining.toString(),
       "employment_type": employmentType.toString(),
+      "imageUrl": imageUrl.toString(),
       "exprience": exprience.toString(),
       "manager": manager.toString(),
       "type": 'Employee'
     };
     print('employee data=> $data');
 
-    FirebaseFirestore.instance.collection("admin").get().then((querySnapshot) {
+    FirebaseCollection().employeeCollection.get().then((querySnapshot) {
       for (var result in querySnapshot.docs) {
         print(result.data());
         employeeData.add(result.data());

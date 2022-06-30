@@ -56,22 +56,6 @@ class EmployeeDrawerScreen extends StatelessWidget {
             },
           ),
 
-          ListTile(
-            leading: const Icon(Icons.leave_bags_at_home),
-            title: const Text('Holiday'),
-            onTap: () {
-              Get.to(const HolidayScreen());
-            },
-          ),
-
-          ListTile(
-            leading: const Icon(Icons.mark_chat_read_outlined),
-            title: const Text('Attendance'),
-            onTap: () {
-              Get.to(const AttendanceScreen());
-            },
-          ),
-
           const Divider(height: 1,color: AppColor.darkGreyColor,),
 
           ListTile(

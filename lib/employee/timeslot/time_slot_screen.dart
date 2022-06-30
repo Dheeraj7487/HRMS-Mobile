@@ -23,7 +23,14 @@ class TimeSlotScreen extends StatelessWidget {
           builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
             if(snapshot.connectionState == ConnectionState.waiting){
               return const Center(child: CircularProgressIndicator());
-            }else{
+            }else if (snapshot.hasError) {
+              return const Text("Something went wrong");
+            }
+            else if (!snapshot.hasData) {
+              return const Text("Document does not exist");
+            } else if (snapshot.requireData.docChanges.isEmpty){
+              return const Text("Data does not exist");
+            } else{
               return ListView.builder(
                   itemCount: snapshot.data!.docs.length,
                   shrinkWrap: true,
@@ -33,37 +40,37 @@ class TimeSlotScreen extends StatelessWidget {
                       return const Center(child: CircularProgressIndicator());
                     }else{
                       return Container(
-                        margin: const EdgeInsets.all(10),
+                        margin: const EdgeInsets.only(left: 10,right: 10),
                         child:  Card(
                           child: ExpansionTile(
                             textColor: AppColor.appColor,
                             iconColor: AppColor.appColor,
                             controlAffinity: ListTileControlAffinity.leading,
                             childrenPadding:
-                            const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                            const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                             expandedCrossAxisAlignment: CrossAxisAlignment.end,
                             maintainState: true,
-                            title: Text('${snapshot.data?.docs[index]['currentDate']}',style: TextStyle(fontSize: 18)),
+                            title: Text('${snapshot.data?.docs[index]['currentDate']}',style: const TextStyle(fontSize: 18)),
                             //expandedAlignment: Alignment.topLeft,
                             children: [
                               Row(
                                 children: [
-                                  Text('In Time'),
-                                  Spacer(),
+                                  const Text('In Time'),
+                                  const Spacer(),
                                   Text('${snapshot.data?.docs[index]['inTime']}'),
                                 ],
                               ),
                               Row(
                                 children: [
-                                  Text('Out Time'),
-                                  Spacer(),
+                                  const Text('Out Time'),
+                                  const Spacer(),
                                   Text('${snapshot.data?.docs[index]['outTime']}'),
                                 ],
                               ),
                               Row(
                                 children: [
-                                  Text('Duration'),
-                                  Spacer(),
+                                  const Text('Duration'),
+                                  const Spacer(),
                                   Text('${snapshot.data?.docs[index]['duration']}'),
                                 ],
                               ),

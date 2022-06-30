@@ -56,6 +56,10 @@ class AppUtils{
       return prefs.getString(key);
     }else if(key == PreferenceKey.prefPassword){
       return prefs.getString(key);
+    }else if(key == PreferenceKey.prefInDisable){
+      return prefs.getString(key);
+    }else if(key == PreferenceKey.prefInDisableBTN){
+      return prefs.getBool(key);
     }
   }
 

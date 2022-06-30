@@ -1,4 +1,5 @@
 import 'package:employee_attendance_app/admin/addemployee/add_employee_screen.dart';
+import 'package:employee_attendance_app/admin/addholiday/screen/add_holiday_screen.dart';
 import 'package:employee_attendance_app/employee/home/widget/dashboard_details_widget.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:employee_attendance_app/widget/admin_drawer_widget.dart';
@@ -12,6 +13,7 @@ class AdminHomeScreen extends StatelessWidget {
   AdminHomeScreen({Key? key}) : super(key: key);
 
   DateTime now = DateTime.now();
+  var hour = DateTime.now().hour;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class AdminHomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 150,
+                  height: 120,
                   width: MediaQuery.of(context).size.width,
                   decoration: const BoxDecoration(
                       color: AppColor.appColor,
@@ -47,13 +49,14 @@ class AdminHomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ClipOval(
-                          child: Image.network('https://upwork-usw2-prod-assets-static.s3.us-west-2.amazonaws.com/org-logo/908288198480056320',height: 100,width: 100,fit: BoxFit.fill)),
+                          child: Image.network('https://upwork-usw2-prod-assets-static.s3.us-west-2.amazonaws.com/org-logo/908288198480056320',height: 80,width: 80,fit: BoxFit.fill)),
                       const SizedBox(width: 20),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text('Good Morning'),
+                        children: [
+                          Text(hour < 12 ? 'Good Morning' :
+                          hour < 17 ? 'Good Afternoon' : 'Good Evening'),
                           SizedBox(height: 10),
                           Text('Elsner Technology',style: TextStyle(fontSize: 24),),
                         ],
@@ -70,13 +73,18 @@ class AdminHomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 20,right: 20),
                   child: Column(
                     children:[
-                      DashboardDetailsWidget('https://png.pngtree.com/png-vector/20190129/ourmid/pngtree-summer-holiday-logo-png-image_346991.jpg',
-                          'Add Holiday','Add public holiday only'),
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(AddHolidayScreen());
+                        },
+                        child: DashboardDetailsWidget('https://png.pngtree.com/png-vector/20190129/ourmid/pngtree-summer-holiday-logo-png-image_346991.jpg',
+                            'Add Holiday','Add public holiday only'),
+                      ),
                       GestureDetector(
                         onTap: () {
                           Get.to(AddEmployeeScreen());
                         },
-                        child: DashboardDetailsWidget('https://icon-library.com/images/icon-employee/icon-employee-5.jpg',
+                        child: DashboardDetailsWidget('https://cdn-icons-png.flaticon.com/512/426/426429.png',
                             'Add Employee','Add employee for whose want to mark attendance'),
                       ),
 

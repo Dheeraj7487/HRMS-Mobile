@@ -3,12 +3,8 @@ import 'package:intl/intl.dart';
 
 class EmployeeInOutProvider extends ChangeNotifier{
 
-  late DateTime entryTimeNow;
-  late DateTime exitTimeNow;
-  DateTime? date;
-  var inTime,outTime,diffrence;
-  var duration;
-  List<dynamic> entryExitData = [];
+  late DateTime entryTimeNow,exitTimeNow,date;
+  var inTime,outTime,diffrence,duration;
 
   currentDate(){
    entryTimeNow = DateTime.now();
@@ -17,7 +13,7 @@ class EmployeeInOutProvider extends ChangeNotifier{
   }
   entryTime(){
     entryTimeNow = DateTime.now();
-    inTime = DateFormat.Hm().format(entryTimeNow);
+    inTime = DateFormat.Hms().format(entryTimeNow);
    notifyListeners();
   }
   exitTIme(){
@@ -37,5 +33,4 @@ class EmployeeInOutProvider extends ChangeNotifier{
 
     notifyListeners();
   }
-
 }
