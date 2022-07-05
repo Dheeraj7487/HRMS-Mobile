@@ -2,7 +2,6 @@ import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ButtonMixin {
-
   Widget stylishButton(
   {
   VoidCallback? onPress,
@@ -18,7 +17,7 @@ class ButtonMixin {
 
     var boxDecoration = BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
           begin: Alignment.centerRight,
           end: Alignment.centerLeft,
           colors: [AppColor.appColor,AppColor.greyColorLight]
@@ -30,10 +29,8 @@ class ButtonMixin {
       decoration:boxDecoration,
       child: Padding(
         padding: const EdgeInsets.only(left: 10.0,right: 10),
-        child:Text(text!,style: TextStyle(letterSpacing:0.5,color: Colors.black,fontWeight: FontWeight.bold)),
+        child:Text(text!,style: const TextStyle(letterSpacing:0.5,color: Colors.black,fontWeight: FontWeight.bold)),
       ),
     );
   }
-
-
 }

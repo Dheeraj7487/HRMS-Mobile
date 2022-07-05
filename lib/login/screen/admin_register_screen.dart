@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:employee_attendance_app/admin/home/screen/admin_home_screen.dart';
-import 'package:employee_attendance_app/login/auth/fire_auth.dart';
+import 'package:employee_attendance_app/login/auth/login_auth.dart';
 import 'package:employee_attendance_app/login/provider/login_provider.dart';
 import 'package:employee_attendance_app/login/screen/login_screen.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,7 @@ import '../../mixin/button_mixin.dart';
 import '../../mixin/textfield_mixin.dart';
 import '../../utils/app_preference_key.dart';
 import '../../utils/app_utils.dart';
+import '../provider/loading_provider.dart';
 
 class RegisterScreen extends StatefulWidget with ButtonMixin,TextFieldMixin {
   RegisterScreen({Key? key}) : super(key: key);
@@ -22,51 +24,16 @@ class RegisterScreen extends StatefulWidget with ButtonMixin,TextFieldMixin {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+
   var emailController = TextEditingController();
   var companyNameController = TextEditingController();
   var mobileController = TextEditingController();
   var passwordController = TextEditingController();
   var confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  List<dynamic> adminData = [];
   RegExp passwordValidation = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
 
-  final CollectionReference _mainCollection =
-      FirebaseFirestore.instance.collection('admin');
-
-  Future<void> signUpAdmin(
-      {required String email,
-      required String companyName,
-      required String mobile,
-      required String type}) async {
-    DocumentReference documentReferencer =
-        _mainCollection.doc(emailController.text);
-
-    Map<String, dynamic> data = <String, dynamic>{
-      "email": email.toString(),
-      "companyName": companyName.toString(),
-      "mobile": mobile.toString(),
-      "employement_type": 'Admin',
-    };
-    print('employee data=> $data');
-
-    FirebaseFirestore.instance.collection("admin").get().then((querySnapshot) {
-      for (var result in querySnapshot.docs) {
-        print(result.data());
-        adminData.add(result.data());
-      }
-    });
-    await documentReferencer
-        .set(data)
-        .whenComplete(() => print("Register Admin"))
-        .catchError((e) => print(e));
-    emailController.clear();
-    companyNameController.clear();
-    mobileController.clear();
-    passwordController.clear();
-    companyNameController.clear();
-  }
-  @override
+  /*@override
   void dispose() {
     companyNameController.dispose();
     emailController.dispose();
@@ -74,7 +41,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     confirmPasswordController.dispose();
     mobileController.dispose();
     super.dispose();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +52,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: Scaffold(
         body: SingleChildScrollView(
           child: Center(
-            child: Form(
+            child:  Form(
               key: _formKey,
               child: Padding(
                 padding: const EdgeInsets.only(top: 70, left: 30, right: 30),
@@ -162,7 +129,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       },
                       validator: (value) {
                         if (value!.isEmpty || value.trim().isEmpty) {
-                          return 'Enter a valid password';
+                          return 'Enter valid password';
                         } else if (!passwordValidation
                             .hasMatch(passwordController.text)) {
                           return 'Password must contain at least one number and both lower upper case letters and special characters.';
@@ -208,10 +175,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     companyName: companyNameController.text,
                                     mobile: mobileController.text,
                                     password: encrypter.encrypt(passwordController.text,iv: encrypt.IV.fromLength(16)).base64).toString();*/
-                            User? user = await FireAuth.registerUsingEmailPassword(
+
+                            Provider.of<LoadingProvider>(context,listen: false).startLoading();
+
+                            User? user = await LoginAuth.registerUsingEmailPassword(
                               email: emailController.text,
                               password: passwordController.text,
-                              userType: 'Admin', mobile: mobileController.text,
+                              userType: 'Admin', mobile: mobileController.text,context: context
                             );
                             if (user != null) {
                               AppUtils.instance.setPref(PreferenceKey.boolKey, PreferenceKey.prefLogin, true);
@@ -219,8 +189,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               Provider.of<LoginProvider>(context,listen: false).getSharedPreferenceData(emailController.text);
                               Get.off(AdminHomeScreen());
                               AppUtils.instance.showToast(toastMessage: "Register Successfully");
-                              signUpAdmin(email: emailController.text.trim(), companyName: companyNameController.text.trim(),
+                              Provider.of<LoginProvider>(context,listen: false).signUpAdmin(email: emailController.text.trim(), companyName: companyNameController.text.trim(),
                                   mobile: mobileController.text.trim(),type: 'Admin');
+                              Provider.of<LoadingProvider>(context,listen: false).stopLoading();
                             }
                           }
                         },

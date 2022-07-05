@@ -55,54 +55,60 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                     color: AppColor.appColor,
                     borderRadius: BorderRadius.only(bottomRight: Radius.circular(50),bottomLeft: Radius.circular(50))
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    StreamBuilder(
-                      stream: getEmployeeData,
-                      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot<Object?>> snapshot) {
-                        if (snapshot.hasError) {
-                          return const Text("Something went wrong");
-                        } else if (snapshot.connectionState == ConnectionState.done) {
-                          return const Center(child: CircularProgressIndicator(),);
-                        }
-                        else if (!snapshot.hasData || !snapshot.data!.exists) {
-                          return ClipOval(
-                            child: Container(
-                                height: 50,width: 50,color: AppColor.whiteColor,
-                                child: const Icon(Icons.error,size: 50,color: AppColor.appColor,)),
-                          );
-                        }
-                        else if(snapshot.requireData.exists){
-                          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                          return ClipOval(
-                              child: data['imageUrl'] == "Instance of 'Future<String>'" ? Container(
-                                color: AppColor.backgroundColor,
-                                height: 80,width: 80,child: Center(
-                                child: Text('${FirebaseAuth.instance.currentUser?.displayName?.substring(0,1).toUpperCase()}',
-                                  style: const TextStyle(color: AppColor.appBlackColor,fontSize: 30),),
-                              ),) :
-                              Image.network('${data['imageUrl']}',height: 80,width: 80,fit: BoxFit.fill)
-                          );
-                        }
-                        else{
-                          return Center(child: CircularProgressIndicator(),);
-                        }
-                      }
-                    ),
-                    const SizedBox(width: 20),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(hour < 12 ? 'Good Morning' :
-                        hour < 17 ? 'Good Afternoon' : 'Good Evening'),
-                        const SizedBox(height: 5),
-                        Text('${FirebaseAuth.instance.currentUser!.displayName?.capitalizeFirst}',style: const TextStyle(fontSize: 24,color: AppColor.blackColor),),
-                      ],
-                    ),
+                child: StreamBuilder(
+                  stream: getEmployeeData,
+                  builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot<Object?>> snapshot) {
+                    if (snapshot.hasError) {
+                      return const Text("Something went wrong");
+                    } else if (snapshot.connectionState == ConnectionState.done) {
+                      return const Center(child: CircularProgressIndicator(),);
+                    }
+                    else if (!snapshot.hasData || !snapshot.data!.exists) {
+                      return ClipOval(
+                        child: Container(
+                            height: 50,width: 50,color: AppColor.whiteColor,
+                            child: const Icon(Icons.error,size: 50,color: AppColor.appColor,)),
+                      );
+                    }
+                    else if(snapshot.requireData.exists){
+                      Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ClipOval(
+                            child:
+                            data['imageUrl'] != "Instance of 'Future<String>''" ? Container(
+                              color: AppColor.backgroundColor,
+                              height: 80,width: 80,child: Center(
+                              child: Text('${data['employeeName']?.substring(0,1).toUpperCase()}',
+                                style: const TextStyle(color: AppColor.appBlackColor,fontSize: 30),),
+                            ),) :
+                            Image.network(
+                                '${data['imageUrl']}',
+                                height: 70,
+                                width: 70,
+                                fit: BoxFit.fill)
+                          ),
 
-                  ],
+                          const SizedBox(width: 20),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(hour < 12 ? 'Good Morning' :
+                              hour < 17 ? 'Good Afternoon' : 'Good Evening'),
+                              const SizedBox(height: 5),
+                              Text('${data['employeeName']}',style: const TextStyle(fontSize: 24,color: AppColor.blackColor),),
+                            ],
+                          ),
+
+                        ],
+                      );
+                    }
+                    else{
+                      return Center(child: CircularProgressIndicator(),);
+                    }
+                  }
                 ),
               ),
               const SizedBox(height: 10),

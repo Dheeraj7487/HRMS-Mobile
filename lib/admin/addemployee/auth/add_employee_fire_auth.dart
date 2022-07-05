@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:employee_attendance_app/utils/app_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 import '../../../firebase/firebase_collection.dart';
+import '../../../login/provider/loading_provider.dart';
 
 class AddEmployeeFireAuth {
 
@@ -13,6 +15,8 @@ class AddEmployeeFireAuth {
     required String employeeName,
     required String email,
     required String password,
+    required BuildContext context
+
   }) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
@@ -28,9 +32,11 @@ class AddEmployeeFireAuth {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
+        Provider.of<LoadingProvider>(context,listen: false).stopLoading();
         AppUtils.instance.showToast(toastMessage: "The password provided is too weak.");
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
+        Provider.of<LoadingProvider>(context,listen: false).stopLoading();
         AppUtils.instance.showToast(toastMessage: "The account already exists for that email.");
       }
     } catch (e) {

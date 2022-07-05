@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:employee_attendance_app/employee/attendance/view_attendance_screen.dart';
 import 'package:employee_attendance_app/employee/holiday/holiday_screen.dart';
 import 'package:employee_attendance_app/employee/reports/employee_reports_screen.dart';
@@ -6,6 +7,7 @@ import 'package:employee_attendance_app/utils/app_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../firebase/firebase_collection.dart';
 import '../login/screen/login_screen.dart';
 import '../utils/app_colors.dart';
 
@@ -21,22 +23,47 @@ class AdminDrawerScreen extends StatelessWidget {
             decoration: const BoxDecoration(
               color: AppColor.appColor,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipOval(
-                    child: Image.network('https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg',height: 70,width: 70,fit: BoxFit.fill)),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children:  [
-                    const SizedBox(height: 5),
-                    Text('${FirebaseAuth.instance.currentUser!.displayName}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.normal)),
-                    Text('${FirebaseAuth.instance.currentUser?.email}',style: TextStyle(color: AppColor.blackColor,fontWeight: FontWeight.normal),),
-                  ],
-                ),
+            child: StreamBuilder(
+                stream: FirebaseCollection().adminCollection.doc(FirebaseAuth.instance.currentUser?.email).snapshots(),
+                builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot<Object?>> snapshot) {
 
-              ],
+                  Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                  if(snapshot.connectionState == ConnectionState.none){
+                    return const Text('Something went wrong');
+                  } else if(snapshot.connectionState == ConnectionState.waiting){
+                    return const Text('Something went wrong');
+                  }
+                  else if(snapshot.hasData){
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipOval(
+                            child:
+                            // Image.network('https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg',height: 70,width: 70,fit: BoxFit.fill)
+                            Container(
+                                color: AppColor.backgroundColor,
+                                height: 70,width: 70,
+                                child: Center(
+                                  child: Text('${data['companyName']?.substring(0,1).toUpperCase()}',
+                                    style: const TextStyle(color: AppColor.appBlackColor,fontSize: 30),),
+                                ))
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children:  [
+                            const SizedBox(height: 5),
+                            Text('${data['companyName']}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.normal)),
+                            Text('${FirebaseAuth.instance.currentUser?.email}',style: const TextStyle(color: AppColor.blackColor,fontWeight: FontWeight.normal),),
+                          ],
+                        ),
+                      ],
+                    );
+                  }
+                  else{
+                    return const Text('Data is loaded');
+                  }
+              }
             ),
           ),
           ListTile(

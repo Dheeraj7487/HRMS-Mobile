@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:io';
+
 
 import 'package:employee_attendance_app/admin/addemployee/auth/add_employee_fire_auth.dart';
 import 'package:employee_attendance_app/admin/home/screen/admin_home_screen.dart';
@@ -9,10 +11,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import '../../login/provider/loading_provider.dart';
 import '../../mixin/button_mixin.dart';
 import '../../utils/app_utils.dart';
-import '../../validation/validation.dart';
 
 class AddEmployeeScreen extends StatefulWidget with TextFieldMixin {
   AddEmployeeScreen({Key? key}) : super(key: key);
@@ -65,6 +69,14 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
 
   }*/
 
+  Future<File> imageSizeCompress(
+  {required File image,
+    quality = 100,
+    percentage = 10}) async {
+      var path = await FlutterNativeImage.compressImage(image.absolute.path,quality: 100,percentage: 10);
+      return path;
+  }
+
   void _selectProfileImage(BuildContext context) async{
     //Pick Image File
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -73,38 +85,43 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
     );
     if(result == null) return;
     final filePath = result.files.single.path;
-    setState(()=> file = File(filePath!));
-
+    File compressImage = await imageSizeCompress(image: File(filePath!));
+    setState(() {
+     // file = File(filePath!);
+      file = compressImage;
+    });
   }
 
   void uploadFile() async {
-    _selectProfileImage(context);
+    //_selectProfileImage(context);
     //Store Image in firebase database
     if (file == null) return;
     final fireauth = FirebaseAuth.instance.currentUser!.email;
     final destination = 'images/$fireauth';
     try {
-
       final ref =
       FirebaseStorage.instance.ref().child(destination);
       await ref.putFile(file!);
-     // var dowurl = await (await ref.putFile(file!).whenComplete(() => ref.getDownloadURL()));
-        print("Image Upload");
+      // var dowurl = await (await ref.putFile(file!).whenComplete(() => ref.getDownloadURL()));
+      print("Image Upload");
 
-    //  final ref1 =
-    //  FirebaseStorage.instance.ref().child("images/${FirebaseAuth.instance.currentUser!.email}.jpg");
-     url = (await ref.getDownloadURL()).toString();
-     print(url);
+      //  final ref1 =
+      //  FirebaseStorage.instance.ref().child("images/${FirebaseAuth.instance.currentUser!.email}.jpg");
+      final url1 = (await ref.getDownloadURL()).toString();
+      setState((){
+        url = url1;
+      });
+      print(url);
 
     } catch (e) {
-        print('error occurred');
+      print('error occurred');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final ref1 = FirebaseStorage.instance.ref().child("images/${FirebaseAuth.instance.currentUser!.email}.jpg");
-    url = (ref1.getDownloadURL()).toString();
+  //  final ref1 = FirebaseStorage.instance.ref().child("images/${FirebaseAuth.instance.currentUser!.uid}.png");
+  //  url = ref1.getDownloadURL().toString();
     final formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
@@ -120,7 +137,8 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
               const SizedBox(height: 20),
               GestureDetector(
                 onTap: (){
-                  uploadFile();
+                  _selectProfileImage(context);
+                 // uploadFile();
                 },
                 child: ClipOval(
                     child: file == null ? /*Image.network(
@@ -129,7 +147,8 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                         width: 100,
                         fit: BoxFit.fill) :*/
                     Container(
-                        height: 100,width: 100,color: AppColor.appColor,
+                        color: AppColor.appColor,
+                        height: 100,width: 100,
                         child: const Icon(Icons.camera_alt,size: 50,color: AppColor.whiteColor,)) :
                   Image.file(
                   file!,
@@ -356,22 +375,35 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                 alignment: Alignment.center,
                 child: GestureDetector(
                   onTap: () async {
+                    if(file == null){
+                      AppUtils.instance.showToast(toastMessage: 'Please choose the image');
+                    }
                     if (formKey.currentState!.validate()) {
-                      User? user = await AddEmployeeFireAuth.registerEmployeeUsingEmailPassword(
-                          employeeName: employeeNameController.text,
-                          email: emailController.text,
-                          password: passwordController.text);
+                      if(file != null) {
+                        Provider.of<LoadingProvider>(context,listen: false).startLoading();
+                        User? user = await AddEmployeeFireAuth.registerEmployeeUsingEmailPassword(
+                            employeeName: employeeNameController.text,
+                            email: emailController.text,
+                            password: passwordController.text,
+                          context: context
+                        );
+                        if (user != null) {
+                            uploadFile();
+                          Timer(
+                              const Duration(seconds: 5), (){
+                            AppUtils.instance.showToast(toastMessage: "Employee Added");
+                            AddEmployeeFireAuth().addEmployee(email: emailController.text, employeeName: employeeNameController.text,
+                                mobile: mobileController.text, dob: dobController.text,
+                                address: addressController.text, designation: designationController.text, department: departmentController.text,
+                                branch: branchNameController.text, dateOfJoining: dateOfJoinController.text,
+                                imageUrl: url,
+                                employmentType: employmentTypeController.text, exprience: exprienceGradeController.text,
+                                manager: managerController.text, type: 'Employee');
+                            Get.off(AdminHomeScreen());
+                            Provider.of<LoadingProvider>(context,listen: false).stopLoading();
+                          });
 
-                      if (user != null) {
-                        AppUtils.instance.showToast(toastMessage: "Employee Added");
-                        AddEmployeeFireAuth().addEmployee(email: emailController.text, employeeName: employeeNameController.text,
-                            mobile: mobileController.text, dob: dobController.text,
-                            address: addressController.text, designation: designationController.text, department: departmentController.text,
-                            branch: branchNameController.text, dateOfJoining: dateOfJoinController.text,
-                            imageUrl: url,
-                            employmentType: employmentTypeController.text, exprience: exprienceGradeController.text,
-                            manager: managerController.text, type: 'Employee');
-                        Get.offAll(AdminHomeScreen());
+                        }
                       }
                     }
                   },

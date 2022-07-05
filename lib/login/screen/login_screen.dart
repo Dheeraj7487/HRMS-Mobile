@@ -9,7 +9,8 @@ import 'package:provider/provider.dart';
 import '../../mixin/textfield_mixin.dart';
 import '../../utils/app_preference_key.dart';
 import '../../utils/app_utils.dart';
-import '../auth/fire_auth.dart';
+import '../auth/login_auth.dart';
+import '../provider/loading_provider.dart';
 import '../provider/login_provider.dart';
 import 'reset_password_screen.dart';
 
@@ -29,6 +30,14 @@ class _LoginScreenState extends State<LoginScreen> {
   bool passwordVisibility = false;
   String? chooseType;
   bool chooseValue = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<LoginProvider>(context,listen: false).fetchRecords();
+    //print(Provider.of<LoginProvider>(context,listen: false).adminDataList[0].mobile);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -153,16 +162,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: GestureDetector(
                       onTap: () async {
                         FocusScope.of(context).unfocus();
-                        User? user = await FireAuth.signInUsingEmailPassword(
-                          email: emailController.text.trim(),
-                          password: passwordController.text.trim(), context: context,
-                        );
-                        if (user != null) {
-                          AppUtils.instance.setPref(PreferenceKey.boolKey, PreferenceKey.prefLogin, true);
-                          AppUtils.instance.setPref(PreferenceKey.stringKey, PreferenceKey.prefEmail, emailController.text);
-                          Provider.of<LoginProvider>(context,listen: false).getSharedPreferenceData(emailController.text);
-                          if (_formKey.currentState!.validate()) {
-                            Provider.of<LoginProvider>(context,listen: false).getData(emailController.text);
+                        if(_formKey.currentState!.validate()){
+                          Provider.of<LoadingProvider>(context,listen: false).startLoading();
+                          User? user = await LoginAuth.signInUsingEmailPassword(
+                            email: emailController.text.trim(),
+                            password: passwordController.text.trim(), context: context,
+                          );
+                          if (user != null) {
+                            AppUtils.instance.setPref(PreferenceKey.boolKey, PreferenceKey.prefLogin, true);
+                            AppUtils.instance.setPref(PreferenceKey.stringKey, PreferenceKey.prefEmail, emailController.text);
+                            Provider.of<LoginProvider>(context,listen: false).getSharedPreferenceData(emailController.text);
+                            if (_formKey.currentState!.validate()) {
+                              Provider.of<LoginProvider>(context,listen: false).getData(emailController.text);
+                            }
+                            Provider.of<LoadingProvider>(context,listen: false).stopLoading();
                           }
                         }
                       },
