@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:employee_attendance_app/employee/home/widget/dashboard_details_widget.dart';
+import 'package:employee_attendance_app/employee/leave/leaveStatusApplied.dart';
 import 'package:employee_attendance_app/employee/timeslot/time_slot_screen.dart';
 import 'package:employee_attendance_app/firebase/firebase_collection.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
@@ -8,11 +9,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../inOut/screen/employee_in_out_screen.dart';
+import '../../leave/leave_screen.dart';
 import '../../publicholiday/screen/public_holiday_screen.dart';
 
 class EmployeeHomeScreen extends StatefulWidget {
 
-  EmployeeHomeScreen({Key? key}) : super(key: key);
+  const EmployeeHomeScreen({Key? key}) : super(key: key);
 
   @override
   State<EmployeeHomeScreen> createState() => _EmployeeHomeScreenState();
@@ -106,7 +108,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                       );
                     }
                     else{
-                      return Center(child: CircularProgressIndicator(),);
+                      return const Center(child: CircularProgressIndicator(),);
                     }
                   }
                 ),
@@ -144,19 +146,31 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                           'Time Slot','Check your entry exit time details'),
                     ),
 
-                    DashboardDetailsWidget('https://www.exacteducation.com/wp-content/uploads/2019/06/Attendance.jpg',
-                        'View Attendance','Check allocated public holiday'),
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>LeaveScreen()));
+                      },
+                      child: DashboardDetailsWidget('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWyyry8YKTQedyHmr7rqIJIijnZZUYKZ35WHALVExpCb9bptsTI9Q9-zpQH_q1XbE08Bk&usqp=CAU',
+                          'Leave','Apply for a leave'),
+                    ),
 
-                    DashboardDetailsWidget('https://png.pngtree.com/png-vector/20190118/ourmid/pngtree-report-writing-line-filled-icon-png-image_324872.jpg',
-                        'Reports','Check your month wise attendance reports'),
+                    GestureDetector(
+                      onTap: (){
+                        Get.to(const LeaveStatusApplied());
+                      },
+                      child: DashboardDetailsWidget('https://png.pngtree.com/png-vector/20191029/ourmid/pngtree-approved-stamp-round-grunge-approved-sign-sticker-seal-png-image_1870480.jpg',
+                          'Leave Status','Check leave status for applied or rejected'),
+                    ),
                     const SizedBox(height: 20)
+                   /* DashboardDetailsWidget('https://png.pngtree.com/png-vector/20190118/ourmid/pngtree-report-writing-line-filled-icon-png-image_324872.jpg',
+                        'Reports','Check your month wise attendance reports'),
+                    const SizedBox(height: 20)*/
                   ],
                 ),
               )
             ],
           ),
         ),
-
       ),
       drawer: const EmployeeDrawerScreen(),
     );

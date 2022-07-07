@@ -23,29 +23,28 @@ class LoginProvider extends ChangeNotifier{
   late BuildContext context;
   final CollectionReference _mainCollection = FirebaseFirestore.instance.collection('admin');
 
-
   getSharedPreferenceData(String? email) {
     userEmail=email;
     notifyListeners();
   }
 
   adminMapRecords (QuerySnapshot<Map<String, dynamic>> records) {
-    var _list = records.docs.map(
+    var list = records.docs.map(
     (item) => AdminModel(companyName: item['companyName'], email: item['email'],mobile: item['mobile'], type: item['type'])).toList();
-    adminDataList = _list.cast<AdminModel>();
-    print(_list);
+    adminDataList = list.cast<AdminModel>();
+    print(list);
     print(adminDataList[0].email);
     notifyListeners();
   }
 
   employeeMapRecords (QuerySnapshot<Map<String, dynamic>> records) {
-    var _list = records.docs.map(
+    var list = records.docs.map(
             (data) => EmployeeModel(address: data['address'], branch: data['branch'], dateofjoining: data['dateofjoining'],
                 department: data['department'], designation: data['designation'], email: data['email'],
                 dob: data['dob'], employeeName: data['employeeName'], employmentType: data['employment_type'],
                 exprience: data['exprience'], imageUrl: data['imageUrl'], mobile: data['mobile'], type: data['type'])).toList();
-    emplyeeDataList = _list.cast<EmployeeModel>();
-    print(_list);
+    emplyeeDataList = list.cast<EmployeeModel>();
+    print(list);
     print(emplyeeDataList[0].email);
     notifyListeners();
   }

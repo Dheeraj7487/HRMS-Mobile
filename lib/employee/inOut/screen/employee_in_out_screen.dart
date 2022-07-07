@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:employee_attendance_app/employee/inOut/auth/in_out_fire_auth.dart';
 import 'package:employee_attendance_app/employee/inOut/provider/employee_in_out_provider.dart';
 import 'package:employee_attendance_app/mixin/button_mixin.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../firebase/firebase_collection.dart';
 
@@ -24,92 +23,33 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
   //late String lockbtnpref = 'lastPressed';
   String? inGetBtnPref;
 
-  final CollectionReference _mainCollection = FirebaseFirestore.instance
-      .collection('employee')
-      .doc(FirebaseAuth.instance.currentUser?.email)
-      .collection('InOutTime');
+  late String inTime, outTime, date, duration,inTimeVal;
 
-  var employeeInOutRef = FirebaseFirestore.instance
-      .collection("employee")
-      .doc(FirebaseAuth.instance.currentUser!.email)
-      .collection('InOutTime')
-      .snapshots();
+  late String currentDate;
+  late String currentDateFire;
 
-  late String inTime, outTime, date, duration;
-
-  /* lockButton() async {
-    AppUtils.instance.setPref(
-        PreferenceKey.boolKey, PreferenceKey.prefInDisable, true);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    DateTime date = DateTime.now();
-    //await prefs.setString('$lockbtnpref', date.toString());
-    await AppUtils.instance.setPref(
-        PreferenceKey.stringKey, PreferenceKey.prefInDisableBTN,
-        buttonInOutDisable);
-  }
-
-  getSharedPreferenceData(String? prefbtn) {
-    inBtnPref = prefbtn;
-  }
-
-  Future<dynamic> addDaySherePref() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var date = DateTime.parse(AppUtils.instance.getPreferenceValueViaKey(
-        PreferenceKey.prefInDisableBTN)).add(Duration(hours: 24));
-    //var date= DateTime.parse(prefs.getString(lockbtnpref)).add(Duration(hours: 12));
-
-    if (date.isBefore(DateTime.now())) {
-      buttonInOutDisable = false;
+ /* getInOutData() async{
+    var querySnapshots = await InOutFireAuth().mainCollection.get();
+    for (var snapshot in querySnapshots.docChanges) {
+      currentDateFire = Provider.of<EmployeeInOutProvider>(context,listen: true).inOutDataList.last.currentDate;
+      // currentDateFire = snapshot.doc.get("currentDate");
+      currentDate = DateTime.now().toString().substring(0,10);
     }
-    else {
-      buttonInOutDisable = true;
-    }
+  }*/
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+   // getInOutData();
+    Provider.of<EmployeeInOutProvider>(context,listen: false).fetchInOutRecords();
+    //currentDateFire = Provider.of<EmployeeInOutProvider>(context,listen: false).inOutDataList.last.currentDate;
+    currentDate = DateTime.now().toString().substring(0,10);
+    //print(Provider.of<EmployeeInOutProvider>(context,listen: false).inOutDataList.last.outTime);
   }
 
-  getPreferenceData() async {
-    buttonInOutDisable = await AppUtils.instance.getPreferenceValueViaKey(
-        PreferenceKey.prefInDisableBTN) ?? false;
-    inBtnPref = await AppUtils.instance.getPreferenceValueViaKey(
-        PreferenceKey.prefInDisable) ?? "";
-    setState(() {});
-    if (buttonInOutDisable) {
-      getSharedPreferenceData(inBtnPref);
-    }}
-*/
   @override
   Widget build(BuildContext context) {
-    Future<void> addInOutTime({required String currentDate,
-      required String inTime,
-      required String outTime,
-      required String duration,
-      required bool inOutCheck
-    }) async {
-      DocumentReference documentReferencer = _mainCollection.doc(
-          Provider
-              .of<EmployeeInOutProvider>(context, listen: false)
-              .date
-              .toString()
-              .replaceAll("00:00:00.000", ""));
-
-      Map<String, dynamic> data = <String, dynamic>{
-        "currentDate": currentDate.toString(),
-        "inTime": inTime.toString(),
-        "outTime": outTime.toString(),
-        "duration": duration.toString(),
-        "inOutCheck": inOutCheck,
-      };
-      print('In Out Data=> $data');
-
-      await documentReferencer
-          .set(data)
-          .whenComplete(() => print("Added In Out Data"))
-          .catchError((e) => print(e));
-    }
-
-    var date = DateTime.now();
-    var currentDate = DateTime(date.year, date.month, date.day).toString();
-    //var currentDate = DateTime(date.year, date.month, date.day).toString();
-
 
     return Scaffold(
       appBar: AppBar(
@@ -133,33 +73,41 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                 StreamBuilder(
                     stream: FirebaseCollection().inOutCollection.doc(DateFormat('yyyy-MM-dd').format(DateTime.now())).snapshots(),
                     builder: (context,AsyncSnapshot<DocumentSnapshot<Object?>> streamSnapshot) {
-                      // Map<String, dynamic> data = streamSnapshot.data!.data() as Map<String, dynamic>;
-                      //   print("data=> $data");
-                      /*DateTime now = DateTime.now();
-                      String formattedTime = DateFormat('yyyy-MM-dd').format(now);
-                      print(formattedTime);
-*/
-                      print(
-                          FirebaseCollection().inOutCollection.doc(
-                              DateFormat('yyyy-MM-dd').format(DateTime.now())));
                       return Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GestureDetector(
                             onTap:
-                            //buttonInOutDisable == false ? null :
+                           // currentDate == currentDateFire ? null :
+                            // currentDateFire == currentDate ? null :
                                 () async {
                               //    print(data['inOutCheck']);
+
                               snapshot.currentDate();
                               snapshot.entryTime();
-                              addInOutTime(
-                                  currentDate: snapshot.date
+                          //    print('dfdfdfdf => $inOutVal');
+
+                             /* if(currentDateFire == '2022-07-06'){
+                                print('I am ==');
+                                print(currentDate);
+                                print(currentDateFire);
+                              }
+                              else{
+                                print('I am not equal');
+                                print(currentDate);
+                                print(currentDateFire);
+                              }*/
+
+                              //getInOutData();
+
+                              InOutFireAuth().addInOutTime(
+                                 currentDate: snapshot.date
                                       .toString()
                                       .replaceAll("00:00:00.000", ""),
                                   inTime: snapshot.inTime.toString(),
-                                  outTime: snapshot.outTime.toString(),
-                                  duration: snapshot.duration.toString(),
+                                  outTime: '',
+                                  duration: '',
                                   inOutCheck: true
                               );
 
@@ -197,17 +145,29 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                           ),
                           const SizedBox(width: 20),
                           GestureDetector(
-                            onTap: buttonInOutDisable == true
-                                ? null
-                                : () {
+                            onTap:
+                           // snapshot.date.toString().replaceAll("00:00:00.000", "") != currentDateVal ? null :
+                                 () async{
                               snapshot.exitTIme();
                               snapshot.durationTime();
-                              //    buttonInOutDisable = false;
-                              addInOutTime(
+                              //getInOutData();
+                              //   snapshot.entryTime();
+                              snapshot.currentDate();
+
+                           //   print('current Date ${currentDate} == $currentDateFire');
+
+                              var querySnapshots = await InOutFireAuth().mainCollection.get();
+                              for (var snapshot in querySnapshots.docChanges) {
+                                inTimeVal = snapshot.doc.get("inTime");
+                                print('inTime $inTimeVal');
+                              }
+
+                              InOutFireAuth().addInOutTime(
                                   currentDate: snapshot.date
                                       .toString()
                                       .replaceAll("00:00:00.000", ""),
-                                  inTime: snapshot.inTime.toString(),
+                                //  inTime: snapshot.inTime.toString(),
+                                  inTime: inTimeVal,
                                   outTime: snapshot.outTime.toString(),
                                   duration: snapshot.duration.toString(), inOutCheck: true);
                             },
@@ -229,7 +189,7 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                   ),
                 ),
                 StreamBuilder(
-                    stream: employeeInOutRef,
+                    stream: InOutFireAuth().employeeInOutRef,
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot<Map<String,
                             dynamic>>> streamSnapshot) {
@@ -306,20 +266,18 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                                               //flex: 1,
                                                 child: Center(
                                                     child: Text(
-                                                        streamSnapshot.data
-                                                            ?.docs[index]['outTime'] ==
-                                                            null
-                                                            ? ''
-                                                            : streamSnapshot
+                                                        streamSnapshot
                                                             .data
-                                                            ?.docs[index]['outTime']))),
+                                                            ?.docs[index]['outTime'] ?? ''))),
                                           ],
                                         ),
                                         const SizedBox(height: 5),
                                         Row(
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                           children: [
                                             const Expanded(
-                                                flex: 1,
+                                                flex: 5,
                                                 child: Text(
                                                   'Duration',
                                                   style: TextStyle(
@@ -329,12 +287,7 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                                             Expanded(
                                                 flex: 1,
                                                 child: Text(
-                                                    streamSnapshot.data
-                                                        ?.docs[index]['duration'] ==
-                                                        null
-                                                        ? ''
-                                                        : streamSnapshot.data
-                                                        ?.docs[index]['duration'])),
+                                                    streamSnapshot.data?.docs[index]['duration'] ?? '')),
                                           ],
                                         ),
                                       ],

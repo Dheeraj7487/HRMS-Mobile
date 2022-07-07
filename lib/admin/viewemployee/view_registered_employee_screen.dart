@@ -1,15 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:employee_attendance_app/admin/viewemployee/viewemployeeinoutdetails/view_employee_in_out_details.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../utils/app_colors.dart';
 
-class ViewRegisteredEmployee extends StatefulWidget {
-  ViewRegisteredEmployee({Key? key}) : super(key: key);
+class ViewEmployeeAttendance extends StatefulWidget {
+  const ViewEmployeeAttendance({Key? key}) : super(key: key);
 
   @override
-  State<ViewRegisteredEmployee> createState() => _ViewRegisteredEmployeeState();
+  State<ViewEmployeeAttendance> createState() => _ViewEmployeeAttendance();
 }
 
-class _ViewRegisteredEmployeeState extends State<ViewRegisteredEmployee> with SingleTickerProviderStateMixin{
+class _ViewEmployeeAttendance extends State<ViewEmployeeAttendance> with SingleTickerProviderStateMixin{
   late TabController tabController;
 
   var registerEmployeeEmail =
@@ -48,51 +50,48 @@ class _ViewRegisteredEmployeeState extends State<ViewRegisteredEmployee> with Si
         ),
         body: TabBarView(
           children: [
-            SingleChildScrollView(
-              child: StreamBuilder(
-                  stream: registerEmployeeEmail,
-                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-                    if(snapshot.connectionState == ConnectionState.waiting || snapshot.connectionState == ConnectionState.none ){
-                      return const Center(child: CircularProgressIndicator());
-                    } else{
-                      return ListView.builder(
-                          itemCount: snapshot.data?.docs.length,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context,index) {
-                            return ListTile(
+            StreamBuilder(
+                stream: registerEmployeeEmail,
+                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                  if(snapshot.connectionState == ConnectionState.waiting || snapshot.connectionState == ConnectionState.none ){
+                    return const Center(child: CircularProgressIndicator());
+                  } else{
+                    return ListView.builder(
+                        itemCount: snapshot.data?.docs.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context,index) {
+                          return GestureDetector(
+                            onTap: (){Get.to(ViewEmployeeinOutScreen(email: snapshot.data!.docs[index].id,));},
+                            child: ListTile(
                               tileColor: index.isOdd ? AppColor.backgroundColor : Colors.white,
                               leading: Text('${index+1}'),
                               title: Text('${snapshot.data!.docs[index].id}'),
-                            );
-                          }
-                      );
-                    }
+                            ),
+                          );
+                        }
+                    );
                   }
-              ),
+                }
             ),
-            SingleChildScrollView(
-              child: StreamBuilder(
-                  stream: registerAdminEmail,
-                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-                    if(snapshot.connectionState == ConnectionState.waiting || snapshot.connectionState == ConnectionState.none ){
-                      return const Center(child: CircularProgressIndicator());
-                    } else{
-                      return ListView.builder(
-                          itemCount: snapshot.data?.docs.length,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context,index) {
-                            return ListTile(
-                              tileColor: index.isOdd ? AppColor.backgroundColor : Colors.white,
-                              leading: Text('${index+1}'),
-                              title: Text('${snapshot.data!.docs[index].id}'),
-                            );
-                          }
-                      );
-                    }
+            StreamBuilder(
+                stream: registerAdminEmail,
+                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                  if(snapshot.connectionState == ConnectionState.waiting || snapshot.connectionState == ConnectionState.none ){
+                    return const Center(child: CircularProgressIndicator());
+                  } else{
+                    return ListView.builder(
+                        itemCount: snapshot.data?.docs.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context,index) {
+                          return ListTile(
+                            tileColor: index.isOdd ? AppColor.backgroundColor : Colors.white,
+                            leading: Text('${index+1}'),
+                            title: Text('${snapshot.data!.docs[index].id}'),
+                          );
+                        }
+                    );
                   }
-              ),
+                }
             ),
           ],
         )

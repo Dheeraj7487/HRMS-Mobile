@@ -6,7 +6,7 @@ class FirebaseCollection {
   final adminCollection = FirebaseFirestore.instance.collection('admin');
   CollectionReference employeeCollection = FirebaseFirestore.instance.collection('employee');
   CollectionReference holidayCollection = FirebaseFirestore.instance.collection('holiday');
-  CollectionReference inOutCollection = FirebaseFirestore.instance.collection('employee').
+  var inOutCollection = FirebaseFirestore.instance.collection('employee').
                                         doc(FirebaseAuth.instance.currentUser?.email).collection('InOutTime');
-
+  var leaveCollection = FirebaseFirestore.instance.collection('leave');
 }

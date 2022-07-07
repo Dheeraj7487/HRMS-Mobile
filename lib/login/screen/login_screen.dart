@@ -1,4 +1,5 @@
 import 'package:employee_attendance_app/login/screen/admin_register_screen.dart';
+import 'package:employee_attendance_app/login/screen/employee_register_screen.dart';
 import 'package:employee_attendance_app/mixin/button_mixin.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -189,37 +190,35 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: Visibility(
-          visible: chooseValue,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
+        bottomNavigationBar: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.only(bottom: 25),
+              child: const Text(
+                'Don' "'" 't Have An Account Yet? ',
+                style: TextStyle(
+                    decorationThickness: 2,
+                    decoration: TextDecoration.none,
+                    color:AppColor.appBlackColor),
+              ),
+            ),
+            GestureDetector(
+              onTap: (){
+               chooseValue == true ? Get.off(RegisterScreen()) : Get.off(RegisterEmployeeScreen());},
+              child: Container(
                 padding: const EdgeInsets.only(bottom: 25),
                 child: const Text(
-                  'Don' "'" 't Have An Account Yet? ',
+                  'Sign Up',
                   style: TextStyle(
-                      decorationThickness: 2,
-                      decoration: TextDecoration.none,
-                      color:AppColor.appBlackColor),
+                      fontSize: 16,
+                      decorationThickness: 1,
+                      decoration: TextDecoration.underline,
+                      color:AppColor.appColor),
                 ),
               ),
-              GestureDetector(
-                onTap: (){Get.off(RegisterScreen());},
-                child: Container(
-                  padding: const EdgeInsets.only(bottom: 25),
-                  child: const Text(
-                    'Sign Up',
-                    style: TextStyle(
-                        fontSize: 16,
-                        decorationThickness: 1,
-                        decoration: TextDecoration.underline,
-                        color:AppColor.appColor),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

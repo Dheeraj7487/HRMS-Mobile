@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:employee_attendance_app/employee/attendance/view_attendance_screen.dart';
-import 'package:employee_attendance_app/employee/holiday/holiday_screen.dart';
 import 'package:employee_attendance_app/employee/reports/employee_reports_screen.dart';
-import 'package:employee_attendance_app/login/screen/admin_employee_choose_login.dart';
 import 'package:employee_attendance_app/utils/app_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../employee/publicholiday/screen/public_holiday_screen.dart';
 import '../firebase/firebase_collection.dart';
 import '../login/screen/login_screen.dart';
 import '../utils/app_colors.dart';
@@ -27,13 +26,13 @@ class AdminDrawerScreen extends StatelessWidget {
                 stream: FirebaseCollection().adminCollection.doc(FirebaseAuth.instance.currentUser?.email).snapshots(),
                 builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot<Object?>> snapshot) {
 
-                  Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
                   if(snapshot.connectionState == ConnectionState.none){
                     return const Text('Something went wrong');
                   } else if(snapshot.connectionState == ConnectionState.waiting){
-                    return const Text('Something went wrong');
+                    return const Text('Your connection is waiting');
                   }
                   else if(snapshot.hasData){
+                    Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -81,9 +80,9 @@ class AdminDrawerScreen extends StatelessWidget {
 
           ListTile(
             leading: const Icon(Icons.leave_bags_at_home),
-            title: const Text('Holiday'),
+            title: const Text('View Holiday'),
             onTap: () {
-              Get.to(const HolidayScreen());
+              Get.to(PublicHolidayScreen());
             },
           ),
 
@@ -97,14 +96,14 @@ class AdminDrawerScreen extends StatelessWidget {
 
           const Divider(height: 1,color: AppColor.darkGreyColor,),
 
-          ListTile(
+         /* ListTile(
             leading: const Icon(Icons.report_gmailerrorred_sharp),
             title: const Text('Reports'),
             onTap: () {
               Get.to(const ReportScreen());
             },
           ),
-
+*/
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Logout'),

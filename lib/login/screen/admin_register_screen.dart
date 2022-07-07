@@ -184,10 +184,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               userType: 'Admin', mobile: mobileController.text,context: context
                             );
                             if (user != null) {
-                              AppUtils.instance.setPref(PreferenceKey.boolKey, PreferenceKey.prefLogin, true);
-                              AppUtils.instance.setPref(PreferenceKey.stringKey, PreferenceKey.prefEmail, emailController.text);
-                              Provider.of<LoginProvider>(context,listen: false).getSharedPreferenceData(emailController.text);
-                              Get.off(AdminHomeScreen());
+                              Get.off(LoginScreen());
                               AppUtils.instance.showToast(toastMessage: "Register Successfully");
                               Provider.of<LoginProvider>(context,listen: false).signUpAdmin(email: emailController.text.trim(), companyName: companyNameController.text.trim(),
                                   mobile: mobileController.text.trim(),type: 'Admin');

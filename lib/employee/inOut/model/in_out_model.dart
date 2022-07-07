@@ -14,21 +14,21 @@ class InOutModel {
     this.inTime,
     this.outTime,
     this.duration,
-    this.inOutCheck,
+    //this.inOutCheck,
   });
 
   String currentDate;
   String? inTime;
   String? outTime;
   String? duration;
-  String? inOutCheck;
+  //bool? inOutCheck;
 
   factory InOutModel.fromJson(Map<String, dynamic> json) => InOutModel(
     currentDate: json["currentDate"],
     inTime: json["inTime"],
     outTime: json["outTime"],
     duration: json["duration"],
-    inOutCheck: json["inOutCheck"],
+   // inOutCheck: json["inOutCheck"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -36,6 +36,6 @@ class InOutModel {
     "inTime": inTime,
     "outTime": outTime,
     "duration": duration,
-    "inOutCheck": inOutCheck,
+   // "inOutCheck": inOutCheck,
   };
 }

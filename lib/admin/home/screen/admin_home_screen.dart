@@ -1,11 +1,13 @@
-import 'package:employee_attendance_app/admin/addemployee/add_employee_screen.dart';
 import 'package:employee_attendance_app/admin/addholiday/screen/add_holiday_screen.dart';
+import 'package:employee_attendance_app/admin/employeeprofile/employee_details_screen.dart';
 import 'package:employee_attendance_app/employee/home/widget/dashboard_details_widget.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:employee_attendance_app/widget/admin_drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../employee/profile/employee_profile_screen.dart';
+import '../../leavestatus/leave_status_screen.dart';
 import '../../viewemployee/view_registered_employee_screen.dart';
 
 class AdminHomeScreen extends StatelessWidget {
@@ -82,26 +84,34 @@ class AdminHomeScreen extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Get.to(AddEmployeeScreen());
+                          Get.to(EmployeeDetailsScreen());
                         },
-                        child: DashboardDetailsWidget('https://cdn-icons-png.flaticon.com/512/426/426429.png',
-                            'Add Employee','Add employee for whose want to mark attendance'),
+                        child: DashboardDetailsWidget('https://pngimage.net/wp-content/uploads/2018/05/employee-png-1.png',
+                            'View Employee Details','List of registered employee details'),
                       ),
 
                       GestureDetector(
                         onTap: () {
-                          Get.to(ViewRegisteredEmployee());
+                          Get.to(const ViewEmployeeAttendance());
                         },
-                        child: DashboardDetailsWidget('https://pngimage.net/wp-content/uploads/2018/05/employee-png-1.png',
-                            'View Employee','List of registered employee'),
+                        child: DashboardDetailsWidget('https://www.seekpng.com/png/detail/126-1268302_attendance-student-icon-student-attendance-icon.png',
+                            'View Attendance','List of registered employee attendance'),
                       ),
 
-                      DashboardDetailsWidget('https://images-platform.99static.com//ITYtWRJgMT53_-hlTb3l2faUrPU=/0x1500:1500x3000/fit-in/500x500/99designs-contests-attachments/127/127315/attachment_127315153',
+                      GestureDetector(
+                        onTap: (){
+                          Get.to(const LeaveStatusScreen());
+                        },
+                        child: DashboardDetailsWidget('https://png.pngtree.com/png-vector/20191029/ourmid/pngtree-approved-stamp-round-grunge-approved-sign-sticker-seal-png-image_1870480.jpg',
+                            'Applied Leave Status','Applied leave for approved or reject'),
+                      ),
+
+                     /* DashboardDetailsWidget('https://images-platform.99static.com//ITYtWRJgMT53_-hlTb3l2faUrPU=/0x1500:1500x3000/fit-in/500x500/99designs-contests-attachments/127/127315/attachment_127315153',
                           'Today Present Employee','Check date wise all registered employee presence of entry/exit'),
 
                       DashboardDetailsWidget('https://thumbs.dreamstime.com/b/earn-money-vector-logo-icon-design-salary-symbol-hand-illustration-illustrations-152826410.jpg',
                           'Calculate Salary','Check your month wise attendance and calculate'),
-                      const SizedBox(height: 20)
+                      const SizedBox(height: 20)*/
                     ],
                   ),
                 )

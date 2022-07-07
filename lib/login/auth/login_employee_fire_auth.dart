@@ -11,6 +11,39 @@ class AddEmployeeFireAuth {
 
   List<dynamic> employeeData = [];
 
+  /*
+  savePdf(asset, String name) async{
+    try {
+      print("Method calll ");
+      final path = 'file/$name';
+      // final file = File(asset.path);
+      final prefs = await SharedPreferences.getInstance();
+      String? number = prefs.getString("number");
+
+      final ref = FirebaseStorage.instance.ref().child(path);
+      UploadTask uploadsTask =  ref.putData(asset);
+      // UploadTask uploadsTask =  ref.putFile(asset.path);
+      final snapshot = await uploadsTask.whenComplete(() {});
+
+      final urlDownloads = await snapshot.ref.getDownloadURL().whenComplete(() {});
+      if(urlDownloads.isNotEmpty){
+        Map<String, dynamic> pdf = {"auth_id": currentUserId,"file_name": fileName, "link": urlDownloads,"phone_No": number, 'timestamp': DateTime.now()};
+        await firestore.collection("pdfDetails").doc(draftsID).set(pdf).whenComplete(() => debugPrint("Success pdf.."));
+        // singleton.pdfDetails(urlDownloads);
+        // firestore.collection("drafts").doc(singleton.draftsID).update({"link" : urlDownloads}).whenComplete(() => debugPrint("Pdf Update"));
+        // singleton.updateDrafts(urlDownloads);
+      }
+
+      debugPrint("PDF URL = $urlDownloads");
+    } on Exception catch (e) {
+      debugPrint("catch ${e.toString()}");
+      // TODO
+    }
+  }
+  */
+
+
+
   static Future<User?> registerEmployeeUsingEmailPassword({
     required String employeeName,
     required String email,

@@ -13,7 +13,7 @@ import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:get/get.dart';
 
-import '../../admin/addemployee/auth/add_employee_fire_auth.dart';
+import '../../admin/employeeprofile/auth/add_employee_fire_auth.dart';
 import '../../mixin/button_mixin.dart';
 import '../../mixin/textfield_mixin.dart';
 import '../../utils/app_utils.dart';
@@ -43,80 +43,10 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
   TextEditingController passwordController = TextEditingController();
 
   File? file;
-  String url = '';
+  var url = '';
+  //final ref;
 
-  Future<File> imageSizeCompress(
-      {required File image,
-        quality = 50,
-        percentage = 1}) async {
-    var path = await FlutterNativeImage.compressImage(image.absolute.path,quality: 100,percentage: 10);
-    return path;
-  }
 
-  void _selectProfileImage(BuildContext context) async{
-    //Pick Image File
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-        allowMultiple: false,
-        type: FileType.image
-    );
-    if(result == null) return;
-    final filePath = result.files.single.path;
-    File compressImage = await imageSizeCompress(image: File(filePath!));
-    setState(() {
-      // file = File(filePath!);
-      file = compressImage;
-    });
-  }
-
-  void uploadFile() async {
-    //_selectProfileImage(context);
-    //Store Image in firebase database
-    if (file == null) return;
-    final fireauth = FirebaseAuth.instance.currentUser!.email;
-    final destination = 'images/$fireauth';
-    try {
-      final ref =
-      FirebaseStorage.instance.ref().child(destination);
-      await ref.putFile(file!);
-      // var dowurl = await (await ref.putFile(file!).whenComplete(() => ref.getDownloadURL()));
-      print("Image Upload");
-
-      //  final ref1 =
-      //  FirebaseStorage.instance.ref().child("images/${FirebaseAuth.instance.currentUser!.email}.jpg");
-      final url1 = (await ref.getDownloadURL()).toString();
-      setState((){
-        url = url1;
-      });
-      print(url);
-
-    } catch (e) {
-      print('error occurred');
-    }
-  }
-
-  /*void uploadFile() async {
-    _selectProfileImage(context);
-    //Store Image in firebase database
-    if (file == null) return;
-    final fireauth = FirebaseAuth.instance.currentUser!.email;
-    final destination = 'images/$fireauth';
-    try {
-      final ref = FirebaseStorage.instance.ref().child(destination);
-      await ref.putFile(file!);
-      // var dowurl = await (await ref.putFile(file!).whenComplete(() => ref.getDownloadURL()));
-      print("Image Upload");
-
-      //  final ref1 =
-      //  FirebaseStorage.instance.ref().child("images/${FirebaseAuth.instance.currentUser!.email}.jpg");
-      final url1 = (await ref.getDownloadURL()).toString();
-      setState((){
-        url = url1;
-      });
-      print(url);
-    } catch (e) {
-      print('error occurred');
-    }
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +54,54 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
     //final ref1 = FirebaseStorage.instance.ref().child("images/${FirebaseAuth.instance.currentUser!.email}.jpg");
     //url = (ref1.getDownloadURL()).toString();
     final formKey = GlobalKey<FormState>();
+
+    Future<File> imageSizeCompress(
+        {required File image,
+          quality = 50,
+          percentage = 1}) async {
+      var path = await FlutterNativeImage.compressImage(image.absolute.path,quality: 100,percentage: 10);
+      return path;
+    }
+
+    void _selectProfileImage(BuildContext context) async{
+      //Pick Image File
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+          allowMultiple: false,
+          type: FileType.image
+      );
+      if(result == null) return;
+      final filePath = result.files.single.path;
+      File compressImage = await imageSizeCompress(image: File(filePath!));
+      setState(() {
+        // file = File(filePath!);
+        file = compressImage;
+      });
+    }
+
+    void uploadFile() async {
+      //_selectProfileImage(context);
+      //Store Image in firebase database
+      if (file == null) return;
+      final fireauth = FirebaseAuth.instance.currentUser!.email;
+      final destination = 'images/$fireauth';
+      try {
+        final ref = FirebaseStorage.instance.ref().child(destination);
+        await ref.putFile(file!);
+        // var dowurl = await (await ref.putFile(file!).whenComplete(() => ref.getDownloadURL()));
+        print("Image Upload");
+
+        //  final ref1 =
+        //  FirebaseStorage.instance.ref().child("images/${FirebaseAuth.instance.currentUser!.email}.jpg");
+        final url1 = (await ref.getDownloadURL()).toString();
+        setState((){
+          url = url1;
+        });
+        print(url);
+
+      } catch (e) {
+        print('error occurred');
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -266,11 +244,17 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                                 alignment: Alignment.center,
                                 child: GestureDetector(
                                   onTap: () async {
-
-                                    if (formKey.currentState!.validate() ) {
+                                    if(url == ''){
+                                      var querySnapshots = await FirebaseCollection().employeeCollection.get();
+                                      for (var snapshot in querySnapshots.docChanges) {
+                                        url = snapshot.doc.get("imageUrl");
+                                      }
+                                    }
+                                    if(formKey.currentState!.validate() ) {
+                                      // if(url != ''){
                                       uploadFile();
-                                      Timer(Duration(seconds: 5), () {
-                                        AppUtils.instance.showToast(toastMessage: "Update Profile");
+                                      Timer(const Duration(seconds: 5), () {
+                                        AppUtils.instance.showToast(toastMessage: "Edit Profile");
                                         AddEmployeeFireAuth().addEmployee(email: emailController.text, employeeName: employeeNameController.text,
                                             mobile: mobileController.text, dob: dobController.text,
                                             address: addressController.text, designation: designationController.text, department: departmentController.text,
@@ -281,8 +265,11 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                                         //Navigator.push(context, MaterialPageRoute(builder: (context)=>EmployeeHomeScreen()));
                                         Get.offAll(EmployeeHomeScreen());
                                       });
+                                      // } else{
+                                      //   print('Image Url is null = > $url');
                                     }
 
+                                //  print('Image Url = > $url');
                                   },
                                   child: ButtonMixin()
                                       .stylishButton(onPress: () {}, text: 'Edit Profile'),
@@ -300,7 +287,7 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                   return const Center(child: CircularProgressIndicator(),);
                 }
                 else{
-                  return Center(child: CircularProgressIndicator(),);
+                  return const Center(child: CircularProgressIndicator(),);
                 }
               },
             ),
