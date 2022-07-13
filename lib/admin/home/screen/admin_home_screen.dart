@@ -2,6 +2,7 @@ import 'package:employee_attendance_app/admin/addholiday/screen/add_holiday_scre
 import 'package:employee_attendance_app/admin/employeeprofile/employee_details_screen.dart';
 import 'package:employee_attendance_app/employee/home/widget/dashboard_details_widget.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
+import 'package:employee_attendance_app/utils/app_images.dart';
 import 'package:employee_attendance_app/widget/admin_drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,6 +31,7 @@ class AdminHomeScreen extends StatelessWidget {
                 iconTheme: const IconThemeData(color: Colors.black),
                 backgroundColor: AppColor.appColor,
                 elevation: 0,
+                toolbarHeight: 27,
                 pinned: false,
                 //floating: true,
                 forceElevated: innerBoxIsScrolled,
@@ -79,14 +81,14 @@ class AdminHomeScreen extends StatelessWidget {
                         onTap: () {
                           Get.to(AddHolidayScreen());
                         },
-                        child: DashboardDetailsWidget('https://png.pngtree.com/png-vector/20190129/ourmid/pngtree-summer-holiday-logo-png-image_346991.jpg',
+                        child: DashboardDetailsWidget(AppImage.event,
                             'Add Holiday','Add public holiday only'),
                       ),
                       GestureDetector(
                         onTap: () {
                           Get.to(EmployeeDetailsScreen());
                         },
-                        child: DashboardDetailsWidget('https://pngimage.net/wp-content/uploads/2018/05/employee-png-1.png',
+                        child: DashboardDetailsWidget(AppImage.employee,
                             'View Employee Details','List of registered employee details'),
                       ),
 
@@ -94,7 +96,7 @@ class AdminHomeScreen extends StatelessWidget {
                         onTap: () {
                           Get.to(const ViewEmployeeAttendance());
                         },
-                        child: DashboardDetailsWidget('https://www.seekpng.com/png/detail/126-1268302_attendance-student-icon-student-attendance-icon.png',
+                        child: DashboardDetailsWidget(AppImage.attendance,
                             'View Attendance','List of registered employee attendance'),
                       ),
 
@@ -102,7 +104,7 @@ class AdminHomeScreen extends StatelessWidget {
                         onTap: (){
                           Get.to(const LeaveStatusScreen());
                         },
-                        child: DashboardDetailsWidget('https://png.pngtree.com/png-vector/20191029/ourmid/pngtree-approved-stamp-round-grunge-approved-sign-sticker-seal-png-image_1870480.jpg',
+                        child: DashboardDetailsWidget(AppImage.leaveStatus,
                             'Applied Leave Status','Applied leave for approved or reject'),
                       ),
 

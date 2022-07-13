@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../utils/app_colors.dart';
-import '../viewemployee/viewemployeeinoutdetails/view_employee_in_out_details.dart';
 
 class EmployeeDetailsScreen extends StatelessWidget {
    EmployeeDetailsScreen({Key? key}) : super(key: key);
@@ -34,10 +33,11 @@ class EmployeeDetailsScreen extends StatelessWidget {
                     return GestureDetector(
                       onTap: (){Get.to(ViewAdminEmployeeProfileScreen(email: snapshot.data!.docs[index].id));},
                       child: ListTile(
-                        tileColor: index.isOdd ? AppColor.backgroundColor : Colors.white,
-                        leading: Text('${index+1}'),
+                        tileColor: index.isOdd ? Colors.blueGrey.shade50 : Colors.white,
                         title: Text('${snapshot.data!.docs[index].id}'),
-                       // trailing: Icons,
+                        leading: Text('${index+1}'),
+                        trailing: Icon(Icons.arrow_forward_ios,size: 12,),
+                        // trailing: Icons,
                       ),
                     );
                   }

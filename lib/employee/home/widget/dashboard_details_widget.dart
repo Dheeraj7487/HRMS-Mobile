@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../utils/app_colors.dart';
 
-Widget DashboardDetailsWidget(String imageUrl,String title,String description){
+Widget DashboardDetailsWidget(String imageLocation,String title,String description){
   return Card(
     elevation: 5,
     shape: RoundedRectangleBorder(
@@ -22,7 +22,7 @@ Widget DashboardDetailsWidget(String imageUrl,String title,String description){
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: AppColor.darkGreyColor)
             ),
-            child: IntrinsicHeight(child: ClipOval(child: Image.network(imageUrl,height: 80,width: 100,fit: BoxFit.contain))),
+            child: IntrinsicHeight(child: Image.asset(imageLocation,height: 80,width: 80,fit: BoxFit.contain)),
           ),
         ),
         const SizedBox(width: 10),

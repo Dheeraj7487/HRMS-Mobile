@@ -86,7 +86,6 @@ class _ViewEmployeeinOutScreenState extends State<ViewEmployeeinOutScreen> {
                         ),
                       );
                     }
-
                   }
               );
             }

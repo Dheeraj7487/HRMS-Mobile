@@ -9,8 +9,12 @@ class LeaveFireAuth{
         required String leaveEmail,
         required String leaveFrom,
         required String leaveTo,
+        required String leaveDays,
         required String leaveType,
         required String leaveReason,
+        required String leaveFromTime,
+        required String leaveToTime,
+        required String leaveHours,
         required String leaveStatus}) async {
     DocumentReference documentReferencer =
     FirebaseFirestore.instance.collection('leave').doc('$leaveEmail $leaveFrom');
@@ -19,7 +23,11 @@ class LeaveFireAuth{
       "leaveEmail": leaveEmail.toString(),
       "leaveForm": leaveFrom.toString(),
       "leaveTo": leaveTo.toString(),
+      "leaveDays": leaveDays.toString(),
       "leaveStatus": leaveStatus.toString(),
+      "leaveFromTime": leaveFromTime.toString(),
+      "leaveToTime": leaveToTime.toString(),
+      "leaveHours": leaveHours.toString(),
       "leaveReason": leaveReason.toString(),
       "leaveType": leaveType.toString(),
     };

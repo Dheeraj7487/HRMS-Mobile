@@ -5,7 +5,7 @@ import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:get/utils.dart';
 
-import '../screen/admin_employee_choose_login.dart';
+import '../../utils/app_images.dart';
 import '../screen/login_screen.dart';
 
 class OnboardingController extends GetxController {
@@ -22,11 +22,11 @@ class OnboardingController extends GetxController {
   }
 
   List<OnboardingInfo> onboardingPages = [
-    OnboardingInfo('https://png.pngtree.com/png-vector/20201203/ourlarge/pngtree-penguin-with-christmas-hat-background-png-image_2508812.jpg', 'Employee Attendance',
+    OnboardingInfo(AppImage.introduction1, 'Employee Attendance',
         'A employee can view the attendance',AppColor.appColor),
-    OnboardingInfo('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKpJAsryOXV1dZKZDRIsoxwI4jx0K90uDn-A&usqp=CAU', 'Employee Attendance',
+    OnboardingInfo(AppImage.introduction2, 'Employee Attendance',
         'A employee can view the attendance',AppColor.darkGreyColor),
-    OnboardingInfo('https://png.pngitem.com/pimgs/s/118-1185893_photo-by-daniellemoraesfalcao-christmas-penguin-hd-png-download.png', 'Employee Attendance',
+    OnboardingInfo(AppImage.introduction3, 'Employee Attendance',
         'A employee can view the attendance',AppColor.appColor),
   ];
 }

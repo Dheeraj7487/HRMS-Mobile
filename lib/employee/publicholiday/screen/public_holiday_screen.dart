@@ -43,12 +43,16 @@ class PublicHolidayScreen extends StatelessWidget {
                               ListTile(
                                 leading: Text('${index+1}'),
                                 trailing: Text('${streamSnapshot.data?.docs[index]['holidayDate']}'),
-                                title:Text('${streamSnapshot.data?.docs[index]['holidayName']}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
+                                title:Text('${streamSnapshot.data?.docs[index]['holidayName']}',
+                                    style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,overflow: TextOverflow.ellipsis)
+                                    ,maxLines: 1,
+                                ),
                                 subtitle:Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const SizedBox(height: 10),
-                                    Text('${streamSnapshot.data?.docs[index]['holidayDescription']}'),
+                                    Text('${streamSnapshot.data?.docs[index]['holidayDescription']}',
+                                        style: const TextStyle(fontSize: 12,overflow: TextOverflow.ellipsis)
+                                      ,maxLines: 2),
                                   ],
                                 ),
                               ),

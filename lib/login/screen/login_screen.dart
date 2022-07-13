@@ -2,7 +2,9 @@ import 'package:employee_attendance_app/login/screen/admin_register_screen.dart'
 import 'package:employee_attendance_app/login/screen/employee_register_screen.dart';
 import 'package:employee_attendance_app/mixin/button_mixin.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
+import 'package:employee_attendance_app/utils/app_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
@@ -122,6 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   const SizedBox(height: 20),
+
                   TextFieldMixin().textFieldCardWidget(
                     controller: passwordController,
                     prefixIcon: const Icon(Icons.lock, color: AppColor.appColor),

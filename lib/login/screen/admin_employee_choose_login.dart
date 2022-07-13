@@ -24,7 +24,7 @@ class AdminEmployeeChooseLoginScreen extends StatelessWidget {
             const Text(
               'Choose a Admin or Employee',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 24,fontFamily: AppFonts.semiBold),
+              style: TextStyle(fontSize: 24),
             ),
             const SizedBox(height: 10),
             const Padding(
@@ -32,7 +32,7 @@ class AdminEmployeeChooseLoginScreen extends StatelessWidget {
               child: Text(
                 'rofessor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 18,fontFamily: AppFonts.regular,wordSpacing: -1),
+                style: TextStyle(fontSize: 18,wordSpacing: -1),
               ),
             ),
             const SizedBox(height: 50),
@@ -59,7 +59,7 @@ class AdminEmployeeChooseLoginScreen extends StatelessWidget {
                           style: TextStyle(
                               letterSpacing: 0.5,
                               color: Colors.black,
-                              fontFamily: AppFonts.semiBold)),
+                              )),
                     ),
                   ),
                 ),
@@ -83,7 +83,7 @@ class AdminEmployeeChooseLoginScreen extends StatelessWidget {
                           style: TextStyle(
                               letterSpacing: 0.5,
                               color: Colors.black,
-                              fontFamily: AppFonts.semiBold)),
+                          )),
                     ),
                   ),
                 )

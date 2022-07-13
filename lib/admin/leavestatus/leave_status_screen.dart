@@ -32,36 +32,55 @@ class LeaveStatusScreen extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (context,index) {
                   return Padding(
-                    padding: const EdgeInsets.only(left: 10.0,right: 10,top: 10,bottom: 10),
+                    padding: const EdgeInsets.only(left: 10.0,right: 10,top: 10),
                     child: Card(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 10.0,right: 10,top: 10,bottom: 10),
+                        padding: const EdgeInsets.only(left: 10.0,right: 10,top: 5,bottom: 5),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('${snapshot.data?.docs[index]['leaveEmail']}',style: TextStyle(color: AppColor.appColor,fontSize: 16),),
-                            SizedBox(height: 10,),
+                            Text('${snapshot.data?.docs[index]['leaveEmail']}',style: const TextStyle(color: AppColor.appColor,fontSize: 16),),
+                            const SizedBox(height: 5),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text('${snapshot.data?.docs[index]['leaveForm']}',),
-                                Text('${snapshot.data?.docs[index]['leaveTo']}'),
+                                Text('${snapshot.data?.docs[index]['leaveType'] == 'Flexi Leave' ?
+                                snapshot.data?.docs[index]['leaveFromTime'] : snapshot.data?.docs[index]['leaveForm']}',),
+                                Text('${snapshot.data?.docs[index]['leaveType'] == 'Flexi Leave' ?
+                                snapshot.data?.docs[index]['leaveToTime'] : snapshot.data?.docs[index]['leaveTo']}'),
+                                Text('${snapshot.data?.docs[index]['leaveType'] == 'Flexi Leave' ?
+                                snapshot.data?.docs[index]['leaveHours'] : snapshot.data?.docs[index]['leaveDays']}'),
                               ],
                             ),
                             const SizedBox(height: 10,),
-                             Text('${snapshot.data?.docs[index]['leaveType']}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-                             Text('${snapshot.data?.docs[index]['leaveReason']}',style: TextStyle(fontSize: 12),),
-                             SizedBox(height: 20),
-                             Container(
-                                 padding: EdgeInsets.all(10),
-                                 width: 100,
-                                 decoration: BoxDecoration(
-                                   borderRadius: BorderRadius.circular(10),
-                                   color: snapshot.data?.docs[index]['leaveStatus'] == 'Applied' ?
-                                   AppColor.darkGreyColor : snapshot.data?.docs[index]['leaveStatus'] == 'Approved' ?
-                                   AppColor.appColor : AppColor.redColor,
-                                 ),
-                                 child: Center(child: Text('${snapshot.data?.docs[index]['leaveStatus']}',style: TextStyle(color: AppColor.whiteColor)))),
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('${snapshot.data?.docs[index]['leaveType']}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold,overflow: TextOverflow.ellipsis),maxLines: 1,),
+                                      Text('${snapshot.data?.docs[index]['leaveReason']}',style: const TextStyle(fontSize: 12,overflow: TextOverflow.ellipsis),maxLines: 2,),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 20),
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                      padding: const EdgeInsets.all(10),
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: snapshot.data?.docs[index]['leaveStatus'] == 'Pending' ?
+                                        AppColor.darkGreyColor : snapshot.data?.docs[index]['leaveStatus'] == 'Approved' ?
+                                        AppColor.appColor : AppColor.redColor,
+                                      ),
+                                      child: Center(child: Text('${snapshot.data?.docs[index]['leaveStatus']}',style: const TextStyle(color: AppColor.whiteColor)))),
+                                ),
+                              ],
+                            ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -71,10 +90,15 @@ class LeaveStatusScreen extends StatelessWidget {
                                     LeaveFireAuth().applyLeave(
                                         leaveFrom: snapshot.data?.docs[index]['leaveForm'],
                                         leaveTo: snapshot.data?.docs[index]['leaveTo'],
+                                        leaveDays: snapshot.data?.docs[index]['leaveDays'],
                                         leaveType: snapshot.data?.docs[index]['leaveType'],
                                         leaveReason: snapshot.data?.docs[index]['leaveReason'],
                                         leaveStatus: 'Approved',
-                                        leaveEmail: snapshot.data?.docs[index]['leaveEmail']);
+                                        leaveEmail: snapshot.data?.docs[index]['leaveEmail'],
+                                        leaveFromTime: snapshot.data?.docs[index]['leaveFromTime'],
+                                        leaveHours: snapshot.data?.docs[index]['leaveHours'],
+                                        leaveToTime: snapshot.data?.docs[index]['leaveToTime']
+                                    );
                                   },
                                   child: const Text('Approved',style: TextStyle(color: AppColor.appColor),),
                                 ),
@@ -84,10 +108,15 @@ class LeaveStatusScreen extends StatelessWidget {
                                     LeaveFireAuth().applyLeave(
                                         leaveFrom: snapshot.data?.docs[index]['leaveForm'],
                                         leaveTo: snapshot.data?.docs[index]['leaveTo'],
+                                        leaveDays: snapshot.data?.docs[index]['leaveDays'],
                                         leaveType: snapshot.data?.docs[index]['leaveType'],
                                         leaveReason: snapshot.data?.docs[index]['leaveReason'],
                                         leaveStatus: 'Rejected',
-                                        leaveEmail: snapshot.data?.docs[index]['leaveEmail']);
+                                        leaveEmail: snapshot.data?.docs[index]['leaveEmail'],
+                                        leaveFromTime: snapshot.data?.docs[index]['leaveFromTime'],
+                                        leaveHours: snapshot.data?.docs[index]['leaveHours'],
+                                        leaveToTime: snapshot.data?.docs[index]['leaveToTime']
+                                    );
                                   },
                                   child: const Text('Rejected',style: TextStyle(color: AppColor.appColor)),
                                 )

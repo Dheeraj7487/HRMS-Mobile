@@ -262,6 +262,37 @@ class _RegisterEmployeeScreenState extends State<RegisterEmployeeScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.only(bottom: 25),
+            child: const Text(
+              'Already have an Account ',
+              style: TextStyle(
+                  decorationThickness: 2,
+                  decoration: TextDecoration.none,
+                  color: AppColor.appBlackColor),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Get.off(LoginScreen());
+            },
+            child: Container(
+              padding: const EdgeInsets.only(bottom: 25),
+              child: const Text(
+                'Login',
+                style: TextStyle(
+                    fontSize: 16,
+                    decorationThickness: 1,
+                    decoration: TextDecoration.underline,
+                    color: AppColor.appColor),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

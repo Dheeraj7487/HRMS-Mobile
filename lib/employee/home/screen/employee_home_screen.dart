@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:employee_attendance_app/employee/home/widget/dashboard_details_widget.dart';
 import 'package:employee_attendance_app/employee/leave/leaveStatusApplied.dart';
-import 'package:employee_attendance_app/employee/timeslot/time_slot_screen.dart';
+import 'package:employee_attendance_app/employee/timeslot/attendance_details_screen.dart';
 import 'package:employee_attendance_app/firebase/firebase_collection.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
+import 'package:employee_attendance_app/utils/app_images.dart';
 import 'package:employee_attendance_app/widget/employee_drawer_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
               iconTheme: const IconThemeData(color: Colors.black),
               backgroundColor: AppColor.appColor,
               elevation: 0,
+              toolbarHeight: 27,
               pinned: false,
               //floating: true,
               forceElevated: innerBoxIsScrolled,
@@ -126,7 +128,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                         print(getEmployeeData);
                         Get.to(PublicHolidayScreen());
                       },
-                      child: DashboardDetailsWidget('https://cdn5.vectorstock.com/i/thumb-large/21/29/beach-holiday-travel-logo-vector-19952129.jpg',
+                      child: DashboardDetailsWidget(AppImage.introduction2,
                           'Public Holiday','Check allocated public holiday'),
                     ),
 
@@ -134,23 +136,24 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                       onTap: () {
                         Get.to(const EmployeeInOutScreen());
                       },
-                      child: DashboardDetailsWidget('https://previews.123rf.com/images/mariusz_prusaczyk/mariusz_prusaczyk1303/mariusz_prusaczyk130300217/18341105-3d-entry-exit-button-click-here-block-text-over-white-background.jpg',
+                      child: DashboardDetailsWidget(AppImage.entryExit,
                           'Entry Exit','Fill the attendance today is present or not'),
                     ),
 
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>TimeSlotScreen()));
+                        Get.to(TimeSlotScreen());
                       },
-                      child: DashboardDetailsWidget('https://media.istockphoto.com/vectors/logo-sports-stopwatch-vector-id489669050?k=20&m=489669050&s=612x612&w=0&h=1l57ehZJkK9ODqmNcYX8cJpMAQZft6OlkULZPtBa8kI=',
-                          'Time Slot','Check your entry exit time details'),
+                      child: DashboardDetailsWidget(AppImage.timeSlot,
+                          'Attendance Details','Check your entry exit time details'),
                     ),
 
                     GestureDetector(
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>LeaveScreen()));
+                        Get.to(LeaveScreen());
+                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>LeaveScreen()));
                       },
-                      child: DashboardDetailsWidget('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWyyry8YKTQedyHmr7rqIJIijnZZUYKZ35WHALVExpCb9bptsTI9Q9-zpQH_q1XbE08Bk&usqp=CAU',
+                      child: DashboardDetailsWidget(AppImage.leave,
                           'Leave','Apply for a leave'),
                     ),
 
@@ -158,7 +161,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                       onTap: (){
                         Get.to(const LeaveStatusApplied());
                       },
-                      child: DashboardDetailsWidget('https://png.pngtree.com/png-vector/20191029/ourmid/pngtree-approved-stamp-round-grunge-approved-sign-sticker-seal-png-image_1870480.jpg',
+                      child: DashboardDetailsWidget(AppImage.leaveStatus,
                           'Leave Status','Check leave status for applied or rejected'),
                     ),
                     const SizedBox(height: 20)

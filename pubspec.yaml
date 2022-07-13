@@ -45,6 +45,8 @@ dependencies:
   flutter_native_image: ^0.0.6+1
   flutter_spinkit: ^5.1.0
   table_calendar: ^3.0.6
+  dropdown_button2: ^1.6.3
+  time_range: ^1.0.3
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -89,25 +91,11 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: HindSiliguri_regular
+    - family: CormorantSCSemiBold
       fonts:
-        - asset: assets/fonts/HindSiliguri-Regular.ttf
+        - asset: assets/fonts/CormorantSC-SemiBold.ttf
 
-    - family: HindSiliguri_bold
-      fonts:
-        - asset: assets/fonts/HindSiliguri-Bold.ttf
 
-    - family: HindSiligHuri_light
-      fonts:
-        - asset: assets/fonts/HindSiliguri-Light.ttf
-
-    - family: HindSiliguri_semibold
-      fonts:
-        - asset: assets/fonts/HindSiliguri-SemiBold.ttf
-
-    - family: HindSiliguri_medium
-      fonts:
-        - asset: assets/fonts/HindSiliguri-Medium.ttf
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

@@ -31,13 +31,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>{
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.network(
+                        Image.asset(
                             _controller.onboardingPages[index].imageAsset,height: 300),
                         const SizedBox(height: 20),
                         Text(
                           _controller.onboardingPages[index].title,textAlign: TextAlign.center,
                           style: const TextStyle(
-                              fontSize: 24, fontFamily: AppFonts.semiBold),
+                              fontSize: 24),
                         ),
                         const SizedBox(height: 10),
                         Padding(
@@ -45,7 +45,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>{
                           child: Text(
                             _controller.onboardingPages[index].description,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 18,fontFamily: AppFonts.regular),
+                            style: const TextStyle(fontSize: 18),
                           ),
                         ),
                       ],
@@ -60,7 +60,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>{
                     Get.off(LoginScreen());
                   },
                   child: Container(
-                      height:40,width:70,child: Center(child: Text('Skip',style: TextStyle(fontFamily: AppFonts.semiBold),textAlign: TextAlign.center,))),
+                    color: Colors.transparent,
+                      height:40,width:70,child: Center(child: Text('Skip',textAlign: TextAlign.center,))),
                 ),
             ),
             Positioned(
@@ -93,7 +94,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>{
                 return GestureDetector(
                   onTap: _controller.forwardAction,
                   child: Container(
-                      height:40,width:100,child: Center(child: Text(_controller.isLastPage ? 'Get Started' : 'Next -->',style: TextStyle(fontFamily: AppFonts.semiBold),textAlign: TextAlign.center))),
+                      color: Colors.transparent,
+                      height:40,width:100,child: Center(child: Text(_controller.isLastPage ? 'Get Started' : 'Next -->',textAlign: TextAlign.center))),
                 );
               }),
             ),

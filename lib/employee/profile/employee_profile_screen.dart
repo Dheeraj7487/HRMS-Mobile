@@ -8,6 +8,7 @@ import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
@@ -45,8 +46,6 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
   File? file;
   var url = '';
   //final ref;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -154,130 +153,153 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                       Container(
                         margin: EdgeInsets.only(top:5),
                         padding: const EdgeInsets.all(10),
-                        child: Card(
-                          child: Column(
-                            children: [
-                              const SizedBox(height: 5),
-                              TextFieldMixin().textFieldWidget(
-                                  controller: employeeNameController..text = data['employeeName'],
-                                  prefixIcon: const Icon(Icons.person, color: AppColor.appColor),
-                                  labelText: 'Employee Name'),
-                              const SizedBox(height: 20),
-                              TextFieldMixin().textFieldWidget(
-                                  controller: emailController..text = data['email'],
-                                  readOnly: true,
-                                  prefixIcon: const Icon(Icons.email, color: AppColor.appColor),
-                                  labelText: 'Email'),
-                              const SizedBox(height: 20),
-                              TextFieldMixin().textFieldWidget(
-                                  controller: mobileController..text = data['mobile'],
-                                  keyboardType: TextInputType.phone,
-                                  prefixIcon:
-                                  const Icon(Icons.phone_android, color: AppColor.appColor),
-                                  labelText: 'Mobile'),
-                              const SizedBox(height: 20),
-                              TextFieldMixin().textFieldWidget(
-                                  controller: dobController..text = data['dob'],
-                                  prefixIcon: const Icon(Icons.date_range_outlined,
-                                      color: AppColor.appColor),
-                                  keyboardType: TextInputType.number,
-                                  labelText: 'Date of Birth'),
-                              const SizedBox(height: 20),
-                              TextFieldMixin().textFieldWidget(
-                                  controller: addressController..text = data['address'],
-                                  keyboardType: TextInputType.text,
-                                  prefixIcon:
-                                  const Icon(Icons.location_on, color: AppColor.appColor),
-                                  labelText: 'Address'),
-                              const SizedBox(height: 20),
-                              TextFieldMixin().textFieldWidget(
-                                  controller: designationController..text = data['designation'],
-                                  prefixIcon:
-                                  const Icon(Icons.post_add, color: AppColor.appColor),
-                                  readOnly: true,
-                                  labelText: 'Designation'),
-                              const SizedBox(height: 20),
-                              TextFieldMixin().textFieldWidget(
-                                  controller: departmentController..text = data['department'],
-                                  prefixIcon:
-                                  const Icon(Icons.description, color: AppColor.appColor),
-                                  readOnly: true,
-                                  labelText: 'Department'),
-                              const SizedBox(height: 20),
-                              TextFieldMixin().textFieldWidget(
-                                  controller: branchNameController..text = data['branch'],
-                                  readOnly: true,
-                                  prefixIcon:
-                                  const Icon(Icons.person, color: AppColor.appColor),
-                                  labelText: 'Branch'),
-                              const SizedBox(height: 20),
-                              TextFieldMixin().textFieldWidget(
-                                  controller: dateOfJoinController..text = data['dateofjoining'],
-                                  readOnly: true,
-                                  prefixIcon:
-                                  const Icon(Icons.date_range_outlined, color: AppColor.appColor),
-                                  labelText: 'Date of Joining'),
-                              const SizedBox(height: 20),
-                              TextFieldMixin().textFieldWidget(
-                                  controller: employmentTypeController..text = data['employment_type'],
-                                  prefixIcon:
-                                  const Icon(Icons.person, color: AppColor.appColor),
-                                  readOnly : true,
-                                  labelText: 'Employment Type'),
-                              const SizedBox(height: 20),
-                              TextFieldMixin().textFieldWidget(
-                                  controller: exprienceGradeController..text = data['exprience'],
-                                  prefixIcon:
-                                  const Icon(Icons.timeline_sharp, color: AppColor.appColor),
-                                  readOnly : true,
-                                  labelText: 'Exprience'),
-                              const SizedBox(height: 20),
-                              TextFieldMixin().textFieldWidget(
-                                  controller: managerController..text = data['manager'],
-                                  readOnly : true,
-                                  prefixIcon:
-                                  const Icon(Icons.man, color: AppColor.appColor),
-                                  labelText: 'Manager'),
-                              const SizedBox(height: 20),
-                              const SizedBox(height: 20),
-                              Align(
-                                alignment: Alignment.center,
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    if(url == ''){
-                                      var querySnapshots = await FirebaseCollection().employeeCollection.get();
-                                      for (var snapshot in querySnapshots.docChanges) {
-                                        url = snapshot.doc.get("imageUrl");
-                                      }
-                                    }
-                                    if(formKey.currentState!.validate() ) {
-                                      // if(url != ''){
-                                      uploadFile();
-                                      Timer(const Duration(seconds: 5), () {
-                                        AppUtils.instance.showToast(toastMessage: "Edit Profile");
-                                        AddEmployeeFireAuth().addEmployee(email: emailController.text, employeeName: employeeNameController.text,
-                                            mobile: mobileController.text, dob: dobController.text,
-                                            address: addressController.text, designation: designationController.text, department: departmentController.text,
-                                            branch: branchNameController.text, dateOfJoining: dateOfJoinController.text,
-                                            imageUrl: url,
-                                            employmentType: employmentTypeController.text, exprience: exprienceGradeController.text,
-                                            manager: managerController.text, type: 'Employee');
-                                        //Navigator.push(context, MaterialPageRoute(builder: (context)=>EmployeeHomeScreen()));
-                                        Get.offAll(EmployeeHomeScreen());
-                                      });
-                                      // } else{
-                                      //   print('Image Url is null = > $url');
-                                    }
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 5),
 
-                                //  print('Image Url = > $url');
-                                  },
-                                  child: ButtonMixin()
-                                      .stylishButton(onPress: () {}, text: 'Edit Profile'),
-                                ),
+                            CupertinoFormSection(
+                                header: Text("Personal Details"),
+                                children: [
+                                  CupertinoFormRow(
+                                    prefix: const Icon(Icons.person, color: AppColor.appColor),
+                                    child: CupertinoTextFormFieldRow(
+                                      placeholder: "Enter name",
+                                      controller: employeeNameController..text = data['employeeName'],
+                                      validator: (value){
+                                        if(value!.isEmpty){
+                                          return 'Name is Required';
+                                        }
+                                      },
+                                    ),
+                                  ),
+
+                                  CupertinoFormRow(
+                                    prefix: const Icon(Icons.email, color: AppColor.appColor),
+                                    child: CupertinoTextFormFieldRow(
+                                      placeholder: "Enter Email",
+                                      controller: emailController..text = data['email'],
+                                      readOnly: true,
+                                    ),
+                                  ),
+
+                                  CupertinoFormRow(
+                                    prefix: const Icon(Icons.phone_android, color: AppColor.appColor),
+                                    child: CupertinoTextFormFieldRow(
+                                      placeholder: "Enter Mobile",
+                                      controller: mobileController..text = data['mobile'],
+                                      keyboardType: TextInputType.phone,
+                                    ),
+                                  ),
+
+                                  CupertinoFormRow(
+                                    prefix: const Icon(Icons.date_range_outlined, color: AppColor.appColor),
+                                    child: CupertinoTextFormFieldRow(
+                                      placeholder: "Enter Date Of Birth",
+                                      controller: dobController..text = data['dob'],
+                                      keyboardType: TextInputType.number,
+                                    ),
+                                  ),
+
+                                  CupertinoFormRow(
+                                    prefix: const Icon(Icons.location_on, color: AppColor.appColor),
+                                    child: CupertinoTextFormFieldRow(
+                                      placeholder: "Enter Address",
+                                      controller: addressController..text = data['address'],
+                                      keyboardType: TextInputType.text,
+                                    ),
+                                  ),
+                                  CupertinoFormRow(
+                                    prefix: const Icon(Icons.post_add_outlined, color: AppColor.appColor),
+                                    child: CupertinoTextFormFieldRow(
+                                      placeholder: "Enter Designation",
+                                      controller: designationController..text = data['designation'],
+                                      readOnly: true,
+                                    ),
+                                  ),
+                                  CupertinoFormRow(
+                                    prefix: const Icon(Icons.description, color: AppColor.appColor),
+                                    child: CupertinoTextFormFieldRow(
+                                      placeholder: "Enter Department",
+                                      controller: departmentController..text = data['department'],
+                                      readOnly: true,
+                                    ),
+                                  ),
+                                  CupertinoFormRow(
+                                    prefix: const Icon(Icons.home_work_outlined, color: AppColor.appColor),
+                                    child: CupertinoTextFormFieldRow(
+                                      placeholder: "Enter Branch",
+                                      controller: branchNameController..text = data['branch'],
+                                      readOnly: true,
+                                    ),
+                                  ),
+                                  CupertinoFormRow(
+                                    prefix: const Icon(Icons.date_range_outlined, color: AppColor.appColor),
+                                    child: CupertinoTextFormFieldRow(
+                                      placeholder: "Enter Date Of Joining",
+                                      controller: dateOfJoinController..text = data['dateofjoining'],
+                                      readOnly: true,
+                                    ),
+                                  ),
+                                  CupertinoFormRow(
+                                    prefix: const Icon(Icons.date_range_outlined, color: AppColor.appColor),
+                                    child: CupertinoTextFormFieldRow(
+                                      controller: employmentTypeController..text = data['employment_type'],
+                                      readOnly: true,
+                                    ),
+                                  ),
+                                  CupertinoFormRow(
+                                    prefix: const Icon(Icons.timeline_sharp, color: AppColor.appColor),
+                                    child: CupertinoTextFormFieldRow(
+                                      controller: exprienceGradeController..text = data['exprience'],
+                                      readOnly: true,
+                                    ),
+                                  ),
+                                  CupertinoFormRow(
+                                    prefix: const Icon(Icons.date_range_outlined, color: AppColor.appColor),
+                                    child: CupertinoTextFormFieldRow(
+                                      controller: managerController..text = data['manager'],
+                                      readOnly: true,
+                                    ),
+                                  ),
+                                ]),
+                            const SizedBox(height: 20),
+                            Align(
+                              alignment: Alignment.center,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  if(url == ''){
+                                    var querySnapshots = await FirebaseCollection().employeeCollection.get();
+                                    for (var snapshot in querySnapshots.docChanges) {
+                                      url = snapshot.doc.get("imageUrl");
+                                    }
+                                  }
+                                  if(formKey.currentState!.validate() ) {
+                                    // if(url != ''){
+                                    uploadFile();
+                                    Timer(const Duration(seconds: 5), () {
+                                      AppUtils.instance.showToast(toastMessage: "Edit Profile");
+                                      AddEmployeeFireAuth().addEmployee(email: emailController.text, employeeName: employeeNameController.text,
+                                          mobile: mobileController.text, dob: dobController.text,
+                                          address: addressController.text, designation: designationController.text, department: departmentController.text,
+                                          branch: branchNameController.text, dateOfJoining: dateOfJoinController.text,
+                                          imageUrl: url,
+                                          employmentType: employmentTypeController.text, exprience: exprienceGradeController.text,
+                                          manager: managerController.text, type: 'Employee');
+                                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>EmployeeHomeScreen()));
+                                      Get.offAll(EmployeeHomeScreen());
+                                    });
+                                    // } else{
+                                    //   print('Image Url is null = > $url');
+                                  }
+
+                              //  print('Image Url = > $url');
+                                },
+                                child: ButtonMixin()
+                                    .stylishButton(onPress: () {}, text: 'Edit Profile'),
                               ),
-                              const SizedBox(height: 20)
-                            ],
-                          ),
+                            ),
+                            const SizedBox(height: 20)
+                          ],
                         ),
                       ),
                     ],

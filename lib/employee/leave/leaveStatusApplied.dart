@@ -43,12 +43,15 @@ class LeaveStatusApplied extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('${snapshot.data?.docs[index]['leaveForm']}',),
-                                  Text('${snapshot.data?.docs[index]['leaveTo']}'),
+                                  Text('${snapshot.data?.docs[index]['leaveType'] == 'Flexi Leave' ?
+                                  snapshot.data?.docs[index]['leaveFromTime'] : snapshot.data?.docs[index]['leaveForm']}',),
+                                  Text('${snapshot.data?.docs[index]['leaveType'] == 'Flexi Leave' ?
+                                  snapshot.data?.docs[index]['leaveToTime'] : snapshot.data?.docs[index]['leaveTo']}'),
+                                  Text('${snapshot.data?.docs[index]['leaveType'] == 'Flexi Leave' ?
+                                  snapshot.data?.docs[index]['leaveHours'] : snapshot.data?.docs[index]['leaveDays']}'),
                                 ],
                               ),
                               const SizedBox(height: 5,),
-
                               Row(
                                 children: [
                                   Expanded(
@@ -56,12 +59,12 @@ class LeaveStatusApplied extends StatelessWidget {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text('${snapshot.data?.docs[index]['leaveType']}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold,overflow: TextOverflow.ellipsis),maxLines: 1,),
+                                        Text('${snapshot.data?.docs[index]['leaveType']}',style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,overflow: TextOverflow.ellipsis),maxLines: 1,),
                                         Text('${snapshot.data?.docs[index]['leaveReason']}',style: const TextStyle(fontSize: 12,overflow: TextOverflow.ellipsis),maxLines: 2,),
                                       ],
                                     ),
                                   ),
-                                  SizedBox(width: 20),
+                                  const SizedBox(width: 20),
                                   Expanded(
                                     flex: 1,
                                     child: Container(
@@ -69,7 +72,7 @@ class LeaveStatusApplied extends StatelessWidget {
                                         width: 100,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(10),
-                                          color: snapshot.data?.docs[index]['leaveStatus'] == 'Applied' ?
+                                          color: snapshot.data?.docs[index]['leaveStatus'] == 'Pending' ?
                                           AppColor.darkGreyColor : snapshot.data?.docs[index]['leaveStatus'] == 'Approved' ?
                                           AppColor.appColor : AppColor.redColor,
                                         ),

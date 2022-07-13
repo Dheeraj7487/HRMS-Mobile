@@ -45,6 +45,7 @@ class _ViewEmployeeAttendance extends State<ViewEmployeeAttendance> with SingleT
           title: const Text('View Registered Details'),
           centerTitle: true,
           bottom : const TabBar(
+            indicatorColor: AppColor.appColor,
             tabs: registeredTab
           ),
         ),
@@ -63,9 +64,10 @@ class _ViewEmployeeAttendance extends State<ViewEmployeeAttendance> with SingleT
                           return GestureDetector(
                             onTap: (){Get.to(ViewEmployeeinOutScreen(email: snapshot.data!.docs[index].id,));},
                             child: ListTile(
-                              tileColor: index.isOdd ? AppColor.backgroundColor : Colors.white,
+                              tileColor: index.isOdd ? Colors.blueGrey.shade50 : Colors.white,
                               leading: Text('${index+1}'),
                               title: Text('${snapshot.data!.docs[index].id}'),
+                              trailing: Icon(Icons.arrow_forward_ios,size: 12,),
                             ),
                           );
                         }
@@ -84,7 +86,7 @@ class _ViewEmployeeAttendance extends State<ViewEmployeeAttendance> with SingleT
                         shrinkWrap: true,
                         itemBuilder: (context,index) {
                           return ListTile(
-                            tileColor: index.isOdd ? AppColor.backgroundColor : Colors.white,
+                            tileColor: index.isOdd ? Colors.blueGrey.shade50 : Colors.white,
                             leading: Text('${index+1}'),
                             title: Text('${snapshot.data!.docs[index].id}'),
                           );

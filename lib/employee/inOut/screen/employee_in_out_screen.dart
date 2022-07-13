@@ -141,7 +141,7 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                                       }
 */
                             },
-                            child: ButtonMixin().stylishButton(text: 'In'),
+                            child: ButtonMixin().stylishButton(text: 'In',),
                           ),
                           const SizedBox(width: 20),
                           GestureDetector(
@@ -184,7 +184,7 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                     child: Center(
                       child: Text('Employee In Out List',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 24)),
+                          style: TextStyle(fontSize: 20)),
                     ),
                   ),
                 ),
@@ -209,61 +209,37 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                                       : AppColor.listingBgColor,
                                   child: Padding(
                                     padding:
-                                    const EdgeInsets.only(top: 5,
-                                        bottom: 5,
-                                        left: 10,
-                                        right: 10),
+                                    const EdgeInsets.only(top: 5, left: 10, right: 10),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment
-                                          .start,
-                                      mainAxisAlignment: MainAxisAlignment
-                                          .start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
                                         Row(
                                           children: [
                                             Expanded(
-                                              //flex: 1,
-                                                child: Text(
-                                                    '${streamSnapshot.data
-                                                        ?.docs[index]['currentDate']}',
-                                                    style: const TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight: FontWeight
-                                                            .bold)
+                                                child: Text('${streamSnapshot.data?.docs[index]['currentDate']}',
+                                                    style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w500)
                                                 )),
                                           ],
                                         ),
                                         const SizedBox(height: 5),
                                         Row(
-                                          crossAxisAlignment: CrossAxisAlignment
-                                              .start,
-                                          mainAxisAlignment: MainAxisAlignment
-                                              .start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
                                             const Expanded(
                                                 flex: 1,
-                                                child: Text(
-                                                  'In Time',
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight
-                                                          .bold),
-                                                )),
-                                            Expanded(
-                                                flex: 1,
-                                                child: Text(
-                                                    streamSnapshot.data
-                                                        ?.docs[index]['inTime'])),
+                                                child: Text('In Time', style: TextStyle(fontWeight: FontWeight.w500))),
+                                            Expanded(flex: 1,
+                                                child: Text(streamSnapshot.data?.docs[index]['inTime'])),
                                             const Expanded(
                                               //flex: 1,
                                                 child: Center(
                                                     child: Text(
                                                       'Out Time',
-                                                      style: TextStyle(
-                                                          fontWeight: FontWeight
-                                                              .bold),
+                                                      style: TextStyle(fontWeight: FontWeight.w500),
                                                     ))),
                                             Expanded(
-                                              //flex: 1,
                                                 child: Center(
                                                     child: Text(
                                                         streamSnapshot
@@ -281,13 +257,13 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                                                 child: Text(
                                                   'Duration',
                                                   style: TextStyle(
-                                                      fontWeight: FontWeight
-                                                          .bold),
+                                                      fontWeight: FontWeight.w500),
                                                 )),
                                             Expanded(
                                                 flex: 1,
                                                 child: Text(
-                                                    streamSnapshot.data?.docs[index]['duration'] ?? '')),
+                                                  streamSnapshot.data?.docs[index]['duration'] ?? ''
+                                                )),
                                           ],
                                         ),
                                       ],

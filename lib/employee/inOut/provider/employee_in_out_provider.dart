@@ -58,23 +58,22 @@ class EmployeeInOutProvider extends ChangeNotifier{
     var querySnapshots = await collection.get();
     for (var snapshot in querySnapshots.docChanges) {
       var date = snapshot.doc.get("inTime");
-      print("234523v346g345fg543 ${date}");
 
       DateTime tempDate = DateFormat('kk:mm').parse('${date}');
       var dateFormatData = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
-      print('tempDate => ${tempDate.toString().replaceAll('1970-01-01', dateFormatData)}');
+      //print('tempDate => ${tempDate.toString().replaceAll('1970-01-01', dateFormatData)}');
       var dataDate1 = tempDate.toString().replaceAll('1970-01-01', dateFormatData);
-      print('data date 1 => $dataDate1');
+     // print('data date 1 => $dataDate1');
 
       DateTime dateTime = DateTime.parse('$dataDate1');
      // DateTime dateFormat = DateFormat('kk:mm').parse('${dataDate1}');
-      print('dfdfdfdf ======= $dateTime');
+     // print('dfdfdfdf ======= $dateTime');
 
       Duration duration1 = exitTimeNow.difference(dateTime);
       print('Duration 1 Date => $duration1');
-      print('Duration 1 Date => $exitTimeNow');
-      print('Duration 1 Date => $dataDate1');
+      //print('Duration 1 Date => $exitTimeNow');
+     // print('Duration 1 Date => $dataDate1');
 
       duration = duration1.toString().substring(0,5);
     }
