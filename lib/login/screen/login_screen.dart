@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Row(
                           children: [
-                            Text("Employee"),
+                            Text("Employee",style: TextStyle(fontFamily: AppFonts.CormorantGaramondBold)),
                             Radio(
                                 value: "Employee",
                                 groupValue: chooseType,
@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         Row(
                           children: [
-                            Text("Admin"),
+                            Text("Admin",style: TextStyle(fontFamily: AppFonts.CormorantGaramondBold)),
                             Radio(
                                 value: "Admin",
                                 groupValue: chooseType,
@@ -100,12 +100,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   const Text(
                     "Login",
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 24,fontFamily: AppFonts.CormorantGaramondBold),
                   ),
                   const SizedBox(height: 10),
                   const Text(
                     'Please sign in to continue',
                     textAlign: TextAlign.center,
+                    style: TextStyle(fontFamily: AppFonts.CormorantGaramondLight),
                   ),
                   const SizedBox(height: 40),
                   TextFieldMixin().textFieldCardWidget(
@@ -158,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onTap: (){
                       Get.to(ResetPasswordScreen());
                     },
-                      child: Text('Reset Password')),
+                      child: Text('Reset Password',style: TextStyle(fontFamily: AppFonts.CormorantGaramondLight),)),
                   const SizedBox(height: 30),
 
                   Align(
@@ -203,6 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: TextStyle(
                     decorationThickness: 2,
                     decoration: TextDecoration.none,
+                    fontFamily: AppFonts.CormorantGaramondMedium,
                     color:AppColor.appBlackColor),
               ),
             ),
@@ -216,6 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(
                       fontSize: 16,
                       decorationThickness: 1,
+                      fontFamily: AppFonts.CormorantGaramondBold,
                       decoration: TextDecoration.underline,
                       color:AppColor.appColor),
                 ),

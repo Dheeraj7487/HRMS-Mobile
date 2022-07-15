@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:employee_attendance_app/employee/leave/leaveStatusApplied.dart';
-import 'package:employee_attendance_app/employee/reports/employee_reports_screen.dart';
 import 'package:employee_attendance_app/login/screen/login_screen.dart';
 import 'package:employee_attendance_app/utils/app_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +7,7 @@ import 'package:get/get.dart';
 import '../employee/profile/employee_profile_screen.dart';
 import '../firebase/firebase_collection.dart';
 import '../utils/app_colors.dart';
+import '../utils/app_fonts.dart';
 
 class EmployeeDrawerScreen extends StatelessWidget {
   const EmployeeDrawerScreen({Key? key}) : super(key: key);
@@ -46,7 +45,7 @@ class EmployeeDrawerScreen extends StatelessWidget {
                                 height: 70,width: 70,
                                 child: Center(
                                   child: Text('${data['employeeName']?.substring(0,1).toUpperCase()}',
-                                    style: const TextStyle(color: AppColor.appBlackColor,fontSize: 30),),
+                                    style: const TextStyle(color: AppColor.appBlackColor,fontSize: 30,fontFamily: AppFonts.CormorantGaramondBold),),
                                 )) :
                             Image.network(
                                 '${data['imageUrl']}',
@@ -57,8 +56,8 @@ class EmployeeDrawerScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children:  [
                               const SizedBox(height: 5),
-                              Text('${data['employeeName']}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.normal)),
-                              Text('${FirebaseAuth.instance.currentUser?.email}',style: const TextStyle(color: AppColor.blackColor,fontWeight: FontWeight.normal),),
+                              Text('${data['employeeName']}',style: const TextStyle(fontSize: 18,fontFamily: AppFonts.CormorantGaramondItalic)),
+                              Text('${FirebaseAuth.instance.currentUser?.email}',style: const TextStyle(color: AppColor.blackColor,fontFamily: AppFonts.CormorantGaramondItalic),),
                             ],
                           ),
                         ],
@@ -70,14 +69,14 @@ class EmployeeDrawerScreen extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.home),
-            title: const Text('Home'),
+            title: const Text('Home',style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
             leading: const Icon(Icons.person),
-            title: const Text('Profile'),
+            title: const Text('Profile',style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
             onTap: () {
               Navigator.pop(context);
               Get.to(const EmployeeProfileScreen());
@@ -96,7 +95,7 @@ class EmployeeDrawerScreen extends StatelessWidget {
 */
           ListTile(
             leading: const Icon(Icons.logout),
-            title: const Text('Logout'),
+            title: const Text('Logout',style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
             onTap: () {
               FirebaseAuth.instance.signOut();
               AppUtils.instance.clearPref().then((value) => Get.offAll(LoginScreen()));

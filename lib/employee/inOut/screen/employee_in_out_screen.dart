@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../firebase/firebase_collection.dart';
+import '../../../utils/app_fonts.dart';
 
 
 class EmployeeInOutScreen extends StatefulWidget {
@@ -20,13 +21,13 @@ class EmployeeInOutScreen extends StatefulWidget {
 class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
   bool buttonInOutDisable = false;
   String? inDate = "";
-  //late String lockbtnpref = 'lastPressed';
   String? inGetBtnPref;
 
   late String inTime, outTime, date, duration,inTimeVal;
 
   late String currentDate;
   late String currentDateFire;
+  late String currentYearMonth;
 
  /* getInOutData() async{
     var querySnapshots = await InOutFireAuth().mainCollection.get();
@@ -41,11 +42,9 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-   // getInOutData();
     Provider.of<EmployeeInOutProvider>(context,listen: false).fetchInOutRecords();
-    //currentDateFire = Provider.of<EmployeeInOutProvider>(context,listen: false).inOutDataList.last.currentDate;
     currentDate = DateTime.now().toString().substring(0,10);
-    //print(Provider.of<EmployeeInOutProvider>(context,listen: false).inOutDataList.last.outTime);
+    currentYearMonth = DateTime.now().toString().substring(0,7);
   }
 
   @override
@@ -54,7 +53,7 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.appColor,
-        title: const Text('Employee In Out'),
+        title: const Text('Employee In Out',style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold),),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -67,7 +66,7 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                 const Center(
                   child: Text('Manual In Out',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 18)),
+                      style: TextStyle(fontSize: 18,fontFamily: AppFonts.CormorantGaramondSemiBold)),
                 ),
                 const SizedBox(height: 10),
                 StreamBuilder(
@@ -78,15 +77,9 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GestureDetector(
-                            onTap:
-                           // currentDate == currentDateFire ? null :
-                            // currentDateFire == currentDate ? null :
-                                () async {
-                              //    print(data['inOutCheck']);
-
+                            onTap: () async {
                               snapshot.currentDate();
                               snapshot.entryTime();
-                          //    print('dfdfdfdf => $inOutVal');
 
                              /* if(currentDateFire == '2022-07-06'){
                                 print('I am ==');
@@ -99,15 +92,14 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                                 print(currentDateFire);
                               }*/
 
-                              //getInOutData();
-
                               InOutFireAuth().addInOutTime(
                                  currentDate: snapshot.date
                                       .toString()
                                       .replaceAll("00:00:00.000", ""),
                                   inTime: snapshot.inTime.toString(),
                                   outTime: '',
-                                  duration: '',
+                                  duration: '00:00',
+                                  yearMonth: DateFormat.yMMMM().format(DateTime.now()),
                                   inOutCheck: true
                               );
 
@@ -115,14 +107,10 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                                     pref.setString("employeeDate",snapshot.date
                                         .toString()
                                         .replaceAll("00:00:00.000", ""));*/
-
                               /*AppUtils.instance.setPref(PreferenceKey.boolKey,
                                   PreferenceKey.prefInDisableBTN, true);
                               AppUtils.instance.setPref(PreferenceKey.stringKey,
                                   PreferenceKey.prefInDisable,*/
-                              //  snapshot.inTime.toString());
-                              //getSharedPreferenceData(snapshot.inTime.toString());
-                              // addDaySherePref();
                               /* final prefs = await SharedPreferences.getInstance();
 
                                       inGetBtnPref = prefs.getString("employeeDate");
@@ -169,6 +157,7 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                                 //  inTime: snapshot.inTime.toString(),
                                   inTime: inTimeVal,
                                   outTime: snapshot.outTime.toString(),
+                                  yearMonth: DateFormat.yMMMM().format(DateTime.now()),
                                   duration: snapshot.duration.toString(), inOutCheck: true);
                             },
                             child: ButtonMixin().stylishButton(text: 'Out'),
@@ -178,23 +167,19 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                     }
                 ),
                 const SizedBox(height: 10),
-                const Card(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 10, bottom: 10),
-                    child: Center(
-                      child: Text('Employee In Out List',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 20)),
-                    ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 10, bottom: 10),
+                  child: Center(
+                    child: Text('Employee In Out List',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 20,fontFamily: AppFonts.CormorantGaramondSemiBold)),
                   ),
                 ),
                 StreamBuilder(
-                    stream: InOutFireAuth().employeeInOutRef,
+                    stream: InOutFireAuth().mainCollection.where('yearMonth',isEqualTo: DateFormat.yMMMM().format(DateTime.now())).snapshots(),
                     builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot<Map<String,
-                            dynamic>>> streamSnapshot) {
-                      if (streamSnapshot.connectionState ==
-                          ConnectionState.waiting) {
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> streamSnapshot) {
+                      if (streamSnapshot.connectionState == ConnectionState.waiting) {
                         return const Center(
                             child: CircularProgressIndicator());
                       } else {
@@ -205,7 +190,7 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                             itemBuilder: (context, index) {
                               return Card(
                                   color: index.isOdd == true
-                                      ? AppColor.backgroundColor
+                                      ? AppColor.platinumColor
                                       : AppColor.listingBgColor,
                                   child: Padding(
                                     padding:
@@ -218,7 +203,7 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                                           children: [
                                             Expanded(
                                                 child: Text('${streamSnapshot.data?.docs[index]['currentDate']}',
-                                                    style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w500)
+                                                    style: const TextStyle(fontSize: 16,fontFamily: AppFonts.CormorantGaramondSemiBold)
                                                 )),
                                           ],
                                         ),
@@ -229,22 +214,22 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                                           children: [
                                             const Expanded(
                                                 flex: 1,
-                                                child: Text('In Time', style: TextStyle(fontWeight: FontWeight.w500))),
+                                                child: Text('In Time', style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold))),
                                             Expanded(flex: 1,
-                                                child: Text(streamSnapshot.data?.docs[index]['inTime'])),
+                                                child: Text(streamSnapshot.data?.docs[index]['inTime'],style: const TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold))),
                                             const Expanded(
                                               //flex: 1,
                                                 child: Center(
                                                     child: Text(
                                                       'Out Time',
-                                                      style: TextStyle(fontWeight: FontWeight.w500),
+                                                      style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold),
                                                     ))),
                                             Expanded(
                                                 child: Center(
                                                     child: Text(
                                                         streamSnapshot
                                                             .data
-                                                            ?.docs[index]['outTime'] ?? ''))),
+                                                            ?.docs[index]['outTime'] ?? '',style: const TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)))),
                                           ],
                                         ),
                                         const SizedBox(height: 5),
@@ -256,14 +241,13 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                                                 flex: 5,
                                                 child: Text(
                                                   'Duration',
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.w500),
+                                                  style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold),
                                                 )),
                                             Expanded(
                                                 flex: 1,
                                                 child: Text(
                                                   streamSnapshot.data?.docs[index]['duration'] ?? ''
-                                                )),
+                                                ,style: const TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold))),
                                           ],
                                         ),
                                       ],

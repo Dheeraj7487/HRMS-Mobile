@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utils/app_colors.dart';
+import '../utils/app_fonts.dart';
 
 class TextFieldMixin {
   Widget textFieldWidget(
@@ -29,13 +30,15 @@ class TextFieldMixin {
         keyboardType: keyboardType,
         maxLines: maxLines,
         validator: validator,
+        style: const TextStyle(fontFamily: AppFonts.CormorantGaramondMedium,fontSize: 14),
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(0),
           prefixIcon: prefixIcon,
           focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: AppColor.appColor)),
+              borderSide: BorderSide(color: AppColor.appColor,
+              )),
           labelStyle: const TextStyle(
-            color: AppColor.appBlackColor,
+            color: AppColor.appBlackColor,fontFamily: AppFonts.CormorantGaramondRegular,
           ),
           labelText: labelText,
         ),
@@ -66,6 +69,7 @@ class TextFieldMixin {
           controller: controller,
           keyboardType: keyboardType,
           textInputAction: TextInputAction.next,
+          style: const TextStyle(fontFamily: AppFonts.CormorantGaramondMedium,fontSize: 14),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(0),
             border: InputBorder.none,
@@ -75,7 +79,7 @@ class TextFieldMixin {
                 borderSide: BorderSide(color: AppColor.appColor)),
             labelText: labelText,
             labelStyle: const TextStyle(
-              color: AppColor.appBlackColor,
+              color: AppColor.appBlackColor,fontFamily: AppFonts.CormorantGaramondRegular
             ),
           ),
           obscureText: obscureText,

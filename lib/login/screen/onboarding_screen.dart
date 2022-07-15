@@ -3,7 +3,6 @@ import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:employee_attendance_app/utils/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'login_screen.dart';
 
 class OnBoardingScreen extends StatefulWidget{
@@ -27,29 +26,27 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>{
                 onPageChanged: _controller.selectedPageIndex,
                 itemCount: _controller.onboardingPages.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                            _controller.onboardingPages[index].imageAsset,height: 300),
-                        const SizedBox(height: 20),
-                        Text(
-                          _controller.onboardingPages[index].title,textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              fontSize: 24),
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                          _controller.onboardingPages[index].imageAsset,height: 200),
+                      const SizedBox(height: 40),
+                      Text(
+                        _controller.onboardingPages[index].title,textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontSize: 24,fontFamily: AppFonts.CormorantGaramondBold),
+                      ),
+                      const SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal:50.0),
+                        child: Text(
+                          _controller.onboardingPages[index].description,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 18,fontFamily: AppFonts.CormorantGaramondRegular),
                         ),
-                        const SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal:50.0),
-                          child: Text(
-                            _controller.onboardingPages[index].description,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   );
                 }),
             Positioned(
@@ -61,7 +58,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>{
                   },
                   child: Container(
                     color: Colors.transparent,
-                      height:40,width:70,child: Center(child: Text('Skip',textAlign: TextAlign.center,))),
+                      height:40,width:70,child: const Center(child: Text('Skip',textAlign: TextAlign.center,style: TextStyle(fontFamily: AppFonts.CormorantGaramondBold),))),
                 ),
             ),
             Positioned(
@@ -74,12 +71,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>{
                     return Container(
                       margin: const EdgeInsets.all(4),
                       width: 15,
-                      height: 5,
+                      height: 4,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: _controller.selectedPageIndex.value == index
-                            ? AppColor.appBlackColor
-                            : AppColor.greyColor,
+                            ? AppColor.appColor
+                            : AppColor.backgroundColor,
                         shape: BoxShape.rectangle,
                       ),
                     );
@@ -95,7 +92,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>{
                   onTap: _controller.forwardAction,
                   child: Container(
                       color: Colors.transparent,
-                      height:40,width:100,child: Center(child: Text(_controller.isLastPage ? 'Get Started' : 'Next -->',textAlign: TextAlign.center))),
+                      height:40,width:100,child: Center(child: Text(_controller.isLastPage ? 'Get Started' : 'Next -->',textAlign: TextAlign.center,style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold),))),
                 );
               }),
             ),

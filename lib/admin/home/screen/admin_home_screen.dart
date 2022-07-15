@@ -2,12 +2,12 @@ import 'package:employee_attendance_app/admin/addholiday/screen/add_holiday_scre
 import 'package:employee_attendance_app/admin/employeeprofile/employee_details_screen.dart';
 import 'package:employee_attendance_app/employee/home/widget/dashboard_details_widget.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
+import 'package:employee_attendance_app/utils/app_fonts.dart';
 import 'package:employee_attendance_app/utils/app_images.dart';
 import 'package:employee_attendance_app/widget/admin_drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../employee/profile/employee_profile_screen.dart';
 import '../../leavestatus/leave_status_screen.dart';
 import '../../viewemployee/view_registered_employee_screen.dart';
 
@@ -28,12 +28,11 @@ class AdminHomeScreen extends StatelessWidget {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
-                iconTheme: const IconThemeData(color: Colors.black),
+                iconTheme: const IconThemeData(color: AppColor.appBlackColor),
                 backgroundColor: AppColor.appColor,
                 elevation: 0,
                 toolbarHeight: 27,
                 pinned: false,
-                //floating: true,
                 forceElevated: innerBoxIsScrolled,
               ),
             ];
@@ -60,9 +59,9 @@ class AdminHomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(hour < 12 ? 'Good Morning' :
-                          hour < 17 ? 'Good Afternoon' : 'Good Evening'),
-                          SizedBox(height: 10),
-                          Text('Elsner Technology',style: TextStyle(fontSize: 24),),
+                          hour < 17 ? 'Good Afternoon' : 'Good Evening',style: const TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
+                          const SizedBox(height: 5),
+                          const Text('Elsner Technology',style: TextStyle(fontSize: 24,fontFamily: AppFonts.CormorantGaramondBold),),
                         ],
                       ),
 
@@ -72,14 +71,14 @@ class AdminHomeScreen extends StatelessWidget {
                 const SizedBox(height: 10),
                 Container(
                     padding: const EdgeInsets.only(left: 30),
-                    child: Text(date.toString().replaceAll("00:00:00.000", ""),style: const TextStyle(fontSize: 18,color: AppColor.blackColor),)),
+                    child: Text(date.toString().replaceAll("00:00:00.000", ""),style: const TextStyle(fontSize: 20,color: AppColor.blackColor,fontFamily: AppFonts.CormorantGaramondBold))),
                 Padding(
                   padding: const EdgeInsets.only(left: 20,right: 20),
                   child: Column(
                     children:[
                       GestureDetector(
                         onTap: () {
-                          Get.to(AddHolidayScreen());
+                          Get.to(const AddHolidayScreen());
                         },
                         child: DashboardDetailsWidget(AppImage.event,
                             'Add Holiday','Add public holiday only'),

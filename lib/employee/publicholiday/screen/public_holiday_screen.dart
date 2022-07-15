@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:employee_attendance_app/utils/app_fonts.dart';
 import 'package:flutter/material.dart';
 import '../../../utils/app_colors.dart';
 
@@ -12,7 +13,7 @@ class PublicHolidayScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.appColor,
-        title: const Text('Public Holiday'),
+        title: const Text('Public Holiday',style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold),),
         centerTitle: true,
       ),
       body: Container(
@@ -41,27 +42,21 @@ class PublicHolidayScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ListTile(
-                                leading: Text('${index+1}'),
-                                trailing: Text('${streamSnapshot.data?.docs[index]['holidayDate']}'),
+                                leading: Text('${index+1}',style: const TextStyle(fontFamily: AppFonts.CormorantGaramondMedium),),
+                                trailing: Text('${streamSnapshot.data?.docs[index]['holidayDate']}',style: const TextStyle(fontFamily: AppFonts.CormorantGaramondBold),),
                                 title:Text('${streamSnapshot.data?.docs[index]['holidayName']}',
-                                    style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,overflow: TextOverflow.ellipsis)
+                                    style: const TextStyle(fontSize: 16,fontFamily: AppFonts.CormorantGaramondSemiBold,overflow: TextOverflow.ellipsis)
                                     ,maxLines: 1,
                                 ),
                                 subtitle:Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('${streamSnapshot.data?.docs[index]['holidayDescription']}',
-                                        style: const TextStyle(fontSize: 12,overflow: TextOverflow.ellipsis)
+                                        style: const TextStyle(fontSize: 12,overflow: TextOverflow.ellipsis,fontFamily: AppFonts.CormorantGaramondMedium)
                                       ,maxLines: 2),
                                   ],
                                 ),
                               ),
-
-
-                              /*Text('Date'),
-                        SizedBox(height: 10),
-                        Text('Event Name'),
-                        SizedBox(height: 10),*/
                             ],
                           ),
                         ),

@@ -22,11 +22,11 @@ class OnboardingController extends GetxController {
   }
 
   List<OnboardingInfo> onboardingPages = [
-    OnboardingInfo(AppImage.introduction1, 'Employee Attendance',
-        'A employee can view the attendance',AppColor.appColor),
-    OnboardingInfo(AppImage.introduction2, 'Employee Attendance',
-        'A employee can view the attendance',AppColor.darkGreyColor),
-    OnboardingInfo(AppImage.introduction3, 'Employee Attendance',
-        'A employee can view the attendance',AppColor.appColor),
+    OnboardingInfo(AppImage.entryExit, 'Entry Exit',
+        'A employee can add daily In Out and view the attendance details',AppColor.appColor),
+    OnboardingInfo(AppImage.event, 'Holiday',
+        'A employee can view public holiday',AppColor.darkGreyColor),
+    OnboardingInfo(AppImage.leaveStatus, 'Employee Attendance',
+        'A employee can apply for a leave and also check the leave status',AppColor.appColor),
   ];
 }

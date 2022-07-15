@@ -4,6 +4,7 @@ import 'package:employee_attendance_app/employee/leave/leaveStatusApplied.dart';
 import 'package:employee_attendance_app/employee/timeslot/attendance_details_screen.dart';
 import 'package:employee_attendance_app/firebase/firebase_collection.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
+import 'package:employee_attendance_app/utils/app_fonts.dart';
 import 'package:employee_attendance_app/utils/app_images.dart';
 import 'package:employee_attendance_app/widget/employee_drawer_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,7 +39,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              iconTheme: const IconThemeData(color: Colors.black),
+              iconTheme: const IconThemeData(color: AppColor.blackColor),
               backgroundColor: AppColor.appColor,
               elevation: 0,
               toolbarHeight: 27,
@@ -63,16 +64,17 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                   stream: getEmployeeData,
                   builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot<Object?>> snapshot) {
                     if (snapshot.hasError) {
-                      return const Text("Something went wrong");
+                      return const Text("Something went wrong",style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold));
                     } else if (snapshot.connectionState == ConnectionState.done) {
                       return const Center(child: CircularProgressIndicator(),);
                     }
                     else if (!snapshot.hasData || !snapshot.data!.exists) {
-                      return ClipOval(
+                      /*return ClipOval(
                         child: Container(
                             height: 50,width: 50,color: AppColor.whiteColor,
-                            child: const Icon(Icons.error,size: 50,color: AppColor.appColor,)),
-                      );
+                            child: const Icon(Icons.error,size: 50,color: AppColor.appColor)),
+                      );*/
+                      return Text('');
                     }
                     else if(snapshot.requireData.exists){
                       Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
@@ -81,11 +83,11 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                         children: [
                           ClipOval(
                             child:
-                            data['imageUrl'] != "Instance of 'Future<String>''" ? Container(
+                            data['imageUrl'] == "" ? Container(
                               color: AppColor.backgroundColor,
                               height: 80,width: 80,child: Center(
                               child: Text('${data['employeeName']?.substring(0,1).toUpperCase()}',
-                                style: const TextStyle(color: AppColor.appBlackColor,fontSize: 30),),
+                                style: const TextStyle(color: AppColor.appBlackColor,fontSize: 30,fontFamily: AppFonts.CormorantGaramondSemiBold),),
                             ),) :
                             Image.network(
                                 '${data['imageUrl']}',
@@ -100,9 +102,9 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(hour < 12 ? 'Good Morning' :
-                              hour < 17 ? 'Good Afternoon' : 'Good Evening'),
+                              hour < 17 ? 'Good Afternoon' : 'Good Evening',style: const TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold),),
                               const SizedBox(height: 5),
-                              Text('${data['employeeName']}',style: const TextStyle(fontSize: 24,color: AppColor.blackColor),),
+                              Text('${data['employeeName']}',style: const TextStyle(fontSize: 24,color: AppColor.blackColor,fontFamily: AppFonts.CormorantGaramondSemiBold),),
                             ],
                           ),
 
@@ -118,17 +120,16 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
               const SizedBox(height: 10),
               Container(
                   padding: const EdgeInsets.only(left: 30),
-                  child: Text(date.toString().replaceAll("00:00:00.000", ""),style: const TextStyle(fontSize: 18,color: AppColor.blackColor),)),
+                  child: Text(date.toString().replaceAll("00:00:00.000", ""),style: const TextStyle(fontSize: 20,color: AppColor.blackColor,fontFamily: AppFonts.CormorantGaramondSemiBold))),
               Padding(
                 padding: const EdgeInsets.only(left: 20,right: 20),
                 child: Column(
                   children:[
                     GestureDetector(
                       onTap: () {
-                        print(getEmployeeData);
                         Get.to(PublicHolidayScreen());
                       },
-                      child: DashboardDetailsWidget(AppImage.introduction2,
+                      child: DashboardDetailsWidget(AppImage.holidays,
                           'Public Holiday','Check allocated public holiday'),
                     ),
 
@@ -142,19 +143,16 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
 
                     GestureDetector(
                       onTap: () {
-                        Get.to(TimeSlotScreen());
+                        Get.to(const AttendanceDetailsScreen());
                       },
-                      child: DashboardDetailsWidget(AppImage.timeSlot,
-                          'Attendance Details','Check your entry exit time details'),
+                      child: DashboardDetailsWidget(AppImage.timeSlot, 'Attendance Details','Check your entry exit time details'),
                     ),
 
                     GestureDetector(
                       onTap: (){
                         Get.to(LeaveScreen());
-                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>LeaveScreen()));
                       },
-                      child: DashboardDetailsWidget(AppImage.leave,
-                          'Leave','Apply for a leave'),
+                      child: DashboardDetailsWidget(AppImage.leave, 'Leave','Apply for a leave'),
                     ),
 
                     GestureDetector(

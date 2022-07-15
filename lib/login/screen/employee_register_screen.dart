@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import '../../admin/employeeprofile/auth/add_employee_fire_auth.dart';
 import '../../login/provider/loading_provider.dart';
 import '../../mixin/button_mixin.dart';
+import '../../utils/app_fonts.dart';
 import '../../utils/app_utils.dart';
 
 class RegisterEmployeeScreen extends StatefulWidget with TextFieldMixin {
@@ -112,8 +113,9 @@ class _RegisterEmployeeScreenState extends State<RegisterEmployeeScreen> {
                   "Create Account",
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontSize: 24, fontWeight: FontWeight.w500),
-                ),
+                      fontSize: 24,
+                    fontFamily: AppFonts.CormorantGaramondBold)
+                  ),
                 const SizedBox(height: 40,),
                 GestureDetector(
                     onTap: (){
@@ -272,6 +274,7 @@ class _RegisterEmployeeScreenState extends State<RegisterEmployeeScreen> {
               style: TextStyle(
                   decorationThickness: 2,
                   decoration: TextDecoration.none,
+                  fontFamily: AppFonts.CormorantGaramondMedium,
                   color: AppColor.appBlackColor),
             ),
           ),
@@ -287,6 +290,7 @@ class _RegisterEmployeeScreenState extends State<RegisterEmployeeScreen> {
                     fontSize: 16,
                     decorationThickness: 1,
                     decoration: TextDecoration.underline,
+                    fontFamily: AppFonts.CormorantGaramondBold,
                     color: AppColor.appColor),
               ),
             ),

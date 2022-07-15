@@ -1,4 +1,5 @@
 import 'package:employee_attendance_app/utils/app_colors.dart';
+import 'package:employee_attendance_app/utils/app_fonts.dart';
 import 'package:flutter/material.dart';
 
 class ButtonMixin {
@@ -29,7 +30,7 @@ class ButtonMixin {
       decoration:boxDecoration,
       child: Padding(
         padding: const EdgeInsets.only(left: 10.0,right: 10),
-        child:Text(text!,style: const TextStyle(letterSpacing:0.5,color: Colors.black,fontWeight: FontWeight.bold)),
+        child:Text(text!,style: const TextStyle(letterSpacing:0.5,color: Colors.black,fontFamily: AppFonts.CormorantGaramondBold)),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:employee_attendance_app/admin/addholiday/auth/add_holiday_fire_auth.dart';
 import 'package:employee_attendance_app/mixin/textfield_mixin.dart';
+import 'package:employee_attendance_app/utils/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -21,79 +22,77 @@ class _AddHolidayScreenState extends State<AddHolidayScreen> {
   final _formKey = GlobalKey<FormState>();
   ScrollController scrollController = ScrollController();
 
-
-
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: ()=> FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: AppColor.appColor,
-          title: const Text('Add Public Holiday'),
-          centerTitle: true,
-        ),
-        body: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              //mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const SizedBox(height: 30),
-                Consumer<AddHolidayProvider>(builder: (_, snapshot, __) {
-                  return GestureDetector(
-                    onTap : () => snapshot.selectDate(context),
-                    child: Container(
-                      color: Colors.transparent,
-                      margin: const EdgeInsets.only(left: 20,right: 20),
-                      padding: const EdgeInsets.only(top:10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(left: 12),
-                            child: Row(
-                              children: [
-                                const Icon(Icons.date_range_outlined,color: AppColor.appColor,),
-                                const SizedBox(width: 10),
-                                Text("${DateFormat('dd-MM-yyyy').format(snapshot.holidayDate)}",style: const TextStyle(fontSize: 16)),
-                              ],
+    return WillPopScope(
+      onWillPop: Provider.of<AddHolidayProvider>(context,listen: false).onWillPop(),
+      child: GestureDetector(
+        onTap: ()=> FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: AppColor.appColor,
+            title: const Text('Add Public Holiday',style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
+            centerTitle: true,
+          ),
+          body: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                //mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const SizedBox(height: 30),
+                  Consumer<AddHolidayProvider>(builder: (_, snapshot, __) {
+                    return GestureDetector(
+                      onTap : () => snapshot.selectDate(context),
+                      child: Container(
+                        color: Colors.transparent,
+                        margin: const EdgeInsets.only(left: 20,right: 20),
+                        padding: const EdgeInsets.only(top:10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(left: 12),
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.date_range_outlined,color: AppColor.appColor,),
+                                  const SizedBox(width: 10),
+                                  Text(snapshot.picked==null? 'Please Select Date' : DateFormat('dd-MM-yyyy').format(snapshot.holidayDate),style: const TextStyle(fontSize: 16,fontFamily: AppFonts.CormorantGaramondRegular)),
+                                ],
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 10,),
-                          const Divider(height: 2,thickness: 2,),
-                        ],
+                            const SizedBox(height: 10,),
+                            const Divider(height: 2,thickness: 1,color: Colors.black38),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                }),
-                const SizedBox(height: 20),
-                TextFieldMixin().textFieldWidget(
-                    controller: holidayNameController,
-                    prefixIcon:
-                    const Icon(Icons.add_business, color: AppColor.appColor),
-                    labelText: 'Holiday Name',
+                    );
+                  }),
+                  const SizedBox(height: 20),
+                  TextFieldMixin().textFieldWidget(
+                      controller: holidayNameController,
+                      prefixIcon:
+                      const Icon(Icons.add_business, color: AppColor.appColor),
+                      labelText: 'Holiday Name',
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter holiday name';
-                      }
-                      return null;
-                   },
-                ),
-                const SizedBox(height: 10),
-                Container(
-                    padding: const EdgeInsets.only(left: 25,bottom: 5,top: 15),
-                    child: const Text('Description')),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
-                  child: Scrollbar(
-                    child: Container(
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter holiday name';
+                        }
+                        return null;
+                     },
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                      padding: const EdgeInsets.only(left: 25,bottom: 5,top: 15),
+                      child: const Text('Description',style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold),)),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: Scrollbar(
                       child: TextFormField(
                         cursorColor:  AppColor.appColor,
-                        scrollController: scrollController,
-                        // minLines: 3,
-                        maxLines: 3,
+                        maxLines: null,
+                        style: TextStyle(fontFamily: AppFonts.CormorantGaramondMedium,fontSize: 14),
                         keyboardType: TextInputType.multiline,
                         controller: descriptionController,
                         textInputAction: TextInputAction.done,
@@ -111,27 +110,27 @@ class _AddHolidayScreenState extends State<AddHolidayScreen> {
                       ),
                     ),
                   ),
-                ),
 
-                const SizedBox(height: 30),
-                Align(
-                  alignment: Alignment.center,
-                  child: GestureDetector(
-                    onTap: () async {
-                      if(_formKey.currentState!.validate()) {
-                        AddHolidayFireAuth().addPublicHoliday(holidayDate: DateFormat('dd-MM-yyyy').format(Provider.of<AddHolidayProvider>(context,listen: false).holidayDate),
-                            holidayName: holidayNameController.text,
-                            holidayDescription: descriptionController.text);
-                        holidayNameController.clear();
-                        descriptionController.clear();
-                      }
-                    },
-                    child: ButtonMixin()
-                        .stylishButton(onPress: () {}, text: 'Add Holiday'),
+                  const SizedBox(height: 40),
+                  Align(
+                    alignment: Alignment.center,
+                    child: GestureDetector(
+                      onTap: () async {
+                        if(_formKey.currentState!.validate()) {
+                          AddHolidayFireAuth().addPublicHoliday(holidayDate: DateFormat('dd-MM-yyyy').format(Provider.of<AddHolidayProvider>(context,listen: false).holidayDate),
+                              holidayName: holidayNameController.text,
+                              holidayDescription: descriptionController.text);
+                          holidayNameController.clear();
+                          descriptionController.clear();
+                        }
+                      },
+                      child: ButtonMixin()
+                          .stylishButton(onPress: () {}, text: 'Add Holiday'),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20)
-              ],
+                  const SizedBox(height: 20)
+                ],
+              ),
             ),
           ),
         ),

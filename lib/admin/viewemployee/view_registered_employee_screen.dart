@@ -3,6 +3,7 @@ import 'package:employee_attendance_app/admin/viewemployee/viewemployeeinoutdeta
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../utils/app_colors.dart';
+import '../../utils/app_fonts.dart';
 
 class ViewEmployeeAttendance extends StatefulWidget {
   const ViewEmployeeAttendance({Key? key}) : super(key: key);
@@ -25,7 +26,7 @@ class _ViewEmployeeAttendance extends State<ViewEmployeeAttendance> with SingleT
       .snapshots();
 
   static const List<Tab> registeredTab = <Tab>[
-    Tab(text: 'Employee'),
+    Tab(text: 'Employee',),
     Tab(text: 'Admin'),
   ];
 
@@ -42,7 +43,7 @@ class _ViewEmployeeAttendance extends State<ViewEmployeeAttendance> with SingleT
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: AppColor.appColor,
-          title: const Text('View Registered Details'),
+          title: const Text('View Registered Details',style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
           centerTitle: true,
           bottom : const TabBar(
             indicatorColor: AppColor.appColor,
@@ -65,9 +66,9 @@ class _ViewEmployeeAttendance extends State<ViewEmployeeAttendance> with SingleT
                             onTap: (){Get.to(ViewEmployeeinOutScreen(email: snapshot.data!.docs[index].id,));},
                             child: ListTile(
                               tileColor: index.isOdd ? Colors.blueGrey.shade50 : Colors.white,
-                              leading: Text('${index+1}'),
-                              title: Text('${snapshot.data!.docs[index].id}'),
-                              trailing: Icon(Icons.arrow_forward_ios,size: 12,),
+                              leading: Text('${index+1}',style: const TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
+                              title: Text(snapshot.data!.docs[index].id,style: const TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
+                              trailing: const Icon(Icons.arrow_forward_ios,size: 12,),
                             ),
                           );
                         }
@@ -80,18 +81,22 @@ class _ViewEmployeeAttendance extends State<ViewEmployeeAttendance> with SingleT
                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                   if(snapshot.connectionState == ConnectionState.waiting || snapshot.connectionState == ConnectionState.none ){
                     return const Center(child: CircularProgressIndicator());
-                  } else{
+                  } 
+                  else if(snapshot.hasData){
                     return ListView.builder(
                         itemCount: snapshot.data?.docs.length,
                         shrinkWrap: true,
                         itemBuilder: (context,index) {
                           return ListTile(
                             tileColor: index.isOdd ? Colors.blueGrey.shade50 : Colors.white,
-                            leading: Text('${index+1}'),
-                            title: Text('${snapshot.data!.docs[index].id}'),
+                            leading: Text('${index+1}',style: const TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
+                            title: Text(snapshot.data!.docs[index].id,style: const TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
                           );
                         }
                     );
+                  }
+                  else{
+                    return const Center(child: Text('No Data Found',style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)));
                   }
                 }
             ),

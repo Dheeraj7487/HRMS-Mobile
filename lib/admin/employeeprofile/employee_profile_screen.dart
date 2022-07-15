@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:employee_attendance_app/admin/home/screen/admin_home_screen.dart';
 import 'package:employee_attendance_app/mixin/textfield_mixin.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
+import 'package:employee_attendance_app/utils/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:get/get.dart';
@@ -43,20 +44,19 @@ class _ViewAdminEmployeeProfileScreen extends State<ViewAdminEmployeeProfileScre
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.appColor,
-        title: const Text('Employee Information'),
+        title: const Text('Employee Information',style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
         centerTitle: true,
       ),
       body: Form(
         key: formKey,
         child: StreamBuilder(
-            stream: FirebaseCollection().employeeCollection.doc('${widget.email}').snapshots(),
+            stream: FirebaseCollection().employeeCollection.doc(widget.email).snapshots(),
             builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot<Object?>> snapshot) {
               if (snapshot.hasError) {
                 print('Something went wrong');
-                return Center(child: const Text("Something went wrong"));
+                return const Center(child: Text("Something went wrong"));
               }
               else if (!snapshot.hasData || !snapshot.data!.exists) {
-                print('Document does not exist');
                 return const Center(child: CircularProgressIndicator());
               } else{
                 Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
@@ -70,7 +70,7 @@ class _ViewAdminEmployeeProfileScreen extends State<ViewAdminEmployeeProfileScre
                           color: AppColor.appColor,
                           height: 80,width: 80,child: Center(
                           child: Text('${data['employeeName']?.substring(0,1).toUpperCase()}',
-                              style: const TextStyle(color: AppColor.appBlackColor,fontSize: 30)),
+                              style: const TextStyle(color: AppColor.appBlackColor,fontSize: 30,fontFamily: AppFonts.CormorantGaramondSemiBold)),
                         ),) :
                         Image.network(
                             '${data['imageUrl']}',

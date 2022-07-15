@@ -4,6 +4,7 @@ import 'package:employee_attendance_app/login/auth/login_auth.dart';
 import 'package:employee_attendance_app/login/provider/login_provider.dart';
 import 'package:employee_attendance_app/login/screen/login_screen.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
+import 'package:employee_attendance_app/utils/app_fonts.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -65,7 +66,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         "Create Admin Account",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.w500),
+                            fontSize: 24, fontFamily: AppFonts.CormorantGaramondBold),
                       ),
                     ),
                     const SizedBox(height: 50),
@@ -213,6 +214,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 style: TextStyle(
                     decorationThickness: 2,
                     decoration: TextDecoration.none,
+                    fontFamily: AppFonts.CormorantGaramondMedium,
                     color: AppColor.appBlackColor),
               ),
             ),
@@ -228,6 +230,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       fontSize: 16,
                       decorationThickness: 1,
                       decoration: TextDecoration.underline,
+                      fontFamily: AppFonts.CormorantGaramondBold,
                       color: AppColor.appColor),
                 ),
               ),

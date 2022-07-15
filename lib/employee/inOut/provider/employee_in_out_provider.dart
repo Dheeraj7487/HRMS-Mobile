@@ -11,6 +11,7 @@ class EmployeeInOutProvider extends ChangeNotifier{
   var duration;
   List<InOutModel> inOutDataList = [];
 
+
   inOutMapRecords(QuerySnapshot<Map<dynamic, dynamic>> records) async{
     var _list = records.docs.map(
             (item) => InOutModel(

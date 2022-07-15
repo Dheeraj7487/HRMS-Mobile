@@ -1,3 +1,4 @@
+import 'package:employee_attendance_app/utils/app_fonts.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/app_colors.dart';
@@ -31,15 +32,15 @@ Widget DashboardDetailsWidget(String imageLocation,String title,String descripti
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title,style: TextStyle(fontSize: 18),textAlign: TextAlign.start),
-              SizedBox(height: 10),
-              Text(description,style: TextStyle(color:AppColor.darkGreyColor,fontSize: 14),textAlign: TextAlign.start),
+              Text(title,style: TextStyle(fontSize: 18,fontFamily: AppFonts.CormorantGaramondSemiBold),textAlign: TextAlign.start),
+              SizedBox(height: 5),
+              Text(description,style: TextStyle(color:AppColor.darkGreyColor,fontSize: 14,fontFamily: AppFonts.CormorantGaramondRegular),textAlign: TextAlign.start),
             ],
           ),
         ),
         const Expanded(
             flex: 2,
-            child: Icon(Icons.arrow_forward_ios,color: AppColor.darkGreyColor,))
+            child: Icon(Icons.arrow_forward_ios,color: AppColor.darkGreyColor,size: 20))
       ],
     ),
   );

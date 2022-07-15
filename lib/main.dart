@@ -1,5 +1,6 @@
 import 'package:employee_attendance_app/employee/inOut/provider/employee_in_out_provider.dart';
 import 'package:employee_attendance_app/employee/leave/provider/leave_provider.dart';
+import 'package:employee_attendance_app/employee/timeslot/provider/attendance_details_provider.dart';
 import 'package:employee_attendance_app/login/provider/loading_provider.dart';
 import 'package:employee_attendance_app/login/provider/login_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,16 +29,15 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<AddHolidayProvider>(create: (_) => AddHolidayProvider()),
           ChangeNotifierProvider<LoadingProvider>(create: (_) => LoadingProvider()),
           ChangeNotifierProvider<LeaveProvider>(create: (_) => LeaveProvider()),
+          ChangeNotifierProvider<AttendanceDetailsProvider>(create: (_) => AttendanceDetailsProvider()),
         ],
       child: GetMaterialApp(
-        home: SplashScreen(),
+        home: const SplashScreen(),
         debugShowCheckedModeBanner: false,
         builder: (context, child) {
           return Loading(child: child);
         },
       )
     );
-
-
   }
 }
