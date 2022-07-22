@@ -21,62 +21,60 @@ class EmployeeDrawerScreen extends StatelessWidget {
             decoration: const BoxDecoration(
               color: AppColor.appColor,
             ),
-            child: Container(
-              child: StreamBuilder(
-                  stream: FirebaseCollection().employeeCollection.doc(FirebaseAuth.instance.currentUser?.email).snapshots(),
-                  builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot<Object?>?> snapshot) {
+            child: StreamBuilder(
+                stream: FirebaseCollection().employeeCollection.doc(FirebaseAuth.instance.currentUser?.email).snapshots(),
+                builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot<Object?>?> snapshot) {
 
-                    if(snapshot.connectionState == ConnectionState.none){
-                      return const Text('Something went wrong');
-                    }
-                    else if(!snapshot.hasData){
-                      return const Text('Unable to fin data');
-                    }
-                    else{
-                      Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipOval(
-                            child:
-                            // Image.network('https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg',height: 70,width: 70,fit: BoxFit.fill)
-                            data['imageUrl'] == "" ? Container(
-                                color: AppColor.backgroundColor,
-                                height: 70,width: 70,
-                                child: Center(
-                                  child: Text('${data['employeeName']?.substring(0,1).toUpperCase()}',
-                                    style: const TextStyle(color: AppColor.appBlackColor,fontSize: 30,fontFamily: AppFonts.CormorantGaramondBold),),
-                                )) :
-                            Image.network(
-                                '${data['imageUrl']}',
-                                height: 70, width: 70, fit: BoxFit.fill),
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children:  [
-                              const SizedBox(height: 5),
-                              Text('${data['employeeName']}',style: const TextStyle(fontSize: 18,fontFamily: AppFonts.CormorantGaramondItalic)),
-                              Text('${FirebaseAuth.instance.currentUser?.email}',style: const TextStyle(color: AppColor.blackColor,fontFamily: AppFonts.CormorantGaramondItalic),),
-                            ],
-                          ),
-                        ],
-                      );
-                    }
-                }
-              ),
+                  if(snapshot.connectionState == ConnectionState.none){
+                    return const Text('Something went wrong');
+                  }
+                  else if(!snapshot.hasData){
+                    return const Text('Unable to fin data');
+                  }
+                  else{
+                    Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipOval(
+                          child:
+                          // Image.network('https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg',height: 70,width: 70,fit: BoxFit.fill)
+                          data['imageUrl'] == "" ? Container(
+                              color: AppColor.backgroundColor,
+                              height: 70,width: 70,
+                              child: Center(
+                                child: Text('${data['employeeName']?.substring(0,1).toUpperCase()}',
+                                  style: const TextStyle(color: AppColor.appBlackColor,fontSize: 30,fontFamily: AppFonts.Medium),),
+                              )) :
+                          Image.network(
+                              '${data['imageUrl']}',
+                              height: 70, width: 70, fit: BoxFit.fill),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children:  [
+                            const SizedBox(height: 5),
+                            Text('${data['employeeName']}',style: const TextStyle(fontSize: 18,fontFamily: AppFonts.Regular)),
+                            Text('${FirebaseAuth.instance.currentUser?.email}',style: const TextStyle(color: AppColor.blackColor,fontFamily: AppFonts.Italic),),
+                          ],
+                        ),
+                      ],
+                    );
+                  }
+              }
             ),
           ),
           ListTile(
             leading: const Icon(Icons.home),
-            title: const Text('Home',style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
+            title: const Text('Home',style: TextStyle(fontFamily: AppFonts.Medium)),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
             leading: const Icon(Icons.person),
-            title: const Text('Profile',style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
+            title: const Text('Profile',style: TextStyle(fontFamily: AppFonts.Medium)),
             onTap: () {
               Navigator.pop(context);
               Get.to(const EmployeeProfileScreen());
@@ -95,7 +93,7 @@ class EmployeeDrawerScreen extends StatelessWidget {
 */
           ListTile(
             leading: const Icon(Icons.logout),
-            title: const Text('Logout',style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
+            title: const Text('Logout',style: TextStyle(fontFamily: AppFonts.Medium)),
             onTap: () {
               FirebaseAuth.instance.signOut();
               AppUtils.instance.clearPref().then((value) => Get.offAll(LoginScreen()));

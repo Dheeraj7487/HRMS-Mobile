@@ -13,7 +13,7 @@ class PublicHolidayScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.appColor,
-        title: const Text('Public Holiday',style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold),),
+        title: const Text('Public Holiday',style: TextStyle(fontFamily: AppFonts.Medium),),
         centerTitle: true,
       ),
       body: Container(
@@ -42,17 +42,17 @@ class PublicHolidayScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ListTile(
-                                leading: Text('${index+1}',style: const TextStyle(fontFamily: AppFonts.CormorantGaramondMedium),),
-                                trailing: Text('${streamSnapshot.data?.docs[index]['holidayDate']}',style: const TextStyle(fontFamily: AppFonts.CormorantGaramondBold),),
+                                leading: Text('${index+1}',style: const TextStyle(fontFamily: AppFonts.Medium),),
+                                trailing: Text('${streamSnapshot.data?.docs[index]['holidayDate']}',style: const TextStyle(fontFamily: AppFonts.Medium),),
                                 title:Text('${streamSnapshot.data?.docs[index]['holidayName']}',
-                                    style: const TextStyle(fontSize: 16,fontFamily: AppFonts.CormorantGaramondSemiBold,overflow: TextOverflow.ellipsis)
+                                    style: const TextStyle(fontSize: 16,fontFamily: AppFonts.Medium,overflow: TextOverflow.ellipsis)
                                     ,maxLines: 1,
                                 ),
                                 subtitle:Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('${streamSnapshot.data?.docs[index]['holidayDescription']}',
-                                        style: const TextStyle(fontSize: 12,overflow: TextOverflow.ellipsis,fontFamily: AppFonts.CormorantGaramondMedium)
+                                        style: const TextStyle(fontSize: 12,overflow: TextOverflow.ellipsis,fontFamily: AppFonts.Medium)
                                       ,maxLines: 2),
                                   ],
                                 ),

@@ -66,7 +66,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         "Create Admin Account",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 24, fontFamily: AppFonts.CormorantGaramondBold),
+                            fontSize: 24, fontFamily: AppFonts.Medium),
                       ),
                     ),
                     const SizedBox(height: 50),
@@ -214,7 +214,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 style: TextStyle(
                     decorationThickness: 2,
                     decoration: TextDecoration.none,
-                    fontFamily: AppFonts.CormorantGaramondMedium,
+                    fontFamily: AppFonts.Medium,
                     color: AppColor.appBlackColor),
               ),
             ),
@@ -230,7 +230,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       fontSize: 16,
                       decorationThickness: 1,
                       decoration: TextDecoration.underline,
-                      fontFamily: AppFonts.CormorantGaramondBold,
+                      fontFamily: AppFonts.Medium,
                       color: AppColor.appColor),
                 ),
               ),

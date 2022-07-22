@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:employee_attendance_app/utils/app_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
@@ -46,18 +47,21 @@ class AddEmployeeFireAuth {
 
   static Future<User?> registerEmployeeUsingEmailPassword({
     required String employeeName,
-    required String email,
+    required String emailID,
     required String password,
     required BuildContext context
 
   }) async {
+    FirebaseApp app = await Firebase.initializeApp(
+        name: 'secondary', options: Firebase.app().options);
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
     try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-        email: email,
+      UserCredential userCredential = await FirebaseAuth.instanceFor(app: app).createUserWithEmailAndPassword(
+        email: emailID,
         password: password,
       );
+      app.delete();
       user = userCredential.user;
       await user!.updateDisplayName(employeeName);
       await user.reload();

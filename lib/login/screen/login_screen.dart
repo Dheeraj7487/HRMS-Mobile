@@ -53,13 +53,13 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Form(
             key: _formKey,
             child: Padding(
-              padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
+              padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 50),
-                  Align(
+                  const SizedBox(height: 50),
+                 /* Align(
                     alignment: Alignment.topCenter,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Row(
                           children: [
-                            Text("Employee",style: TextStyle(fontFamily: AppFonts.CormorantGaramondBold)),
+                            Text("Employee",style: TextStyle(fontFamily: AppFonts.Medium)),
                             Radio(
                                 value: "Employee",
                                 groupValue: chooseType,
@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         Row(
                           children: [
-                            Text("Admin",style: TextStyle(fontFamily: AppFonts.CormorantGaramondBold)),
+                            Text("Admin",style: TextStyle(fontFamily: AppFonts.Medium)),
                             Radio(
                                 value: "Admin",
                                 groupValue: chooseType,
@@ -95,18 +95,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-                  ),
+                  ),*/
                   const SizedBox(height: 70),
                   const Text(
                     "Login",
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 24,fontFamily: AppFonts.CormorantGaramondBold),
+                    style: TextStyle(fontSize: 24,fontFamily: AppFonts.Medium),
                   ),
                   const SizedBox(height: 10),
                   const Text(
                     'Please sign in to continue',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontFamily: AppFonts.CormorantGaramondLight),
+                    style: TextStyle(fontFamily: AppFonts.Light),
                   ),
                   const SizedBox(height: 40),
                   TextFieldMixin().textFieldCardWidget(
@@ -159,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onTap: (){
                       Get.to(ResetPasswordScreen());
                     },
-                      child: Text('Reset Password',style: TextStyle(fontFamily: AppFonts.CormorantGaramondLight),)),
+                      child: const Text('Reset Password',style: TextStyle(fontFamily: AppFonts.Light),)),
                   const SizedBox(height: 30),
 
                   Align(
@@ -204,13 +204,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: TextStyle(
                     decorationThickness: 2,
                     decoration: TextDecoration.none,
-                    fontFamily: AppFonts.CormorantGaramondMedium,
+                    fontFamily: AppFonts.Medium,
                     color:AppColor.appBlackColor),
               ),
             ),
             GestureDetector(
               onTap: (){
-               chooseValue == true ? Get.off(RegisterScreen()) : Get.off(RegisterEmployeeScreen());},
+              // chooseValue == true ?
+               Get.off(RegisterScreen());
+                 //  : Get.off(RegisterEmployeeScreen());
+               },
               child: Container(
                 padding: const EdgeInsets.only(bottom: 25),
                 child: const Text(
@@ -218,7 +221,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(
                       fontSize: 16,
                       decorationThickness: 1,
-                      fontFamily: AppFonts.CormorantGaramondBold,
+                      fontFamily: AppFonts.Medium,
                       decoration: TextDecoration.underline,
                       color:AppColor.appColor),
                 ),

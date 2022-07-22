@@ -32,9 +32,9 @@ Widget DashboardDetailsWidget(String imageLocation,String title,String descripti
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title,style: TextStyle(fontSize: 18,fontFamily: AppFonts.CormorantGaramondSemiBold),textAlign: TextAlign.start),
-              SizedBox(height: 5),
-              Text(description,style: TextStyle(color:AppColor.darkGreyColor,fontSize: 14,fontFamily: AppFonts.CormorantGaramondRegular),textAlign: TextAlign.start),
+              Text(title,style: const TextStyle(fontSize: 18,fontFamily: AppFonts.Medium),textAlign: TextAlign.start),
+              const SizedBox(height: 5),
+              Text(description,style: const TextStyle(color:AppColor.darkGreyColor,fontSize: 14,fontFamily: AppFonts.Regular),textAlign: TextAlign.start),
             ],
           ),
         ),

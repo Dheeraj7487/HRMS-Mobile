@@ -19,7 +19,6 @@ class InOutFireAuth{
     String? outTime,
     String? duration,
     required String yearMonth,
-    required bool inOutCheck
   }) async {
     DocumentReference documentReferencer = mainCollection.doc(DateTime.now().toString().substring(0,10));
 
@@ -28,7 +27,6 @@ class InOutFireAuth{
       "inTime": inTime.toString(),
       "outTime": outTime.toString(),
       "duration": duration.toString(),
-      "inOutCheck": inOutCheck,
       "yearMonth": yearMonth,
     };
     print('In Out Data=> $data');

@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen>{
     Timer(
         const Duration(seconds: 3), (){
       if(isUserLogin){
-        Provider.of<LoginProvider>(context,listen: false).getSharedPreferenceData(email);
+       // Provider.of<LoginProvider>(context,listen: false).getSharedPreferenceData(email);
         if(FirebaseAuth.instance.currentUser?.displayName == 'Admin'){
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => AdminHomeScreen()));

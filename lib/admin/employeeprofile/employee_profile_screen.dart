@@ -44,7 +44,7 @@ class _ViewAdminEmployeeProfileScreen extends State<ViewAdminEmployeeProfileScre
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.appColor,
-        title: const Text('Employee Information',style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
+        title: const Text('Employee Information',style: TextStyle(fontFamily: AppFonts.Medium)),
         centerTitle: true,
       ),
       body: Form(
@@ -64,13 +64,14 @@ class _ViewAdminEmployeeProfileScreen extends State<ViewAdminEmployeeProfileScre
                   child: Column(
                     children: [
                       const SizedBox(height: 20),
-                      ClipOval(
+
+                  ClipOval(
                         child:
                         data['imageUrl'] == "" ? Container(
                           color: AppColor.appColor,
                           height: 80,width: 80,child: Center(
                           child: Text('${data['employeeName']?.substring(0,1).toUpperCase()}',
-                              style: const TextStyle(color: AppColor.appBlackColor,fontSize: 30,fontFamily: AppFonts.CormorantGaramondSemiBold)),
+                              style: const TextStyle(color: AppColor.appBlackColor,fontSize: 30,fontFamily: AppFonts.Medium)),
                         ),) :
                         Image.network(
                             '${data['imageUrl']}',

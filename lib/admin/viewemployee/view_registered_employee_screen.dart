@@ -43,7 +43,7 @@ class _ViewEmployeeAttendance extends State<ViewEmployeeAttendance> with SingleT
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: AppColor.appColor,
-          title: const Text('View Registered Details',style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
+          title: const Text('View Registered Details',style: TextStyle(fontFamily: AppFonts.Medium)),
           centerTitle: true,
           bottom : const TabBar(
             indicatorColor: AppColor.appColor,
@@ -55,8 +55,17 @@ class _ViewEmployeeAttendance extends State<ViewEmployeeAttendance> with SingleT
             StreamBuilder(
                 stream: registerEmployeeEmail,
                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-                  if(snapshot.connectionState == ConnectionState.waiting || snapshot.connectionState == ConnectionState.none ){
+                  if(snapshot.connectionState == ConnectionState.waiting){
                     return const Center(child: CircularProgressIndicator());
+                  }else if (snapshot.hasError) {
+                    return const Center(child: Text("Something went wrong",style: TextStyle(fontFamily: AppFonts.Medium)));
+                  }
+                  else if (!snapshot.hasData) {
+                    return  const Center(
+                        child: Text("No Employee Record Found",style: TextStyle(fontFamily: AppFonts.Medium),));
+                  } else if (snapshot.requireData.docChanges.isEmpty){
+                    return  const Center(
+                        child: Text("No Employee Record Found",style: TextStyle(fontFamily: AppFonts.Medium),));
                   } else{
                     return ListView.builder(
                         itemCount: snapshot.data?.docs.length,
@@ -66,8 +75,8 @@ class _ViewEmployeeAttendance extends State<ViewEmployeeAttendance> with SingleT
                             onTap: (){Get.to(ViewEmployeeinOutScreen(email: snapshot.data!.docs[index].id,));},
                             child: ListTile(
                               tileColor: index.isOdd ? Colors.blueGrey.shade50 : Colors.white,
-                              leading: Text('${index+1}',style: const TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
-                              title: Text(snapshot.data!.docs[index].id,style: const TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
+                              leading: Text('${index+1}',style: const TextStyle(fontFamily: AppFonts.Medium)),
+                              title: Text(snapshot.data!.docs[index].id,style: const TextStyle(fontFamily: AppFonts.Medium)),
                               trailing: const Icon(Icons.arrow_forward_ios,size: 12,),
                             ),
                           );
@@ -79,24 +88,30 @@ class _ViewEmployeeAttendance extends State<ViewEmployeeAttendance> with SingleT
             StreamBuilder(
                 stream: registerAdminEmail,
                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-                  if(snapshot.connectionState == ConnectionState.waiting || snapshot.connectionState == ConnectionState.none ){
+                  if(snapshot.connectionState == ConnectionState.waiting){
                     return const Center(child: CircularProgressIndicator());
-                  } 
-                  else if(snapshot.hasData){
+                  }else if (snapshot.hasError) {
+                    return const Center(child: Text("Something went wrong",style: TextStyle(fontFamily: AppFonts.Medium)));
+                  }
+                  else if (!snapshot.hasData) {
+                    return  const Center(
+                        child: Text("No Data Found",style: TextStyle(fontFamily: AppFonts.Medium),));
+                  } else if (snapshot.requireData.docChanges.isEmpty){
+                    return  const Center(
+                        child: Text("No Data Found",style: TextStyle(fontFamily: AppFonts.Medium),));
+                  }
+                  else{
                     return ListView.builder(
                         itemCount: snapshot.data?.docs.length,
                         shrinkWrap: true,
                         itemBuilder: (context,index) {
                           return ListTile(
                             tileColor: index.isOdd ? Colors.blueGrey.shade50 : Colors.white,
-                            leading: Text('${index+1}',style: const TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
-                            title: Text(snapshot.data!.docs[index].id,style: const TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
+                            leading: Text('${index+1}',style: const TextStyle(fontFamily: AppFonts.Medium)),
+                            title: Text(snapshot.data!.docs[index].id,style: const TextStyle(fontFamily: AppFonts.Medium)),
                           );
                         }
                     );
-                  }
-                  else{
-                    return const Center(child: Text('No Data Found',style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)));
                   }
                 }
             ),

@@ -10,6 +10,7 @@ class TextFieldMixin {
       InputDecoration? decoration,
       TextInputType? keyboardType,
       Widget? prefixIcon,
+      void Function()? onTap,
       Widget? suffixIcon,
       int? maxLines = 1,
       TextCapitalization textCapitalization = TextCapitalization.none,
@@ -30,7 +31,7 @@ class TextFieldMixin {
         keyboardType: keyboardType,
         maxLines: maxLines,
         validator: validator,
-        style: const TextStyle(fontFamily: AppFonts.CormorantGaramondMedium,fontSize: 14),
+        style: const TextStyle(fontFamily: AppFonts.Regular,fontSize: 14),
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(0),
           prefixIcon: prefixIcon,
@@ -38,7 +39,7 @@ class TextFieldMixin {
               borderSide: BorderSide(color: AppColor.appColor,
               )),
           labelStyle: const TextStyle(
-            color: AppColor.appBlackColor,fontFamily: AppFonts.CormorantGaramondRegular,
+            color: AppColor.appBlackColor,fontFamily: AppFonts.Regular,
           ),
           labelText: labelText,
         ),
@@ -69,7 +70,7 @@ class TextFieldMixin {
           controller: controller,
           keyboardType: keyboardType,
           textInputAction: TextInputAction.next,
-          style: const TextStyle(fontFamily: AppFonts.CormorantGaramondMedium,fontSize: 14),
+          style: const TextStyle(fontFamily: AppFonts.Regular,fontSize: 14),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(0),
             border: InputBorder.none,
@@ -79,7 +80,7 @@ class TextFieldMixin {
                 borderSide: BorderSide(color: AppColor.appColor)),
             labelText: labelText,
             labelStyle: const TextStyle(
-              color: AppColor.appBlackColor,fontFamily: AppFonts.CormorantGaramondRegular
+              color: AppColor.appBlackColor,fontFamily: AppFonts.Regular
             ),
           ),
           obscureText: obscureText,

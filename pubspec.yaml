@@ -47,7 +47,11 @@ dependencies:
   table_calendar: ^3.0.6
   dropdown_button2: ^1.6.3
   time_range: ^1.0.3
-
+  pdf: ^3.8.1
+  syncfusion_flutter_pdfviewer: ^20.2.39-beta
+  shimmer: ^2.0.0
+  path_provider: ^2.0.11
+  open_file: ^3.2.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -91,29 +95,25 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: CormorantGaramond_semiBold
+    - family: Roboto_italic
       fonts:
-        - asset: assets/fonts/CormorantGaramond-SemiBold.ttf
+        - asset: assets/fonts/Roboto-Italic.ttf
 
-    - family: CormorantGaramond_Bold
+    - family: Roboto_Bold
       fonts:
-        - asset: assets/fonts/CormorantGaramond-Bold.ttf
+        - asset: assets/fonts/Roboto-Bold.ttf
 
-    - family: CormorantGaramond_light
+    - family: Roboto_light
       fonts:
-          - asset: assets/fonts/CormorantGaramond-Light.ttf
+          - asset: assets/fonts/Roboto-Light.ttf
 
-    - family: CormorantGaramond_medium
+    - family: Roboto_medium
       fonts:
-          - asset: assets/fonts/CormorantGaramond-Medium.ttf
+        - asset: assets/fonts/Roboto-Medium.ttf
 
-    - family: CormorantGaramond_italic
+    - family: Roboto_regular
       fonts:
-        - asset: assets/fonts/CormorantGaramond-Italic.ttf
-
-    - family: CormorantGaramond_regular
-      fonts:
-          - asset: assets/fonts/CormorantGaramond-Regular.ttf
+          - asset: assets/fonts/Roboto-Regular.ttf
 
 
   #       - asset: fonts/Schyler-Regular.ttf

@@ -35,7 +35,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>{
                       Text(
                         _controller.onboardingPages[index].title,textAlign: TextAlign.center,
                         style: const TextStyle(
-                            fontSize: 24,fontFamily: AppFonts.CormorantGaramondBold),
+                            fontSize: 24,fontFamily: AppFonts.Medium),
                       ),
                       const SizedBox(height: 10),
                       Padding(
@@ -43,7 +43,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>{
                         child: Text(
                           _controller.onboardingPages[index].description,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 18,fontFamily: AppFonts.CormorantGaramondRegular),
+                          style: const TextStyle(fontSize: 18,fontFamily: AppFonts.Regular),
                         ),
                       ),
                     ],
@@ -58,7 +58,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>{
                   },
                   child: Container(
                     color: Colors.transparent,
-                      height:40,width:70,child: const Center(child: Text('Skip',textAlign: TextAlign.center,style: TextStyle(fontFamily: AppFonts.CormorantGaramondBold),))),
+                      height:40,width:70,child: const Center(child: Text('Skip',textAlign: TextAlign.center,style: TextStyle(fontFamily: AppFonts.Medium),))),
                 ),
             ),
             Positioned(
@@ -92,7 +92,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>{
                   onTap: _controller.forwardAction,
                   child: Container(
                       color: Colors.transparent,
-                      height:40,width:100,child: Center(child: Text(_controller.isLastPage ? 'Get Started' : 'Next -->',textAlign: TextAlign.center,style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold),))),
+                      height:40,width:100,child: Center(child: Text(_controller.isLastPage ? 'Get Started' : 'Next -->',textAlign: TextAlign.center,style: TextStyle(fontFamily: AppFonts.Medium),))),
                 );
               }),
             ),

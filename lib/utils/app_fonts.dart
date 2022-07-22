@@ -1,8 +1,8 @@
 class AppFonts{
-  static const String  CormorantGaramondSemiBold = "CormorantGaramond_semiBold";
-  static const String  CormorantGaramondBold = "CormorantGaramond_Bold";
-  static const String  CormorantGaramondLight = "CormorantGaramond_light";
-  static const String  CormorantGaramondMedium = "CormorantGaramond_medium";
-  static const String  CormorantGaramondRegular = "CormorantGaramond_regular";
-  static const String  CormorantGaramondItalic = "CormorantGaramond_italic";
+ // static const String  SemiBold = "Roboto_Bold";
+  static const String  Bold = "Roboto_Bold";
+  static const String  Light = "Roboto_light";
+  static const String  Medium = "Montserrat_medium";
+  static const String  Regular = "Roboto_regular";
+  static const String  Italic = "Roboto_italic";
 }

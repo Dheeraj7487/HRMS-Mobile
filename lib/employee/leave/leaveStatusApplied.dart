@@ -13,7 +13,7 @@ class LeaveStatusApplied extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.appColor,
-        title: const Text('Leave Status',style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
+        title: const Text('Leave Status',style: TextStyle(fontFamily: AppFonts.Medium)),
         centerTitle: true,
       ),
       body: StreamBuilder(
@@ -22,12 +22,12 @@ class LeaveStatusApplied extends StatelessWidget {
             if(snapshot.connectionState == ConnectionState.waiting){
               return const Center(child: CircularProgressIndicator());
             }else if (snapshot.hasError) {
-              return const Center(child: Text("Something went wrong",style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)));
+              return const Center(child: Text("Something went wrong",style: TextStyle(fontFamily: AppFonts.Medium)));
             }
             else if (!snapshot.hasData) {
-              return const Center(child: Text("No Data Found",style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)));
+              return const Center(child: Text("No Data Found",style: TextStyle(fontFamily: AppFonts.Medium)));
             } else if (snapshot.requireData.docChanges.isEmpty){
-              return const Center(child: Text("No Data Found",style: TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)));
+              return const Center(child: Text("No Data Found",style: TextStyle(fontFamily: AppFonts.Medium)));
             }  else{
               return ListView.builder(
                   itemCount: snapshot.data!.docs.length,
@@ -45,16 +45,16 @@ class LeaveStatusApplied extends StatelessWidget {
                               Visibility(
                                 visible: snapshot.data?.docs[index]['leaveType'] == 'Flexi Leave',
                                   child: Text('${snapshot.data?.docs[index]['leaveForm']}',
-                                    style: const TextStyle(fontSize: 16,fontFamily: AppFonts.CormorantGaramondSemiBold),)),
+                                    style: const TextStyle(fontSize: 16,fontFamily: AppFonts.Medium),)),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text('${snapshot.data?.docs[index]['leaveType'] == 'Flexi Leave' ?
                                   snapshot.data?.docs[index]['leaveFromTime'] : snapshot.data?.docs[index]['leaveForm']}',
-                                      style: const TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
+                                      style: const TextStyle(fontFamily: AppFonts.Medium)),
                                   Text('${snapshot.data?.docs[index]['leaveType'] == 'Flexi Leave' ?
                                   snapshot.data?.docs[index]['leaveToTime'] : snapshot.data?.docs[index]['leaveTo']}',
-                                      style: const TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
+                                      style: const TextStyle(fontFamily: AppFonts.Medium)),
                                   /*Text('${snapshot.data?.docs[index]['leaveType'] == 'Flexi Leave' ?
                                   snapshot.data?.docs[index]['leaveHours'] : snapshot.data?.docs[index]['leaveDays']}'),*/
                                 ],
@@ -67,8 +67,8 @@ class LeaveStatusApplied extends StatelessWidget {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text('${snapshot.data?.docs[index]['leaveType']}',style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,overflow: TextOverflow.ellipsis,fontFamily: AppFonts.CormorantGaramondBold),maxLines: 1,),
-                                        Text('${snapshot.data?.docs[index]['leaveReason']}',style: const TextStyle(fontSize: 12,overflow: TextOverflow.ellipsis,fontFamily: AppFonts.CormorantGaramondMedium),maxLines: 2),
+                                        Text('${snapshot.data?.docs[index]['leaveType']}',style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w400,overflow: TextOverflow.ellipsis,fontFamily: AppFonts.Medium),maxLines: 1,),
+                                        Text('${snapshot.data?.docs[index]['leaveReason']}',style: const TextStyle(fontSize: 12,overflow: TextOverflow.ellipsis,fontFamily: AppFonts.Medium),maxLines: 2),
                                       ],
                                     ),
                                   ),
@@ -84,7 +84,7 @@ class LeaveStatusApplied extends StatelessWidget {
                                           AppColor.darkGreyColor : snapshot.data?.docs[index]['leaveStatus'] == 'Approved' ?
                                           AppColor.appColor : AppColor.redColor,
                                         ),
-                                        child: Center(child: Text('${snapshot.data?.docs[index]['leaveStatus']}',style: const TextStyle(color: AppColor.whiteColor,fontFamily: AppFonts.CormorantGaramondBold)))),
+                                        child: Center(child: Text('${snapshot.data?.docs[index]['leaveStatus']}',style: const TextStyle(color: AppColor.whiteColor,fontFamily: AppFonts.Medium)))),
                                   ),
                                 ],
                               ),

@@ -1,3 +1,4 @@
+/*
 import 'dart:async';
 import 'dart:io';
 import 'package:employee_attendance_app/login/screen/login_screen.dart';
@@ -114,7 +115,7 @@ class _RegisterEmployeeScreenState extends State<RegisterEmployeeScreen> {
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                       fontSize: 24,
-                    fontFamily: AppFonts.CormorantGaramondBold)
+                    fontFamily: AppFonts.Medium)
                   ),
                 const SizedBox(height: 40,),
                 GestureDetector(
@@ -123,11 +124,13 @@ class _RegisterEmployeeScreenState extends State<RegisterEmployeeScreen> {
                       // uploadFile();
                     },
                     child: ClipOval(
-                      child: file == null ? /*Image.network(
+                      child: file == null ? */
+/*Image.network(
                           'https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg',
                           height: 100,
                           width: 100,
-                          fit: BoxFit.fill) :*/
+                          fit: BoxFit.fill) :*//*
+
                       Container(
                           color: AppColor.appColor,
                           height: 80,width: 80,
@@ -274,7 +277,7 @@ class _RegisterEmployeeScreenState extends State<RegisterEmployeeScreen> {
               style: TextStyle(
                   decorationThickness: 2,
                   decoration: TextDecoration.none,
-                  fontFamily: AppFonts.CormorantGaramondMedium,
+                  fontFamily: AppFonts.Medium,
                   color: AppColor.appBlackColor),
             ),
           ),
@@ -290,7 +293,7 @@ class _RegisterEmployeeScreenState extends State<RegisterEmployeeScreen> {
                     fontSize: 16,
                     decorationThickness: 1,
                     decoration: TextDecoration.underline,
-                    fontFamily: AppFonts.CormorantGaramondBold,
+                    fontFamily: AppFonts.Medium,
                     color: AppColor.appColor),
               ),
             ),
@@ -300,3 +303,4 @@ class _RegisterEmployeeScreenState extends State<RegisterEmployeeScreen> {
     );
   }
 }
+*/

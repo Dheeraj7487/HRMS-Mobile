@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:employee_attendance_app/employee/inOut/model/in_out_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class EmployeeInOutProvider extends ChangeNotifier{
@@ -9,6 +10,7 @@ class EmployeeInOutProvider extends ChangeNotifier{
   var date,entryTimeNow,exitTimeNow;
   var inTime,outTime,diffrence;
   var duration;
+  late int entryExitHour;
   List<InOutModel> inOutDataList = [];
 
 
@@ -46,37 +48,45 @@ class EmployeeInOutProvider extends ChangeNotifier{
   exitTIme(){
     exitTimeNow = DateTime.now();
     outTime = DateFormat('kk:mm').format(exitTimeNow);
-   // print(exitTimeNow);
+    //print(exitTimeNow);
     //inOutDataList.last.currentDate;
     notifyListeners();
   }
 
   durationTime()async{
-    var x= FirebaseFirestore.instance
-        .collection('employee')
-        .doc(FirebaseAuth.instance.currentUser?.email).collection('InOutTime');
     var collection = FirebaseFirestore.instance.collection('employee').doc(FirebaseAuth.instance.currentUser?.email).collection('InOutTime');
     var querySnapshots = await collection.get();
     for (var snapshot in querySnapshots.docChanges) {
       var date = snapshot.doc.get("inTime");
 
-      DateTime tempDate = DateFormat('kk:mm').parse('${date}');
+     // DateTime tempDate = DateFormat.Hm().parse('$date');
+      DateTime tempDate = DateFormat.Hm().parse('$date');
       var dateFormatData = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
-      //print('tempDate => ${tempDate.toString().replaceAll('1970-01-01', dateFormatData)}');
       var dataDate1 = tempDate.toString().replaceAll('1970-01-01', dateFormatData);
-     // print('data date 1 => $dataDate1');
-
-      DateTime dateTime = DateTime.parse('$dataDate1');
-     // DateTime dateFormat = DateFormat('kk:mm').parse('${dataDate1}');
-     // print('dfdfdfdf ======= $dateTime');
-
+      DateTime dateTime = DateTime.parse(dataDate1);
       Duration duration1 = exitTimeNow.difference(dateTime);
-      print('Duration 1 Date => $duration1');
+      duration = duration1.toString().substring(2,4);
+      print('Duration 1 Date => $dateTime');
+
+      String exit = exitTimeNow.toString().substring(11,13);
+      String entry = dateTime.toString().substring(11,13);
+      print('Entry Time=> $entry Exit Time=> $exit');
+      entryExitHour = int.parse(exit)-int.parse(entry);
+      print('SubStract $entryExitHour');
+      //int durationHour = exitTimeNow;
+//      print('Hour = > $durationHour');
+
+      //print('Duration 4 Date => $dateFormatData');
+      // print('dfdfdfdf ======= $dateTime');
+
+      //print('tempDate => ${tempDate.toString().replaceAll('1970-01-01', dateFormatData)}');
+      // print('data date 1 => $dataDate1');
+      // DateTime dateFormat = DateFormat('kk:mm').parse('${dataDate1}');
+
       //print('Duration 1 Date => $exitTimeNow');
      // print('Duration 1 Date => $dataDate1');
 
-      duration = duration1.toString().substring(0,5);
     }
     notifyListeners();
   }

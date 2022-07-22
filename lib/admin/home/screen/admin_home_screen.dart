@@ -1,3 +1,4 @@
+import 'package:employee_attendance_app/admin/addemployee/add_employee.dart';
 import 'package:employee_attendance_app/admin/addholiday/screen/add_holiday_screen.dart';
 import 'package:employee_attendance_app/admin/employeeprofile/employee_details_screen.dart';
 import 'package:employee_attendance_app/employee/home/widget/dashboard_details_widget.dart';
@@ -41,48 +42,85 @@ class AdminHomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  height: 120,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: const BoxDecoration(
-                      color: AppColor.appColor,
-                      borderRadius: BorderRadius.only(bottomRight: Radius.circular(50),bottomLeft: Radius.circular(50))
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ClipOval(
-                          child: Image.network('https://upwork-usw2-prod-assets-static.s3.us-west-2.amazonaws.com/org-logo/908288198480056320',height: 80,width: 80,fit: BoxFit.fill)),
-                      const SizedBox(width: 20),
-                      Column(
+                Stack(
+                  clipBehavior: Clip.none,
+                  fit : StackFit.passthrough,
+                  children: [
+                    Container(
+                      height: 200,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: const BoxDecoration(
+                          color: AppColor.appColor,
+                          borderRadius: BorderRadius.only(bottomRight: Radius.circular(50),bottomLeft: Radius.circular(50))
+                      ),
+                    ),
+                    Positioned(
+                      left: 0,right: 0,top: 20,
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(hour < 12 ? 'Good Morning' :
-                          hour < 17 ? 'Good Afternoon' : 'Good Evening',style: const TextStyle(fontFamily: AppFonts.CormorantGaramondSemiBold)),
-                          const SizedBox(height: 5),
-                          const Text('Elsner Technology',style: TextStyle(fontSize: 24,fontFamily: AppFonts.CormorantGaramondBold),),
+                          ClipOval(
+                              child: Image.network('https://upwork-usw2-prod-assets-static.s3.us-west-2.amazonaws.com/org-logo/908288198480056320',height: 80,width: 80,fit: BoxFit.fill)
+
+                            /* Shimmer.fromColors(
+                                  baseColor: Colors.white60,
+                                  highlightColor: Colors.white24,
+                                  child:
+                                  Image.network('https://upwork-usw2-prod-assets-static.s3.us-west-2.amazonaws.com/org-logo/908288198480056320',height: 80,width: 80,fit: BoxFit.fill)
+                                ),*/
+                          ),
+                          const SizedBox(width: 20),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(hour < 12 ? 'Good Morning' :
+                              hour < 17 ? 'Good Afternoon' : 'Good Evening',style: const TextStyle(fontFamily: AppFonts.Medium)),
+                              const SizedBox(height: 5),
+                              const Text('Elsner Technology',style: TextStyle(fontSize: 24,fontFamily: AppFonts.Medium),),
+                            ],
+                          ),
+
                         ],
                       ),
-
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 10),
+                    Positioned(
+                      top: 120,
+                      child: Container(
+                          padding: const EdgeInsets.only(left: 30),
+                          child: Text(date.toString().replaceAll("00:00:00.000", ""),style: const TextStyle(fontSize: 20,color: AppColor.blackColor,fontFamily: AppFonts.Medium))),
+                    ),
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      top: 140,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20,right: 20),
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.to(const AddHolidayScreen());
+                          },
+                          child: DashboardDetailsWidget(AppImage.event,
+                              'Add Holiday','Add public holiday only'),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 10),
-                Container(
-                    padding: const EdgeInsets.only(left: 30),
-                    child: Text(date.toString().replaceAll("00:00:00.000", ""),style: const TextStyle(fontSize: 20,color: AppColor.blackColor,fontFamily: AppFonts.CormorantGaramondBold))),
+                const SizedBox(height: 70),
                 Padding(
                   padding: const EdgeInsets.only(left: 20,right: 20),
                   child: Column(
                     children:[
                       GestureDetector(
                         onTap: () {
-                          Get.to(const AddHolidayScreen());
+                          Get.to(const AddEmployee());
                         },
-                        child: DashboardDetailsWidget(AppImage.event,
-                            'Add Holiday','Add public holiday only'),
+                        child: DashboardDetailsWidget(AppImage.addEmployee,
+                            'Add Employee','Add employee details'),
                       ),
+
                       GestureDetector(
                         onTap: () {
                           Get.to(EmployeeDetailsScreen());

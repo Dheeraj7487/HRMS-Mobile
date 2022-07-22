@@ -23,6 +23,11 @@ class LeaveProvider extends ChangeNotifier{
     return selectLeaveTypeItem;
   }
 
+  get getLeave {
+    notifyListeners();
+    return selectLeaveType;
+  }
+
   get getFromTime {
     notifyListeners();
     return fromTime;
@@ -49,9 +54,10 @@ class LeaveProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  onWillPop(){
+  /*onWillPop(){
     countLeave=0;
     fromTime = null;
     toTime = null;
-  }
+    //selectLeaveType = null;
+  }*/
 }
