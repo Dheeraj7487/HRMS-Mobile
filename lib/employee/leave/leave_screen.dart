@@ -13,7 +13,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:time_range/time_range.dart';
 import '../../mixin/button_mixin.dart';
-import '../../mixin/textfield_mixin.dart';
 import '../../utils/app_colors.dart';
 
 class LeaveScreen extends StatefulWidget {
@@ -125,6 +124,13 @@ class _LeaveScreenState extends State<LeaveScreen> {
   }*/
 
   @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<LeaveProvider>(context,listen: false).onWillPop(context);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -157,7 +163,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
                             return 'Leave type is required';
                           }
                         },
-                        hint: const Text('Select Leave',style: const TextStyle(fontFamily: AppFonts.Medium)),
+                        hint: const Text('Select Leave Type',style: TextStyle(fontFamily: AppFonts.Medium)),
                         isExpanded: true,
                         isDense: true,
                         buttonPadding: const EdgeInsets.only(left: 14, right: 14),
@@ -204,6 +210,10 @@ class _LeaveScreenState extends State<LeaveScreen> {
                         }).toList(),
                       ),
                     ),
+                    const SizedBox(height: 10),
+                    Container(
+                        padding: const EdgeInsets.only(left: 25,bottom: 5),
+                        child: const Text('Leave From Date',style: TextStyle(fontFamily: AppFonts.Medium))),
                     GestureDetector(
                       onTap : () {
                         selectFromDate(context);
@@ -212,15 +222,16 @@ class _LeaveScreenState extends State<LeaveScreen> {
                       },
                       child: Container(
                         width: double.infinity,
-                        color: Colors.transparent,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          border: Border.all(color: fromDateValidation== true ? AppColor.redColor : AppColor.darkGreyColor),
+                          borderRadius: BorderRadius.circular(5)
+                        ),
                         margin: const EdgeInsets.only(left: 20,right: 20),
-                        padding: const EdgeInsets.only(top:10),
+                        padding: const EdgeInsets.only(top:15,bottom: 15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                                padding: const EdgeInsets.only(left: 15,bottom: 5),
-                                child: const Text('Leave From Date',style: TextStyle(fontFamily: AppFonts.Medium))),
                             Container(
                               margin: const EdgeInsets.only(left: 12),
                               child: Row(
@@ -231,16 +242,23 @@ class _LeaveScreenState extends State<LeaveScreen> {
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 10),
-                            const Divider(height: 1,thickness: 1,color: AppColor.greyColor),
-                            const SizedBox(height: 4,),
-                            Visibility(
-                                visible: fromDateValidation== false ? false : true,
-                                child: const Text('Please choose date',style: TextStyle(fontSize: 12,color: AppColor.redColor),))
+                           // const SizedBox(height: 10),
+                         //   const Divider(height: 1,thickness: 1,color: AppColor.greyColor),
                           ],
                         ),
                       ),
                     ),
+                    const SizedBox(height: 4,),
+                    Visibility(
+                        visible: fromDateValidation== false ? false : true,
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 30),
+                          child: Text('Please choose date',style: TextStyle(fontSize: 12,color: AppColor.redColor),),
+                        )),
+                    const SizedBox(height: 10,),
+                    Container(
+                        padding: const EdgeInsets.only(left: 25,bottom: 5),
+                        child: const Text('Leave To Date',style: TextStyle(fontFamily: AppFonts.Medium))),
                     GestureDetector(
                       onTap : () {
                         selectToDate(context);
@@ -250,16 +268,16 @@ class _LeaveScreenState extends State<LeaveScreen> {
                         print(snapshot.leaveFromDate);
                       },
                       child: Container(
-                        width: double.infinity,
-                        color: Colors.transparent,
+                        decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            border: Border.all(color: fromDateValidation== true ? AppColor.redColor : AppColor.darkGreyColor),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
                         margin: const EdgeInsets.only(left: 20,right: 20),
-                        padding: const EdgeInsets.only(top:10),
+                        padding: const EdgeInsets.only(top:15,bottom: 15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                                padding: const EdgeInsets.only(left: 15,bottom: 5),
-                                child: const Text('Leave To Date',style: TextStyle(fontFamily: AppFonts.Medium))),
                             Container(
                               margin: const EdgeInsets.only(left: 12),
                               child: Row(
@@ -270,11 +288,6 @@ class _LeaveScreenState extends State<LeaveScreen> {
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 10,),
-                            const Divider(height: 1,thickness: 1,color: AppColor.greyColor,),
-                            Visibility(
-                                visible: toDateValidation== false ? false : true,
-                                child: const Text('Please choose date',style: TextStyle(fontSize: 12,color: AppColor.redColor),))
                            /* Text('No. of days ${
                                 pickedTo == null ? '0' :
                             pickedFrom==null || pickedTo==null ?
@@ -283,6 +296,12 @@ class _LeaveScreenState extends State<LeaveScreen> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 4,),
+                    Visibility(
+                        visible: toDateValidation== false ? false : true,
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 30),
+                            child:  Text('Please choose date',style: TextStyle(fontSize: 12,color: AppColor.redColor),))),
 
                     Visibility(
                       visible: snapshot.selectLeaveType != 'Flexi Leave' ? true : false,

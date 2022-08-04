@@ -8,7 +8,6 @@ import 'package:employee_attendance_app/utils/app_images.dart';
 import 'package:employee_attendance_app/widget/admin_drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../leavestatus/leave_status_screen.dart';
 import '../../viewemployee/view_registered_employee_screen.dart';
 
@@ -25,6 +24,7 @@ class AdminHomeScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
+      extendBodyBehindAppBar: true,
       body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
@@ -46,6 +46,7 @@ class AdminHomeScreen extends StatelessWidget {
                   clipBehavior: Clip.none,
                   fit : StackFit.passthrough,
                   children: [
+                    const SizedBox(height: 260,),
                     Container(
                       height: 200,
                       width: MediaQuery.of(context).size.width,
@@ -108,7 +109,7 @@ class AdminHomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 70),
+                const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.only(left: 20,right: 20),
                   child: Column(
@@ -160,7 +161,6 @@ class AdminHomeScreen extends StatelessWidget {
       ),
       drawer: const AdminDrawerScreen(),
     );
-
   }
 }
 

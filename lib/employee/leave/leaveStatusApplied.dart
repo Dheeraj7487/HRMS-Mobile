@@ -34,9 +34,9 @@ class LeaveStatusApplied extends StatelessWidget {
                   shrinkWrap: true,
                   itemBuilder: (context,index) {
                     return Padding(
-                      padding: const EdgeInsets.only(left: 10.0,right: 10),
+                      padding: const EdgeInsets.only(left: 10.0,right: 10,top: 5),
                       child: Card(
-                        color: snapshot.data?.docs[index]['leaveType'] == 'Flexi Leave' ? AppColor.whiteColor : AppColor.backgroundColor,
+                        color: snapshot.data?.docs[index]['leaveType'] == 'Flexi Leave' ? AppColor.whiteColor : AppColor.platinumColor,
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10.0,right: 10,top: 10,bottom: 10),
                           child: Column(
@@ -45,7 +45,7 @@ class LeaveStatusApplied extends StatelessWidget {
                               Visibility(
                                 visible: snapshot.data?.docs[index]['leaveType'] == 'Flexi Leave',
                                   child: Text('${snapshot.data?.docs[index]['leaveForm']}',
-                                    style: const TextStyle(fontSize: 16,fontFamily: AppFonts.Medium),)),
+                                    style: const TextStyle(fontFamily: AppFonts.Medium),)),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [

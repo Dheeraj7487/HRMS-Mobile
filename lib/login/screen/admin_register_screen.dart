@@ -5,7 +5,7 @@ import 'package:employee_attendance_app/login/provider/login_provider.dart';
 import 'package:employee_attendance_app/login/screen/login_screen.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:employee_attendance_app/utils/app_fonts.dart';
-import 'package:encrypt/encrypt.dart' as encrypt;
+// import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -120,14 +120,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: passwordController,
                       prefixIcon: Icon(Icons.lock, color: AppColor.appColor),
                       labelText: 'Password',
-                      onChanged: (val) {
+                     /* onChanged: (val) {
                         final key = encrypt.Key.fromUtf8('my 32 length key................');
                         final iv = encrypt.IV.fromLength(16);
                         final encrypter = encrypt.Encrypter(encrypt.AES(key));
-
                         print("Password is encrypted::: ${encrypter.encrypt(val, iv: iv).base64}");
                         print("Password is decrypted::: ${encrypter.decrypt(encrypter.encrypt(val, iv: iv), iv: iv)}");
-                      },
+
+                        },*/
                       validator: (value) {
                         if (value!.isEmpty || value.trim().isEmpty) {
                           return 'Enter valid password';

@@ -17,7 +17,17 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
+ /* await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyBSSEQrhDvg6IiCY6mXgdad-OEsVnRXj6A",
+      appId: "1:671683445551:web:f9e128475bb722eed757da",
+      messagingSenderId: "671683445551",
+      projectId: "attendance-mangement-system",
+    )
+  );*/
   await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 

@@ -42,6 +42,10 @@ class LeaveStatusScreen extends StatelessWidget {
                           children: [
                             Text('${snapshot.data?.docs[index]['leaveEmail']}',style: const TextStyle(color: AppColor.appColor,fontSize: 16,fontFamily: AppFonts.Medium)),
                             const SizedBox(height: 5),
+                            Visibility(
+                                visible: snapshot.data?.docs[index]['leaveType'] == 'Flexi Leave',
+                                child: Text('${snapshot.data?.docs[index]['leaveForm']}',style: const TextStyle(fontFamily: AppFonts.Medium))),
+                            const SizedBox(height: 5),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [

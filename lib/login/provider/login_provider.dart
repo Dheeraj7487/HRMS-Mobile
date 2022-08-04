@@ -4,7 +4,7 @@ import 'package:employee_attendance_app/login/model/admin_model.dart';
 import 'package:employee_attendance_app/login/model/employeeModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:encrypt/encrypt.dart' as encrypt;
+// import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../admin/home/screen/admin_home_screen.dart';

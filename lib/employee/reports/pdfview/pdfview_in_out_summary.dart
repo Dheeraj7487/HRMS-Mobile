@@ -1,10 +1,9 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:employee_attendance_app/employee/reports/provider/reports_provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:employee_attendance_app/firebase/firebase_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -12,23 +11,27 @@ import 'package:provider/provider.dart';
 
 import '../../inOut/auth/in_out_fire_auth.dart';
 
-class PdfViewInOutSummary{
+class PdfViewInOutSummary extends ChangeNotifier{
 
 
-  Future<void> saveAndLaunchFile(List<int> bytes, String fileName) async {
+
+  /* Future<void> saveAndLaunchFile(List<int> bytes, String fileName) async {
     final path = (await getExternalStorageDirectory())?.path;
     final file = File('$path/$fileName');
     await file.writeAsBytes(bytes, flush: true);
     OpenFile.open('$path/$fileName');
   }
-
+*/
   Future<Uint8List> makePdfInOutSummary(fromDate,toDate,BuildContext buildContext) async {
     final pdf = pw.Document();
     var querySnapshots = await InOutFireAuth().mainCollection.get();
+    var leaveCollection = await FirebaseCollection().leaveCollection.get();
     var providerData = Provider.of<ReportsProvider>(buildContext,listen: false);
     String? inTime,outTime,duration;
 
-    List inTimeList = [];
+    //querySnapshots.docChanges.where((element) => element.doc.get('inTime'));
+
+ /*   List inTimeList = [];
     for (var snapshot in querySnapshots.docChanges){
       print(snapshot.doc.get("inTime"));
       inTime = snapshot.doc.get("inTime");
@@ -36,6 +39,7 @@ class PdfViewInOutSummary{
       outTime = snapshot.doc.get("outTime");
       duration = snapshot.doc.get("duration");
     }
+*/
 
     pdf.addPage(
         pw.MultiPage(
@@ -104,26 +108,47 @@ class PdfViewInOutSummary{
                                   pw.Column(children: [pw.Text('SR.')]),
                                   pw.Column(children: [pw.Text('ON DATE')]),
                                   pw.Column(children: [pw.Text('SHIFT TIME'),pw.Divider(height: 1),
-                                    pw.Row(
-                                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        pw.SizedBox(width: 5,),
-                                        pw.Text('From'),
-                                        pw.Text('To'),
-                                        pw.SizedBox(width: 5,),
-                                      ]
-                                    )
+                                      pw.Row(
+                                          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            pw.Padding(
+                                              padding: pw.EdgeInsets.only(left: 12),
+                                              child: pw.Text('From'),
+                                            ),
+                                            pw.Container(
+                                              height: 20,
+                                              color: const PdfColor(0, 0, 0, 0), width: 1),
+                                            pw.Padding(
+                                              padding: pw.EdgeInsets.only(right: 20),
+                                              child: pw.Text('To'),
+                                            ),
+                                          ]
+                                      )
                                   ]),
 
                                   pw.Column(children: [pw.Text('ACTUAL TIME'),pw.Divider(height: 1),
                                     pw.Row(
                                         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: pw.CrossAxisAlignment.center,
                                         children: [
-                                          pw.SizedBox(width: 5,),
-                                          pw.Text('From'),
-                                          pw.Text('To'),
-                                          pw.Text('Duration'),
-                                          pw.SizedBox(width: 5,),
+                                          pw.Padding(
+                                            padding: const pw.EdgeInsets.only(left: 20,right: 7),
+                                            child: pw.Text('From'),
+                                          ),
+                                          pw.Container(
+                                              height: 20,
+                                              color: const PdfColor(0, 0, 0, 0), width: 1),
+                                          pw.Padding(
+                                            padding: const pw.EdgeInsets.only(right: 12,left: 10),
+                                            child: pw.Text('To'),
+                                          ),
+                                          pw.Container(
+                                              height: 20,
+                                              color: const PdfColor(0, 0, 0, 0), width: 1),
+                                          pw.Padding(
+                                            padding: const pw.EdgeInsets.only(right: 10),
+                                            child: pw.Text('Duration'),
+                                          ),
                                         ]
                                     )
                                   ]),
@@ -133,6 +158,7 @@ class PdfViewInOutSummary{
                             for(int i=providerData.reportsFromDate.day;i<=providerData.reportsToDate.day;i++)...{
                               pw.TableRow(
                                   children: [
+
                                     pw.Column(children: [pw.Text('$i')]),
                                     pw.Column(children: [pw.Text("${i.toString().length == 1 ? '0$i' : i}"
                                         "-${providerData.reportsFromDate.month.toString().length != 1 ? providerData.reportsFromDate.month :
@@ -143,27 +169,102 @@ class PdfViewInOutSummary{
                                       pw.Row(
                                         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                                         children: [
-                                          pw.SizedBox(width: 5,),
+                                          pw.SizedBox(width: 7),
                                           pw.Text('9.45'),
-                                          pw.Container(width: 2),
+                                          pw.Container(
+                                              height: 13,
+                                              color: const PdfColor(0, 0, 0, 0), width: 1),
                                           pw.Text('7.15'),
-                                          pw.SizedBox(width: 5),
+                                          pw.SizedBox(width: 2),
                                         ]
                                     )]),
                                     pw.Column(children: [
                                       pw.Row(
                                           mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                                           children: [
-
                                             pw.SizedBox(width: 5,),
-                                            pw.Text(''),
-                                            pw.Text('$outTime'),
-                                            pw.Text('$duration'),
+                                          /*  for(var data in inTimeList)...{
+                                              pw.Text(' ${data}') },
+*/
+                                            pw.Column(
+                                              children: [
+                                                ...querySnapshots.docs.map((e){
+                                                  inTime = e['inTime'];
+                                                  print('InTime => ${e["inTime"]}');
+                                                  return e['currentDate'] == "${providerData.reportsFromDate.year}""-${providerData.reportsFromDate.month
+                                                      .toString().length != 1 ? providerData.reportsFromDate.month :
+                                                  '0${providerData.reportsFromDate.month}'}"
+                                                      "-${i.toString().length == 1 ? '0$i' : i}"
+                                                      ? inTime != '' ? pw.Text('${inTime}') : pw.Text('') : pw.Text('');
+                                                },),
+                                              ]
+                                            ),
+
+                                            pw.Container(
+                                                height: 13,
+                                                color: const PdfColor(0, 0, 0, 0), width: 1),
+
+
+              /*querySnapshots.docs.map((e) =>
+                                            e['currentDate']
+
+                                                ==  "${providerData.reportsFromDate.year}"
+                                                "-${providerData.reportsFromDate.month.toString().length != 1 ? providerData.reportsFromDate.month :
+                                            '0${providerData.reportsFromDate.month}'}"
+                                                "-${i.toString().length == 1 ? '0$i' : i}"?
+                  *//*                          FirebaseCollection().inOutCollection.doc(
+              "${providerData.reportsFromDate.year}"
+              "-${providerData.reportsFromDate.month.toString().length != 1 ? providerData.reportsFromDate.month :
+              '0${providerData.reportsFromDate.month}'}"
+              "-${i.toString().length == 1 ? '0$i' : i}"
+              ).id*//*
+                                            e['inTime']                        : ''
+
+                                            )*/
+
+                                            pw.Column(
+                                                children: [
+                                                  ...querySnapshots.docs.map((e){
+                                                    outTime = e['outTime'];
+                                                    print('outTime => ${e["outTime"]}');
+                                                    return e['currentDate'] == "${providerData.reportsFromDate.year}""-${providerData.reportsFromDate.month
+                                                        .toString().length != 1 ? providerData.reportsFromDate.month :
+                                                    '0${providerData.reportsFromDate.month}'}"
+                                                        "-${i.toString().length == 1 ? '0$i' : i}"
+                                                        ? outTime != '' ? pw.Text('${outTime}') : pw.Text('') : pw.Text('');
+                                                  },),
+                                                ]
+                                            ),
+                                            pw.Container(
+                                                height: 13,
+                                                color: const PdfColor(0, 0, 0, 0), width: 1),
+                                            pw.Column(
+                                                children: [
+                                                  ...querySnapshots.docs.map((e){
+                                                    duration = e['duration'];
+                                                    return e['currentDate'] == "${providerData.reportsFromDate.year}""-${providerData.reportsFromDate.month
+                                                        .toString().length != 1 ? providerData.reportsFromDate.month :
+                                                    '0${providerData.reportsFromDate.month}'}"
+                                                        "-${i.toString().length == 1 ? '0$i' : i}"
+                                                        ? duration != '' ? pw.Text('${duration}') : pw.Text('') : pw.Text('');
+                                                  },),
+                                                ]
+                                            ),
                                             pw.SizedBox(width: 5,),
                                           ]
                                       )
                                     ]),
-                                    pw.Column(children: [pw.Text("")]),
+                                    pw.Column(
+                                        children: [
+                                          ...leaveCollection.docs.map((e){
+                                            return e['leaveForm'] == "${providerData.reportsFromDate.year}""-${providerData.reportsFromDate.month
+                                                .toString().length != 1 ? providerData.reportsFromDate.month :
+                                            '0${providerData.reportsFromDate.month}'}"
+                                                "-${i.toString().length == 1 ? '0$i' : i}"
+                                                ? duration != '' ? pw.Text('${e['leaveType']}') : pw.Text('') : pw.Text('');
+                                          },),
+                                        ]
+                                    ),
                                   ]),
                             }
 
@@ -172,9 +273,11 @@ class PdfViewInOutSummary{
 
                     ])];
             }));
-    List<int> bytes = await pdf.save();
-    saveAndLaunchFile(bytes, 'In Out Summary Reports.pdf');
+     List<int> bytes = await pdf.save();
     return await pdf.save();
+
+    //saveAndShared(bytes, 'In Out Summary Reports.pdf');
+    // return await pdf.save();
   }
 
 }

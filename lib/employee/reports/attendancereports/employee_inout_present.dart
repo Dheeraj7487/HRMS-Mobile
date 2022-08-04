@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:employee_attendance_app/employee/reports/openpdf/open_pdf_present.dart';
 import 'package:employee_attendance_app/employee/reports/pdfview/pdfview_in_out_present.dart';
 import 'package:employee_attendance_app/employee/reports/provider/reports_provider.dart';
 import 'package:employee_attendance_app/utils/app_fonts.dart';
@@ -177,7 +178,7 @@ class _EmployeeInOutPresentState extends State<EmployeeInOutPresent> {
                                       onPressed: () async {
                                         print(presentSnapshot.data!.docs.length
                                             .toString());
-                                        Get.to(
+                                        //Get.to(
                                          /* PdfViewInOutPresent(
                                               DateFormat('dd-MM-yyyy')
                                                   .format(snapshot.reportsFromDate),
@@ -202,10 +203,12 @@ class _EmployeeInOutPresentState extends State<EmployeeInOutPresent> {
                                             data['designation'],
                                             presentSnapshot.data!.docs.length
                                                 .toString()).then((value) {
-                                          setState((){
+                                                  Get.to(OpenPdfInOutPresent(linked: value));
+                                          /*setState((){
                                             Provider.of<ReportsProvider>(context,listen:false).pdf = value;
-                                          });
-                                        }));
+                                          });*/
+                                        });
+                                        //);
                                       },
                                       child: const Text('View')),
                                   const SizedBox(

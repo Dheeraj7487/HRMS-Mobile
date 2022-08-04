@@ -10,6 +10,14 @@ class AppImage{
   static const addEmployee="assets/images/addemployee.png";
   static const attendance="assets/images/attendance.png";
   static const leaveIcon="assets/images/leaveIcon.png";
+  static const designationIcon="assets/images/designationIcon.png";
+  static const exprienceIcon="assets/images/exprienceIcon.png";
+  static const managerIcon="assets/images/managerIcon.png";
+  static const technologyIcon="assets/images/technologyIcon.png";
+  static const dobIcon="assets/images/dobIcon.png";
+  static const branchIcon="assets/images/branchIcon.png";
+  static const employmentIcon="assets/images/employmentIcon.png";
+  static const joiningIcon="assets/images/joiningIcon.png";
   static const resetPassword="assets/images/reset_password.png";
   static const reports="assets/images/reports.png";
 }

@@ -12,7 +12,7 @@ class AppColor {
   static const darkGreyColor = Color(0xff7A7A7A);
   static const checkBoxColor = Color(0xffA1ADB3);
   static const yellowColor = Color(0xffFFDE13);
-  static const newOrageColor = Color(0xffEBBF83);
+  static const newOrangeColor = Color(0xffEBBF83);
   static const redColor = Color(0xffC41414);
   static const grey = Color(0xff00000080);
   static const platinumColor = Color(0xfff1eeee);

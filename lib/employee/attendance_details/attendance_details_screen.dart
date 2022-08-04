@@ -9,7 +9,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class AttendanceDetailsScreen extends StatefulWidget {
-  const AttendanceDetailsScreen({Key? key}) : super(key: key);
+  AttendanceDetailsScreen({Key? key,required this.passType,required this.email}) : super(key: key);
+
+  String passType,email;
 
   @override
   State<AttendanceDetailsScreen> createState() => _AttendanceDetailsScreenState();
@@ -20,6 +22,14 @@ class _AttendanceDetailsScreenState extends State<AttendanceDetailsScreen> {
        .doc(FirebaseAuth.instance.currentUser!.email).collection('InOutTime').snapshots();
 */
   var inOutTimeEmployee;
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<AttendanceDetailsProvider>(context,listen: false).onWillPop();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +176,7 @@ class _AttendanceDetailsScreenState extends State<AttendanceDetailsScreen> {
             const Divider(height: 1,thickness: 1),
             StreamBuilder(
                 stream: FirebaseFirestore.instance.collection("employee")
-                    .doc(FirebaseAuth.instance.currentUser!.email).collection('InOutTime').
+                    .doc('${widget.passType=='Admin' ? widget.email : FirebaseAuth.instance.currentUser!.email}').collection('InOutTime').
                 where('yearMonth',isEqualTo: '${Provider.of<AttendanceDetailsProvider>(context,listen: false).selectMonth} ${Provider.of<AttendanceDetailsProvider>(context,listen: false).selectYear}').snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                   if(snapshot.connectionState == ConnectionState.waiting){
@@ -191,7 +201,7 @@ class _AttendanceDetailsScreenState extends State<AttendanceDetailsScreen> {
                           }else{
                             return Container(
                               margin: const EdgeInsets.only(left: 10,right: 10),
-                              child:  Card(
+                              child: Card(
                                 child: ExpansionTile(
                                   textColor: AppColor.appColor,
                                   iconColor: AppColor.appColor,

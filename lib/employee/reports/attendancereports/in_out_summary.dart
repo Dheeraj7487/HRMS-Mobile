@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:employee_attendance_app/employee/reports/openpdf/open_pdf_in_out_summary.dart';
 import 'package:employee_attendance_app/employee/reports/pdfview/pdfview_in_out_summary.dart';
 import 'package:employee_attendance_app/employee/reports/provider/reports_provider.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -146,7 +149,7 @@ class _InOutSummaryState extends State<InOutSummary> {
                                 DateFormat('dd-MM-yyyy')
                                     .format(snapshot.reportsToDate),
                                 context
-                              );
+                              ).then((value) => Get.to(OpenPdfInOutSummary(linked: value,)));
                             },
                             child: const Text('View')),
                         const SizedBox(

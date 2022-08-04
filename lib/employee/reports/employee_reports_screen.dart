@@ -89,7 +89,7 @@ class _ReportScreenState extends State<ReportScreen> {
                       ),
                       child: const Text('In-Out Summary',style: TextStyle(fontFamily: AppFonts.Regular))),
                 ),
-                const SizedBox(height: 10),
+               /* const SizedBox(height: 10),
                 GestureDetector(
                   onTap: (){
                     Get.to(const AttendanceRegister());
@@ -106,7 +106,7 @@ class _ReportScreenState extends State<ReportScreen> {
                           color: Colors.transparent
                       ),
                       child: const Text('Attendance Register',style: TextStyle(fontFamily: AppFonts.Regular))),
-                ),
+                ),*/
               ],
             ),
           )

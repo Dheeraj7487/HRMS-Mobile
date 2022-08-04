@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -13,7 +14,6 @@ import 'package:provider/provider.dart';
 
 import '../../login/auth/login_employee_fire_auth.dart';
 import '../../login/provider/loading_provider.dart';
-import '../../login/screen/login_screen.dart';
 import '../../mixin/button_mixin.dart';
 import '../../mixin/textfield_mixin.dart';
 import '../../utils/app_colors.dart';
@@ -96,17 +96,35 @@ class _AddEmployeeState extends State<AddEmployee> {
             imageUrl: imageUrl,
             employmentType: employmentTypeController.text, exprience: exprienceGradeController.text,
             manager: managerController.text, type: 'Employee').then((value) {
-              emailController.clear();
           Get.off(AdminHomeScreen());
+          send();
         });
         //FirebaseAuth.instance.signOut();
-
         Provider.of<LoadingProvider>(context,listen: false).stopLoading();
       }
       debugPrint("Image URL = $imageUrl");
     } catch (e) {
       print('Failed to upload image');
     }
+  }
+
+
+  Future<void> send() async {
+    final Email email = Email(
+      body: 'Please find the HRMS credentials below,\n\n To Start HRMS,\n Login ID-${emailController.text} \n Password- ${passwordController.text}',
+      subject: 'HRMS Credentials..!!',
+      recipients: [emailController.text],
+    );
+
+    String platformResponse;
+
+    try {
+      await FlutterEmailSender.send(email);
+      platformResponse = 'success';
+    } catch (error) {
+      platformResponse = error.toString();
+    }
+
   }
 
   @override
@@ -274,7 +292,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                       controller: branchNameController,
                       keyboardType: TextInputType.text,
                       prefixIcon:
-                      const Icon(Icons.person, color: AppColor.appColor),
+                      const Icon(Icons.account_balance_outlined, color: AppColor.appColor),
                       labelText: 'Branch',
                       validator: (value) {
                         if (value == null ||
@@ -306,7 +324,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                         controller: employmentTypeController,
                         keyboardType: TextInputType.text,
                         prefixIcon:
-                        const Icon(Icons.person, color: AppColor.appColor),
+                        const Icon(Icons.person_pin_outlined, color: AppColor.appColor),
                         labelText: 'Employment Type',
                         validator: (value) {
                           if (value == null ||
@@ -374,6 +392,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                     alignment: Alignment.bottomRight,
                     child: GestureDetector(
                       onTap: () async {
+
                         if(file == null){
                           AppUtils.instance.showToast(toastMessage: 'Please choose the image');
                         }

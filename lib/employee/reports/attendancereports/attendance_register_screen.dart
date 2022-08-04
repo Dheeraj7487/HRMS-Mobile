@@ -1,10 +1,10 @@
-import 'package:employee_attendance_app/employee/reports/provider/reports_provider.dart';
+/*import 'package:employee_attendance_app/employee/reports/provider/reports_provider.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import '../../../utils/app_fonts.dart';
-
+import '../../../utils/app_fonts.dart';*/
+/*
 class AttendanceRegister extends StatefulWidget {
   const AttendanceRegister({Key? key}) : super(key: key);
 
@@ -149,4 +149,4 @@ class _AttendanceRegisterState extends State<AttendanceRegister> {
               })),
     );
   }
-}
+}*/

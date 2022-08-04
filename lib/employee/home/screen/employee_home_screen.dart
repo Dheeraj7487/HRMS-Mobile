@@ -8,8 +8,10 @@ import 'package:employee_attendance_app/utils/app_fonts.dart';
 import 'package:employee_attendance_app/utils/app_images.dart';
 import 'package:employee_attendance_app/widget/employee_drawer_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pdf/widgets.dart' as widget;
 import '../../attendance_details/attendance_details_screen.dart';
 import '../../inOut/screen/employee_in_out_screen.dart';
 import '../../leave/leave_screen.dart';
@@ -27,6 +29,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
 
   DateTime now = DateTime.now();
   var hour = DateTime.now().hour;
+  final ScrollController controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +37,21 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
     final getEmployeeData = FirebaseCollection().employeeCollection.doc(FirebaseAuth.instance.currentUser!.email).snapshots();
 
     return Scaffold(
-      backgroundColor: AppColor.backgroundColor,
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: false,
+      drawerEnableOpenDragGesture : false,
       body: NestedScrollView(
+        controller: controller,
+        clipBehavior :Clip.antiAliasWithSaveLayer,
+        dragStartBehavior : DragStartBehavior.down,
+        physics: const NeverScrollableScrollPhysics(),
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
               iconTheme: const IconThemeData(color: AppColor.blackColor),
               backgroundColor: AppColor.appColor,
               elevation: 0,
-              toolbarHeight: 27,
               pinned: false,
-              //floating: true,
+              floating: true,
               forceElevated: innerBoxIsScrolled,
             ),
           ];
@@ -55,10 +61,12 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Stack(
+                fit: StackFit.loose,
                 clipBehavior: Clip.none,
                 children: [
+                  const SizedBox(height: 260,),
                   Container(
-                    height: 20,
+                    height: 200,
                     width: MediaQuery.of(context).size.width,
                     decoration: const BoxDecoration(
                         color: AppColor.appColor,
@@ -135,12 +143,12 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                     left: 0,
                     right: 0,
                     top: 140,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20,right: 20),
-                      child: GestureDetector(
-                        onTap: () {
-                          Get.to(PublicHolidayScreen());
-                        },
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(PublicHolidayScreen());
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20,right: 20),
                         child: DashboardDetailsWidget(AppImage.holidays,
                             'Public Holiday','Check allocated public holiday'),
                       ),
@@ -152,7 +160,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                 padding: const EdgeInsets.only(left: 20,right: 20),
                 child: Column(
                   children:[
-                    const SizedBox(height: 70),
+                    const SizedBox(height: 10),
 
                     GestureDetector(
                       onTap: () {
@@ -164,7 +172,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
 
                     GestureDetector(
                       onTap: () {
-                        Get.to(const AttendanceDetailsScreen());
+                        Get.to(AttendanceDetailsScreen(passType: 'Employee', email: '',));
                       },
                       child: DashboardDetailsWidget(AppImage.timeSlot, 'Attendance Details','Check your entry exit time details'),
                     ),

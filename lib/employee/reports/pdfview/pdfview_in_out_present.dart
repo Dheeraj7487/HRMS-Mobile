@@ -1,10 +1,6 @@
-import 'dart:io';
 import 'dart:typed_data';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
-
 
 
 /*
@@ -57,12 +53,12 @@ class _PdfViewInOutPresentState extends State<PdfViewInOutPresent> {
 
 class PdfViewInOutPresent{
 
-  Future<void> saveAndLaunchFile(List<int> bytes, String fileName) async {
+  /*Future<void> saveAndLaunchFile(List<int> bytes, String fileName) async {
     final path = (await getExternalStorageDirectory())?.path;
     final file = File('$path/$fileName');
     await file.writeAsBytes(bytes, flush: true);
     OpenFile.open('$path/$fileName');
-  }
+  }*/
 
   Future<Uint8List> makePdfInOutPresent(fromDate,toDate,printDate,employeeName,designation,department,presentDays) async {
     final pdf = pw.Document();
@@ -150,8 +146,8 @@ class PdfViewInOutPresent{
                       ),
                     ])];
             }));
-    List<int> bytes = await pdf.save();
-    saveAndLaunchFile(bytes, 'Reports.pdf');
+    //List<int> bytes = await pdf.save();
+    //saveAndLaunchFile(bytes, 'Reports.pdf');
     return await pdf.save();
   }
 

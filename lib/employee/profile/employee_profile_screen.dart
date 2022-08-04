@@ -17,6 +17,7 @@ import 'package:get/get.dart';
 import '../../admin/employeeprofile/auth/add_employee_fire_auth.dart';
 import '../../mixin/button_mixin.dart';
 import '../../mixin/textfield_mixin.dart';
+import '../../utils/app_images.dart';
 import '../../utils/app_utils.dart';
 
 class EmployeeProfileScreen extends StatefulWidget {
@@ -161,7 +162,7 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                                 header: Text("Personal Details"),
                                 children: [
                                   CupertinoFormRow(
-                                    prefix: const Icon(Icons.person, color: AppColor.appColor),
+                                    prefix: const Icon(Icons.person_outline_rounded, color: AppColor.appColor),
                                     child: CupertinoTextFormFieldRow(
                                       placeholder: "Enter name",
                                       controller: employeeNameController..text = data['employeeName'],
@@ -174,7 +175,7 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                                   ),
 
                                   CupertinoFormRow(
-                                    prefix: const Icon(Icons.email, color: AppColor.appColor),
+                                    prefix: const Icon(Icons.email_outlined, color: AppColor.appColor),
                                     child: CupertinoTextFormFieldRow(
                                       placeholder: "Enter Email",
                                       controller: emailController..text = data['email'],
@@ -192,7 +193,7 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                                   ),
 
                                   CupertinoFormRow(
-                                    prefix: const Icon(Icons.date_range_outlined, color: AppColor.appColor),
+                                    prefix: Image.asset(AppImage.dobIcon,height: 22,width: 22),
                                     child: CupertinoTextFormFieldRow(
                                       placeholder: "Enter Date Of Birth",
                                       controller: dobController..text = data['dob'],
@@ -201,7 +202,7 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                                   ),
 
                                   CupertinoFormRow(
-                                    prefix: const Icon(Icons.location_on, color: AppColor.appColor),
+                                    prefix: const Icon(Icons.location_on_outlined, color: AppColor.appColor),
                                     child: CupertinoTextFormFieldRow(
                                       placeholder: "Enter Address",
                                       controller: addressController..text = data['address'],
@@ -209,7 +210,7 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                                     ),
                                   ),
                                   CupertinoFormRow(
-                                    prefix: const Icon(Icons.post_add_outlined, color: AppColor.appColor),
+                                    prefix: Image.asset(AppImage.designationIcon,height: 22,width: 22),
                                     child: CupertinoTextFormFieldRow(
                                       placeholder: "Designation",
                                       controller: designationController..text = data['designation'],
@@ -217,7 +218,7 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                                     ),
                                   ),
                                   CupertinoFormRow(
-                                    prefix: const Icon(Icons.description, color: AppColor.appColor),
+                                    prefix: Image.asset(AppImage.technologyIcon,height: 22,width: 22),
                                     child: CupertinoTextFormFieldRow(
                                       placeholder: "Department",
                                       controller: departmentController..text = data['department'],
@@ -225,7 +226,7 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                                     ),
                                   ),
                                   CupertinoFormRow(
-                                    prefix: const Icon(Icons.home_work_outlined, color: AppColor.appColor),
+                                    prefix: Image.asset(AppImage.branchIcon,height: 22,width: 22),
                                     child: CupertinoTextFormFieldRow(
                                       placeholder: "Branch",
                                       controller: branchNameController..text = data['branch'],
@@ -233,7 +234,7 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                                     ),
                                   ),
                                   CupertinoFormRow(
-                                    prefix: const Icon(Icons.date_range_outlined, color: AppColor.appColor),
+                                    prefix: Image.asset(AppImage.joiningIcon,height: 22,width: 22),
                                     child: CupertinoTextFormFieldRow(
                                       placeholder: "Date Of Joining",
                                       controller: dateOfJoinController..text = data['dateofjoining'],
@@ -241,7 +242,7 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                                     ),
                                   ),
                                   CupertinoFormRow(
-                                    prefix: const Icon(Icons.date_range_outlined, color: AppColor.appColor),
+                                    prefix: Image.asset(AppImage.employmentIcon,height: 22,width: 22),
                                     child: CupertinoTextFormFieldRow(
                                       placeholder: "Employment Type",
                                       controller: employmentTypeController..text = data['employment_type'],
@@ -249,7 +250,7 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                                     ),
                                   ),
                                   CupertinoFormRow(
-                                    prefix: const Icon(Icons.timeline_sharp, color: AppColor.appColor),
+                                    prefix: Image.asset(AppImage.exprienceIcon,height: 22,width: 22),
                                     child: CupertinoTextFormFieldRow(
                                       placeholder: "Exprience",
                                       controller: exprienceGradeController..text = data['exprience'],
@@ -257,7 +258,7 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                                     ),
                                   ),
                                   CupertinoFormRow(
-                                    prefix: const Icon(Icons.date_range_outlined, color: AppColor.appColor),
+                                    prefix: Image.asset(AppImage.managerIcon,height: 22,width: 22),
                                     child: CupertinoTextFormFieldRow(
                                       placeholder: "Manager",
                                       controller: managerController..text = data['manager'],

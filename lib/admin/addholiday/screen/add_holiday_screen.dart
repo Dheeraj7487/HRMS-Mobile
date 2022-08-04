@@ -22,6 +22,14 @@ class _AddHolidayScreenState extends State<AddHolidayScreen> {
   final _formKey = GlobalKey<FormState>();
   ScrollController scrollController = ScrollController();
   bool selectDateVal = false;
+  bool fromDateValidation = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<AddHolidayProvider>(context,listen: false).picked = null;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,51 +49,75 @@ class _AddHolidayScreenState extends State<AddHolidayScreen> {
               //mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const SizedBox(height: 30),
-                Consumer<AddHolidayProvider>(builder: (_, snapshot, __) {
-                  return GestureDetector(
-                    onTap : () => snapshot.selectDate(context),
-                    child: Container(
+                Container(
+                    padding: const EdgeInsets.only(left: 25,bottom: 5),
+                    child: const Text('Holiday Date',style: TextStyle(fontFamily: AppFonts.Medium))),
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
                       color: Colors.transparent,
-                      margin: const EdgeInsets.only(left: 20,right: 20),
-                      padding: const EdgeInsets.only(top:10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(left: 12),
-                            child: Row(
-                              children: [
-                                const Icon(Icons.date_range_outlined,color: AppColor.appColor,),
-                                const SizedBox(width: 10),
-                                Text(snapshot.picked==null? 'Please Select Date' : DateFormat('dd-MM-yyyy').format(snapshot.holidayDate),style: const TextStyle(fontSize: 16,fontFamily: AppFonts.Regular)),
-                              ],
+                      border: Border.all(color: fromDateValidation== true ? AppColor.redColor : AppColor.darkGreyColor),
+                      borderRadius: BorderRadius.circular(5)
+                  ),
+                  margin: const EdgeInsets.only(left: 20,right: 20),
+                  padding: const EdgeInsets.only(top:15,bottom: 15),
+                  child: Consumer<AddHolidayProvider>(builder: (_, snapshot, __) {
+                    return GestureDetector(
+                      onTap : () => snapshot.selectDate(context),
+                      child: Container(
+                        color: Colors.transparent,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(left: 12),
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.date_range_outlined,color: AppColor.appColor,),
+                                  const SizedBox(width: 10),
+                                  Text(snapshot.picked==null? 'Please Select Date' : DateFormat('dd-MM-yyyy').format(snapshot.holidayDate),style: const TextStyle(fontFamily: AppFonts.Regular)),
+                                ],
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 10,),
-                          const Divider(height: 2,thickness: 1,color: Colors.black38),
-                          const SizedBox(height: 5,),
-                          Visibility(
-                              visible: selectDateVal== false ? false : true,
-                              child: const Text('Please choose date',style: TextStyle(fontSize: 12,color: AppColor.redColor),))
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                }),
-                const SizedBox(height: 20),
-                TextFieldMixin().textFieldWidget(
+                    );
+                  }),
+                ),
+                const SizedBox(height: 4,),
+                Visibility(
+                    visible: fromDateValidation== false ? false : true,
+                    child: const Padding(
+                        padding: EdgeInsets.only(left: 30),
+                        child:  Text('Please choose date',style: TextStyle(fontSize: 12,color: AppColor.redColor),))),
+                const SizedBox(height: 10),
+
+                Container(
+                    padding: const EdgeInsets.only(left: 25,bottom: 5,top: 10),
+                    child: const Text('Holiday Name',style: TextStyle(fontFamily: AppFonts.Medium))),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: TextFormField(
+                    cursorColor:  AppColor.appColor,
+                    style: const TextStyle(fontFamily: AppFonts.Medium),
+                    keyboardType: TextInputType.multiline,
                     controller: holidayNameController,
-                    prefixIcon:
-                    const Icon(Icons.add_business, color: AppColor.appColor),
-                    labelText: 'Holiday Name',
-                  validator: (value) {
+                    textInputAction: TextInputAction.done,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: AppColor.appColor),
+                      ),),
+                    validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter holiday name';
                       }
                       return null;
-                   },
+                    },
+                  ),
                 ),
-                const SizedBox(height: 10),
+
                 Container(
                     padding: const EdgeInsets.only(left: 25,bottom: 5,top: 15),
                     child: const Text('Description',style: TextStyle(fontFamily: AppFonts.Medium),)),
@@ -95,7 +127,7 @@ class _AddHolidayScreenState extends State<AddHolidayScreen> {
                     child: TextFormField(
                       cursorColor:  AppColor.appColor,
                       maxLines: null,
-                      style: TextStyle(fontFamily: AppFonts.Medium,fontSize: 14),
+                      style: const TextStyle(fontFamily: AppFonts.Medium,fontSize: 14),
                       keyboardType: TextInputType.multiline,
                       controller: descriptionController,
                       textInputAction: TextInputAction.done,
@@ -106,7 +138,7 @@ class _AddHolidayScreenState extends State<AddHolidayScreen> {
                         ),),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter reason';
+                          return 'Please enter description';
                         }
                         return null;
                       },
@@ -119,6 +151,14 @@ class _AddHolidayScreenState extends State<AddHolidayScreen> {
                   alignment: Alignment.center,
                   child: GestureDetector(
                     onTap: () async {
+                      setState((){
+                        fromDateValidation = true;
+                      });
+                      if(Provider.of<AddHolidayProvider>(context,listen: false).picked !=null){
+                        setState((){
+                          fromDateValidation = false;
+                        });
+                      }
                       /*setState((){
                         selectDateVal = true;
                       });
@@ -131,6 +171,7 @@ class _AddHolidayScreenState extends State<AddHolidayScreen> {
                         AddHolidayFireAuth().addPublicHoliday(holidayDate: DateFormat('dd-MM-yyyy').format(Provider.of<AddHolidayProvider>(context,listen: false).holidayDate),
                             holidayName: holidayNameController.text,
                             holidayDescription: descriptionController.text);
+                        Provider.of<AddHolidayProvider>(context,listen: false).picked =null;
                         holidayNameController.clear();
                         descriptionController.clear();
                       }
