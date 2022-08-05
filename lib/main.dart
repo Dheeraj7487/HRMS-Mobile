@@ -3,6 +3,8 @@ import 'package:employee_attendance_app/employee/leave/provider/leave_provider.d
 import 'package:employee_attendance_app/employee/reports/provider/reports_provider.dart';
 import 'package:employee_attendance_app/login/provider/loading_provider.dart';
 import 'package:employee_attendance_app/login/provider/login_provider.dart';
+import 'package:employee_attendance_app/utils/app_colors.dart';
+import 'package:employee_attendance_app/utils/app_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -47,6 +49,32 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<ReportsProvider>(create: (_) => ReportsProvider()),
         ],
       child: GetMaterialApp(
+        theme: ThemeData(
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ButtonStyle(
+                  backgroundColor:
+                  MaterialStateProperty.all<Color>(AppColor.whiteColor))),
+          accentColor: AppColor.appColor,
+          appBarTheme: const AppBarTheme(
+            color: AppColor.whiteColor,
+            elevation: 0.0,
+            centerTitle: true,
+            textTheme:  TextTheme(
+              headline6:  TextStyle(
+                  color: AppColor.appColor,
+                  fontSize: 14,),
+            ),
+            titleTextStyle:  TextStyle(
+              color: AppColor.appColor,
+              fontSize: 16,
+              fontFamily: AppFonts.Medium,
+            ),
+            iconTheme:  IconThemeData(
+              color: AppColor.blackColor,
+            ),
+          ),
+        ),
         home: const SplashScreen(),
         debugShowCheckedModeBanner: false,
         builder: (context, child) {

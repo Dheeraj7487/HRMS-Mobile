@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:employee_attendance_app/admin/employeeprofile/employee_profile_screen.dart';
+import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-
-import '../../utils/app_colors.dart';
 import '../../utils/app_fonts.dart';
 
 class EmployeeDetailsScreen extends StatelessWidget {
@@ -16,10 +15,9 @@ class EmployeeDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.whiteColor,
       appBar: AppBar(
-        backgroundColor: AppColor.appColor,
-        title: const Text('View Details',style: TextStyle(fontFamily: AppFonts.Medium)),
-        centerTitle: true,
+        title: const Text('View Details'),
       ),
       body: StreamBuilder(
           stream: registerEmployeeEmail,
@@ -43,7 +41,7 @@ class EmployeeDetailsScreen extends StatelessWidget {
                     return GestureDetector(
                       onTap: (){Get.to(ViewAdminEmployeeProfileScreen(email: snapshot.data!.docs[index].id));},
                       child: ListTile(
-                        tileColor: index.isOdd ? Colors.blueGrey.shade50 : Colors.white,
+                        tileColor: index.isOdd ? Colors.blueGrey.withOpacity(0.1) : Colors.white,
                         title: Text(snapshot.data!.docs[index].id,style: const TextStyle(fontFamily: AppFonts.Medium)),
                         leading: Text('${index+1}',style: const TextStyle(fontFamily: AppFonts.Medium)),
                         trailing: const Icon(Icons.arrow_forward_ios,size: 12),

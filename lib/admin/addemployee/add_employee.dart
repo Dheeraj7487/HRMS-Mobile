@@ -133,10 +133,9 @@ class _AddEmployeeState extends State<AddEmployee> {
     //  url = ref1.getDownloadURL().toString();
     final formKey = GlobalKey<FormState>();
     return Scaffold(
+      backgroundColor: AppColor.whiteColor,
       appBar: AppBar(
-        backgroundColor: AppColor.appColor,
-        title: const Text('Add Employee',style: TextStyle(fontFamily: AppFonts.Medium)),
-        centerTitle: true,
+        title: const Text('Add Employee'),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -145,74 +144,87 @@ class _AddEmployeeState extends State<AddEmployee> {
             child: Column(
               children: [
                 const SizedBox(height: 40,),
-                const Text(
+                /*const Text(
                     "Create Account",
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontSize: 24,
                         fontFamily: AppFonts.Medium)
                 ),
-                const SizedBox(height: 40,),
-                GestureDetector(
-                    onTap: (){
-                      _selectProfileImage(context);
-                      // uploadFile();
-                    },
-                    child: ClipOval(
-                      child: file == null ? /*Image.network(
+                const SizedBox(height: 40,),*/
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    GestureDetector(
+                        onTap: (){
+                          _selectProfileImage(context);
+                          // uploadFile();
+                        },
+                        child: ClipOval(
+                          child: file == null ? /*Image.network(
                           'https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg',
                           height: 100,
                           width: 100,
                           fit: BoxFit.fill) :*/
-                      Container(
-                          color: AppColor.appColor,
-                          height: 80,width: 80,
-                          child: const Icon(Icons.camera_alt,size: 50,color: AppColor.whiteColor,)) :
-                      Image.file(
-                        file!,
-                        height: 100,width: 100,
-                        fit: BoxFit.fill,),
+                          Container(
+                              color: AppColor.appColor,
+                              height: 80,width: 80,
+                              child: const Icon(Icons.person_outline_rounded,size: 50,color: AppColor.whiteColor,)) :
+                          Image.file(
+                            file!,
+                            height: 100,width: 100,
+                            fit: BoxFit.fill,),
+                        )
+                    ),
+                    Positioned(
+                      left: 50,
+                      top: 40,
+                      child: ClipOval(child: Container(
+                        height: 40,width: 40,
+                        color:AppColor.whiteColor,child: const Icon(Icons.camera_alt,color: AppColor.appColor,),)),
                     )
+                  ],
                 ),
                 Column(
                   children: [
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 40),
                     TextFieldMixin().textFieldWidget(
                       controller: employeeNameController,
                       keyboardType: TextInputType.text,
-                      prefixIcon: const Icon(Icons.person, color: AppColor.appColor),
+                      prefixIcon: const Icon(Icons.person_outline_rounded, color: AppColor.appColor),
                       labelText: 'Employee Name',
                       validator: (value) {
                         if (value == null ||
                             value.isEmpty ||
                             value.trim().isEmpty) {
-                          return 'Please enter employee name';
+                          return 'Please enter name';
                         }
                         return null;
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     TextFieldMixin().textFieldWidget(
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
-                        prefixIcon: const Icon(Icons.email, color: AppColor.appColor),
+                        prefixIcon: const Icon(Icons.email_outlined, color: AppColor.appColor),
                         labelText: 'Email',
                         validator: (value){
-                          if (value!.isEmpty ||
-                              value.trim().isEmpty ||
+                          if (value!.isEmpty) {
+                            return 'Please enter email';
+                          }else if(value.trim().isEmpty ||
                               !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@"
                               r"[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                  .hasMatch(value)) {
+                                  .hasMatch(value)){
                             return 'Enter a valid email';
                           }
                           return null;
                         }
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     TextFieldMixin().textFieldWidget(
                       controller: mobileController,
                       keyboardType: TextInputType.phone,
-                      prefixIcon: const Icon(Icons.phone_android, color: AppColor.appColor),
+                      prefixIcon: const Icon(Icons.phone_iphone_rounded, color: AppColor.appColor),
                       labelText: 'Mobile',
                       validator: (value) {
                         if (value == null ||
@@ -223,7 +235,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     TextFieldMixin().textFieldWidget(
                       controller: dobController,
                       keyboardType: TextInputType.datetime,
@@ -234,16 +246,16 @@ class _AddEmployeeState extends State<AddEmployee> {
                         if (value == null ||
                             value.isEmpty ||
                             value.trim().isEmpty) {
-                          return 'Please enter date of birth';
+                          return 'Please enter DOB';
                         }
                         return null;
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     TextFieldMixin().textFieldWidget(
                       controller: addressController,
                       prefixIcon:
-                      const Icon(Icons.location_on, color: AppColor.appColor),
+                      const Icon(Icons.location_on_outlined, color: AppColor.appColor),
                       labelText: 'Address',
                       validator: (value) {
                         if (value == null ||
@@ -255,12 +267,12 @@ class _AddEmployeeState extends State<AddEmployee> {
                       },
                     ),
 
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     TextFieldMixin().textFieldWidget(
                       controller: designationController,
                       keyboardType: TextInputType.text,
                       prefixIcon:
-                      const Icon(Icons.post_add, color: AppColor.appColor),
+                      const Icon(Icons.post_add_sharp, color: AppColor.appColor),
                       labelText: 'Designation',
                       validator: (value) {
                         if (value == null ||
@@ -271,12 +283,12 @@ class _AddEmployeeState extends State<AddEmployee> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     TextFieldMixin().textFieldWidget(
                       controller: departmentController,
                       keyboardType: TextInputType.text,
                       prefixIcon:
-                      const Icon(Icons.description, color: AppColor.appColor),
+                      const Icon(Icons.description_outlined, color: AppColor.appColor),
                       labelText: 'Department',
                       validator: (value) {
                         if (value == null ||
@@ -287,7 +299,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     TextFieldMixin().textFieldWidget(
                       controller: branchNameController,
                       keyboardType: TextInputType.text,
@@ -303,13 +315,13 @@ class _AddEmployeeState extends State<AddEmployee> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     TextFieldMixin().textFieldWidget(
                       controller: dateOfJoinController,
                       keyboardType: TextInputType.datetime,
                       prefixIcon:
                       const Icon(Icons.date_range_outlined, color: AppColor.appColor),
-                      labelText: 'Date of Joining',
+                      labelText: 'Joining Date',
                       validator: (value) {
                         if (value == null ||
                             value.isEmpty ||
@@ -319,7 +331,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     TextFieldMixin().textFieldWidget(
                         controller: employmentTypeController,
                         keyboardType: TextInputType.text,
@@ -335,7 +347,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                           return null;
                         }
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     TextFieldMixin().textFieldWidget(
                       controller: exprienceGradeController,
                       keyboardType: TextInputType.number,
@@ -351,12 +363,12 @@ class _AddEmployeeState extends State<AddEmployee> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     TextFieldMixin().textFieldWidget(
                       controller: managerController,
                       keyboardType: TextInputType.text,
                       prefixIcon:
-                      const Icon(Icons.man, color: AppColor.appColor),
+                      const Icon(Icons.personal_injury_outlined, color: AppColor.appColor),
                       labelText: 'Manager',
                       validator: (value) {
                         if (value == null ||
@@ -367,15 +379,15 @@ class _AddEmployeeState extends State<AddEmployee> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     TextFieldMixin().textFieldWidget(
                       controller: passwordController,
                       prefixIcon:
-                      const Icon(Icons.lock, color: AppColor.appColor),
+                      const Icon(Icons.lock_outline, color: AppColor.appColor),
                       labelText: 'Password',
                       validator: (value){
                         if (value!.isEmpty || value.trim().isEmpty) {
-                          return 'Enter a valid password';
+                          return 'Please enter password';
                         } else if (value.length < 8) {
                           return 'Password must be atLeast 8 characters';
                         }

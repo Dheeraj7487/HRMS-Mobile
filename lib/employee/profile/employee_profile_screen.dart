@@ -105,9 +105,7 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColor.appColor,
         title: const Text('Edit Profile'),
-        centerTitle: true,
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -128,29 +126,43 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                   return Column(
                     children: [
                       const SizedBox(height: 20),
-                      GestureDetector(
-                        onTap: (){
-                          _selectProfileImage(context);
-                        },
-                        child: ClipOval(
-                            child: file == null ?
-                            data['imageUrl'] == "" ? Container(
-                              color: AppColor.appColor,
-                              height: 80,width: 80,child: Center(
-                              child: Text('${data['employeeName']?.substring(0,1).toUpperCase()}',
-                                style: const TextStyle(color: AppColor.appBlackColor,fontSize: 30)),
-                            ),) :
-                            Image.network(
-                                '${data['imageUrl']}',
-                                height: 100,
-                                width: 100,
-                                fit: BoxFit.fill) :
-                                Image.file(
-                                  file!,
-                                  height: 100,width: 100,
-                                  fit: BoxFit.fill,),
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children : [
+                        GestureDetector(
+                          onTap: (){
+                            _selectProfileImage(context);
+                          },
+                          child: ClipOval(
+                              child: file == null ?
+                              data['imageUrl'] == "" ? Container(
+                                color: AppColor.appColor,
+                                height: 80,width: 80,child: Center(
+                                child: Text('${data['employeeName']?.substring(0,1).toUpperCase()}',
+                                  style: const TextStyle(color: AppColor.appBlackColor,fontSize: 30)),
+                              ),) :
+                              Image.network(
+                                  '${data['imageUrl']}',
+                                  height: 100,
+                                  width: 100,
+                                  fit: BoxFit.fill) :
+                                  Image.file(
+                                    file!,
+                                    height: 100,width: 100,
+                                    fit: BoxFit.fill,),
+                          ),
                         ),
+                          Positioned(
+                            left: 70,
+                            top: 60,
+                            child: ClipOval(child: Container(
+                              height: 40,width: 40,
+                              color:AppColor.whiteColor,child: Icon(Icons.camera_alt,color: AppColor.appColor,),)),
+                          )
+                        ]
                       ),
+
+
                       Container(
                         margin: EdgeInsets.only(top:5),
                         padding: const EdgeInsets.all(10),
@@ -158,114 +170,78 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                           children: [
                             const SizedBox(height: 5),
 
-                            CupertinoFormSection(
-                                header: Text("Personal Details"),
-                                children: [
-                                  CupertinoFormRow(
-                                    prefix: const Icon(Icons.person_outline_rounded, color: AppColor.appColor),
-                                    child: CupertinoTextFormFieldRow(
-                                      placeholder: "Enter name",
-                                      controller: employeeNameController..text = data['employeeName'],
-                                      validator: (value){
-                                        if(value!.isEmpty){
-                                          return 'Name is Required';
-                                        }
-                                      },
-                                    ),
-                                  ),
+                            TextFieldMixin().textFieldProfileWidget(
+                              labelText: 'Name',
+                              controller: employeeNameController..text = data['employeeName'],
+                              validator: (value){
+                                if(value!.isEmpty){
+                                  return 'Name is Required';
+                                }
+                              },
+                            ),
+                            SizedBox(height: 10,),
+                            TextFieldMixin().textFieldProfileWidget(
+                              labelText: 'Email',
+                              controller: emailController..text = data['email'],
+                              readOnly: true,
+                            ),
+                            SizedBox(height: 10,),
+                            TextFieldMixin().textFieldProfileWidget(
+                              labelText: 'DOB',
+                              controller: dobController..text = data['dob'],
+                              keyboardType: TextInputType.number,
+                            ),
+                            const SizedBox(height: 10,),
+                            TextFieldMixin().textFieldProfileWidget(
+                              labelText: 'Address',
+                              controller: addressController..text = data['address'],
+                              keyboardType: TextInputType.text,
+                            ),
+                            const SizedBox(height: 10,),
+                            TextFieldMixin().textFieldProfileWidget(
+                              labelText: 'Designation',
+                              controller: designationController..text = data['designation'],
+                              readOnly: true,
+                            ),
+                            const SizedBox(height: 10,),
+                            TextFieldMixin().textFieldProfileWidget(
+                              labelText: 'Department',
+                              controller: departmentController..text = data['department'],
+                              readOnly: true,
+                            ),
 
-                                  CupertinoFormRow(
-                                    prefix: const Icon(Icons.email_outlined, color: AppColor.appColor),
-                                    child: CupertinoTextFormFieldRow(
-                                      placeholder: "Enter Email",
-                                      controller: emailController..text = data['email'],
-                                      readOnly: true,
-                                    ),
-                                  ),
+                            const SizedBox(height: 10,),
+                            TextFieldMixin().textFieldProfileWidget(
+                              labelText: 'Branch',
+                              controller: branchNameController..text = data['branch'],
+                              readOnly: true,
+                            ),
 
-                                  CupertinoFormRow(
-                                    prefix: const Icon(Icons.phone_android, color: AppColor.appColor),
-                                    child: CupertinoTextFormFieldRow(
-                                      placeholder: "Enter Mobile",
-                                      controller: mobileController..text = data['mobile'],
-                                      keyboardType: TextInputType.phone,
-                                    ),
-                                  ),
+                            const SizedBox(height: 10,),
+                            TextFieldMixin().textFieldProfileWidget(
+                              labelText: 'Joining Date',
+                              controller: dateOfJoinController..text = data['dateofjoining'],
+                              readOnly: true,
+                            ),
+                            const SizedBox(height: 10,),
+                            TextFieldMixin().textFieldProfileWidget(
+                              labelText: 'Employment Type',
+                              controller: employmentTypeController..text = data['employment_type'],
+                              readOnly: true,
+                            ),
+                            const SizedBox(height: 10,),
+                            TextFieldMixin().textFieldProfileWidget(
+                              labelText: 'Exprience',
+                              controller: exprienceGradeController..text = data['exprience'],
+                              readOnly: true,
+                            ),
+                            const SizedBox(height: 10,),
+                            TextFieldMixin().textFieldProfileWidget(
+                              labelText: 'Manager',
+                              controller: managerController..text = data['manager'],
+                              readOnly: true,
+                            ),
 
-                                  CupertinoFormRow(
-                                    prefix: Image.asset(AppImage.dobIcon,height: 22,width: 22),
-                                    child: CupertinoTextFormFieldRow(
-                                      placeholder: "Enter Date Of Birth",
-                                      controller: dobController..text = data['dob'],
-                                      keyboardType: TextInputType.number,
-                                    ),
-                                  ),
-
-                                  CupertinoFormRow(
-                                    prefix: const Icon(Icons.location_on_outlined, color: AppColor.appColor),
-                                    child: CupertinoTextFormFieldRow(
-                                      placeholder: "Enter Address",
-                                      controller: addressController..text = data['address'],
-                                      keyboardType: TextInputType.text,
-                                    ),
-                                  ),
-                                  CupertinoFormRow(
-                                    prefix: Image.asset(AppImage.designationIcon,height: 22,width: 22),
-                                    child: CupertinoTextFormFieldRow(
-                                      placeholder: "Designation",
-                                      controller: designationController..text = data['designation'],
-                                      readOnly: true,
-                                    ),
-                                  ),
-                                  CupertinoFormRow(
-                                    prefix: Image.asset(AppImage.technologyIcon,height: 22,width: 22),
-                                    child: CupertinoTextFormFieldRow(
-                                      placeholder: "Department",
-                                      controller: departmentController..text = data['department'],
-                                      readOnly: true,
-                                    ),
-                                  ),
-                                  CupertinoFormRow(
-                                    prefix: Image.asset(AppImage.branchIcon,height: 22,width: 22),
-                                    child: CupertinoTextFormFieldRow(
-                                      placeholder: "Branch",
-                                      controller: branchNameController..text = data['branch'],
-                                      readOnly: true,
-                                    ),
-                                  ),
-                                  CupertinoFormRow(
-                                    prefix: Image.asset(AppImage.joiningIcon,height: 22,width: 22),
-                                    child: CupertinoTextFormFieldRow(
-                                      placeholder: "Date Of Joining",
-                                      controller: dateOfJoinController..text = data['dateofjoining'],
-                                      readOnly: true,
-                                    ),
-                                  ),
-                                  CupertinoFormRow(
-                                    prefix: Image.asset(AppImage.employmentIcon,height: 22,width: 22),
-                                    child: CupertinoTextFormFieldRow(
-                                      placeholder: "Employment Type",
-                                      controller: employmentTypeController..text = data['employment_type'],
-                                      readOnly: true,
-                                    ),
-                                  ),
-                                  CupertinoFormRow(
-                                    prefix: Image.asset(AppImage.exprienceIcon,height: 22,width: 22),
-                                    child: CupertinoTextFormFieldRow(
-                                      placeholder: "Exprience",
-                                      controller: exprienceGradeController..text = data['exprience'],
-                                      readOnly: true,
-                                    ),
-                                  ),
-                                  CupertinoFormRow(
-                                    prefix: Image.asset(AppImage.managerIcon,height: 22,width: 22),
-                                    child: CupertinoTextFormFieldRow(
-                                      placeholder: "Manager",
-                                      controller: managerController..text = data['manager'],
-                                      readOnly: true,
-                                    ),
-                                  ),
-                                ]),
                             const SizedBox(height: 20),
                             Align(
                               alignment: Alignment.center,

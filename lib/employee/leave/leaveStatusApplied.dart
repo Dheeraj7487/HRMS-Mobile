@@ -12,9 +12,7 @@ class LeaveStatusApplied extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColor.appColor,
-        title: const Text('Leave Status',style: TextStyle(fontFamily: AppFonts.Medium)),
-        centerTitle: true,
+        title: const Text('Leave Status'),
       ),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection('leave').where('leaveEmail',isEqualTo: FirebaseAuth.instance.currentUser?.email).snapshots(),

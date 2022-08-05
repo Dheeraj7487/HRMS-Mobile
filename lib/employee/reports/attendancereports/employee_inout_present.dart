@@ -34,10 +34,7 @@ class _EmployeeInOutPresentState extends State<EmployeeInOutPresent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColor.appColor,
-        title: const Text('In Out Present',
-            style: TextStyle(fontFamily: AppFonts.Medium)),
-        centerTitle: true,
+        title: const Text('In Out Present'),
       ),
       body: SingleChildScrollView(
           child: Consumer<ReportsProvider>(

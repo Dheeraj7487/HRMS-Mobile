@@ -35,10 +35,7 @@ class _InOutSummaryState extends State<InOutSummary> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColor.appColor,
-        title: const Text('In Out Summary',
-            style: TextStyle(fontFamily: AppFonts.Medium)),
-        centerTitle: true,
+        title: const Text('In Out Summary'),
       ),
       body: SingleChildScrollView(
           child: Consumer<ReportsProvider>(

@@ -19,7 +19,7 @@ class EmployeeDrawerScreen extends StatelessWidget {
         children: [
           DrawerHeader(
             decoration: const BoxDecoration(
-              color: AppColor.appColor,
+              color: AppColor.whiteColor,
             ),
             child: StreamBuilder(
                 stream: FirebaseCollection().employeeCollection.doc(FirebaseAuth.instance.currentUser?.email).snapshots(),
@@ -56,7 +56,7 @@ class EmployeeDrawerScreen extends StatelessWidget {
                           children:  [
                             const SizedBox(height: 5),
                             Text('${data['employeeName']}',style: const TextStyle(fontSize: 18,fontFamily: AppFonts.Regular)),
-                            Text('${FirebaseAuth.instance.currentUser?.email}',style: const TextStyle(color: AppColor.blackColor,fontFamily: AppFonts.Italic),),
+                            Text('${FirebaseAuth.instance.currentUser?.email}',style: const TextStyle(color: AppColor.blackColor,fontFamily: AppFonts.Regular),),
                           ],
                         ),
                       ],

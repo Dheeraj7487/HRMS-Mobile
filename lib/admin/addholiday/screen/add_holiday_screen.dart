@@ -36,17 +36,15 @@ class _AddHolidayScreenState extends State<AddHolidayScreen> {
     return GestureDetector(
       onTap: ()=> FocusScope.of(context).unfocus(),
       child: Scaffold(
+        backgroundColor: AppColor.whiteColor,
         appBar: AppBar(
-          backgroundColor: AppColor.appColor,
-          title: const Text('Add Public Holiday',style: TextStyle(fontFamily: AppFonts.Medium)),
-          centerTitle: true,
+          title: const Text('Add Public Holiday'),
         ),
         body: SingleChildScrollView(
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              //mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const SizedBox(height: 30),
                 Container(

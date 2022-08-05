@@ -52,9 +52,7 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColor.appColor,
-        title: const Text('Employee In Out',style: TextStyle(fontFamily: AppFonts.Medium),),
-        centerTitle: true,
+        title: const Text('Employee In Out'),
       ),
       body: SingleChildScrollView(
           child: Consumer<EmployeeInOutProvider>(builder: (_, snapshot, __) {
@@ -218,15 +216,11 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                                             const Expanded(
                                               //flex: 1,
                                                 child: Center(
-                                                    child: Text(
-                                                      'Out Time',
-                                                      style: TextStyle(fontFamily: AppFonts.Medium),
-                                                    ))),
+                                                    child: Text('Out Time', style: TextStyle(fontFamily: AppFonts.Medium),))),
                                             Expanded(
                                                 child: Center(
                                                     child: Text(
-                                                        streamSnapshot
-                                                            .data
+                                                        streamSnapshot.data
                                                             ?.docs[index]['outTime'] ?? '',style: const TextStyle(fontFamily: AppFonts.Medium)))),
                                           ],
                                         ),
@@ -238,8 +232,7 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                                             const Expanded(
                                                 flex: 5,
                                                 child: Text(
-                                                  'Duration',
-                                                  style: TextStyle(fontFamily: AppFonts.Medium),
+                                                  'Duration', style: TextStyle(fontFamily: AppFonts.Medium),
                                                 )),
                                             Expanded(
                                                 flex: 1,

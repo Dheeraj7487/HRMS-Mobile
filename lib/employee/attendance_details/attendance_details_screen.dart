@@ -36,8 +36,7 @@ class _AttendanceDetailsScreenState extends State<AttendanceDetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: AppColor.appColor,
-        title: const Text('Attendance Details',style: TextStyle(fontFamily: AppFonts.Medium),),
+        title: const Text('Attendance Details'),
       ),
       body: SingleChildScrollView(
         child: Column(

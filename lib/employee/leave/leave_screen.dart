@@ -134,9 +134,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColor.appColor,
-          title: const Text('Apply Leave',style: TextStyle(fontFamily: AppFonts.Medium)),
-          centerTitle: true,
+          title: const Text('Apply Leave'),
         ),
         body: SingleChildScrollView(
           child: Form(

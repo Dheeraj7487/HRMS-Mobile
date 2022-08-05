@@ -43,9 +43,7 @@ class _ViewAdminEmployeeProfileScreen extends State<ViewAdminEmployeeProfileScre
     final formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColor.appColor,
-        title: const Text('Employee Information',style: TextStyle(fontFamily: AppFonts.Medium)),
-        centerTitle: true,
+        title: const Text('Employee Information'),
       ),
       body: Form(
         key: formKey,
@@ -65,7 +63,7 @@ class _ViewAdminEmployeeProfileScreen extends State<ViewAdminEmployeeProfileScre
                     children: [
                       const SizedBox(height: 20),
 
-                  ClipOval(
+                 ClipOval(
                         child:
                         data['imageUrl'] == "" ? Container(
                           color: AppColor.appColor,

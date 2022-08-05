@@ -11,9 +11,7 @@ class LeaveStatusScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColor.appColor,
-        title: const Text('Leave Status',style: TextStyle(fontFamily: AppFonts.Medium)),
-        centerTitle: true,
+        title: const Text('Leave Status'),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('leave').snapshots(),

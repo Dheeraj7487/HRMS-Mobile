@@ -38,9 +38,7 @@ class _ViewEmployeeAttendance extends State<ViewEmployeeAttendance> with SingleT
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColor.appColor,
-          title: const Text('View Registered Details',style: TextStyle(fontFamily: AppFonts.Medium)),
-          centerTitle: true,
+          title: const Text('View Registered Details'),
           bottom : const TabBar(
             indicatorColor: AppColor.appColor,
             tabs: registeredTab

@@ -43,9 +43,7 @@ class _AdminProfileScreen extends State<AdminProfileScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColor.appColor,
         title: const Text('Edit Profile'),
-        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -70,40 +68,27 @@ class _AdminProfileScreen extends State<AdminProfileScreen> {
                       child: Column(
                         children: [
                           const SizedBox(height: 5),
-                          CupertinoFormSection(
-                              header: const Text("Personal Details"),
-                              children: [
-                                CupertinoFormRow(
-                                  prefix: const Icon(Icons.person, color: AppColor.appColor),
-                                  child: CupertinoTextFormFieldRow(
-                                    placeholder: "Enter name",
-                                    controller: companyNameController..text = data['companyName'],
-                                    validator: (value){
-                                      if(value!.isEmpty){
-                                        return 'Name is Required';
-                                      }
-                                    },
-                                  ),
-                                ),
-
-                                CupertinoFormRow(
-                                  prefix: const Icon(Icons.email, color: AppColor.appColor),
-                                  child: CupertinoTextFormFieldRow(
-                                    placeholder: "Enter Email",
-                                    controller: emailController..text = data['email'],
-                                    readOnly: true,
-                                  ),
-                                ),
-
-                                CupertinoFormRow(
-                                  prefix: const Icon(Icons.phone_android, color: AppColor.appColor),
-                                  child: CupertinoTextFormFieldRow(
-                                    placeholder: "Enter Mobile",
-                                    controller: mobileController..text = data['mobile'],
-                                    keyboardType: TextInputType.phone,
-                                  ),
-                                ),
-                              ]),
+                          TextFieldMixin().textFieldProfileWidget(
+                            labelText: 'Name',
+                            controller: companyNameController..text = data['companyName'],
+                            validator: (value){
+                              if(value!.isEmpty){
+                                return 'Name is Required';
+                              }
+                            },
+                          ),
+                          const SizedBox(height: 10),
+                          TextFieldMixin().textFieldProfileWidget(
+                            labelText: 'Email',
+                            controller: emailController..text = data['email'],
+                            readOnly: true,
+                          ),
+                          const SizedBox(height: 10),
+                          TextFieldMixin().textFieldProfileWidget(
+                            labelText: 'Mobile',
+                            controller: mobileController..text = data['mobile'],
+                            keyboardType: TextInputType.phone,
+                          ),
 
                           const SizedBox(height: 50),
                           Align(

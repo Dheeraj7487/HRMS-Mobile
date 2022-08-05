@@ -90,4 +90,40 @@ class TextFieldMixin {
       ),
     );
   }
+
+
+  Widget textFieldProfileWidget(
+      {TextEditingController? controller,
+        Color? cursorColor,
+        TextInputAction? textInputAction,
+        TextInputType? keyboardType,
+        String? Function(String?)? validator,
+        void Function(String)? onChanged,
+        InputDecoration? decoration,
+        Widget? prefixIcon,
+        Widget? suffixIcon,
+        InputBorder? focusedBorder,
+        String? labelText,
+        bool readOnly = false,
+        bool obscureText = false,
+        TextStyle? labelStyle}) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(10,0,10,0),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: Colors.grey)
+      ),
+      child: TextFormField(
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          labelText: labelText,
+          labelStyle: TextStyle(color: AppColor.appColor)
+        ),
+        readOnly: readOnly,
+        controller: controller,
+        validator: validator,
+      ),
+    );
+  }
+
 }

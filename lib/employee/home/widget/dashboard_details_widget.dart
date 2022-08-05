@@ -3,46 +3,47 @@ import 'package:flutter/material.dart';
 
 import '../../../utils/app_colors.dart';
 
-Widget DashboardDetailsWidget(String imageLocation,String title,String description){
+Widget DashboardDetailsWidget(
+    String imageLocation, String title, String description,Color color) {
   return Card(
-    elevation: 5,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(10),
-    ),
-    shadowColor: AppColor.blackColor,
-    color: AppColor.listingBgColor,
-    child:  Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 5,
-          child: Container(
-            padding: const EdgeInsets.all(10),
-            margin: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: AppColor.darkGreyColor)
+      //elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      color: AppColor.whiteColor,
+      child: ClipPath(
+        child: Container(
+          padding: const EdgeInsets.only(left: 5),
+          height: 150,
+          decoration:  BoxDecoration(
+            border: Border(
+              left: BorderSide(color: color, width: 5),
             ),
-            child: IntrinsicHeight(child: Image.asset(imageLocation,height: 80,width: 80,fit: BoxFit.contain)),
           ),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          flex: 7,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
             children: [
-              Text(title,style: const TextStyle(fontSize: 18,fontFamily: AppFonts.Medium),textAlign: TextAlign.start),
-              const SizedBox(height: 5),
-              Text(description,style: const TextStyle(color:AppColor.darkGreyColor,fontSize: 14,fontFamily: AppFonts.Regular),textAlign: TextAlign.start),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 10, right: 60, top: 10),
+                    child: Image.asset(imageLocation,
+                        height: 80, width: 80, fit: BoxFit.contain),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 10, right: 40, top: 5, bottom: 10),
+                    child: Text(title,
+                        style: const TextStyle(
+                            fontSize: 16, fontFamily: AppFonts.Medium),
+                        textAlign: TextAlign.start),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
-        const Expanded(
-            flex: 2,
-            child: Icon(Icons.arrow_forward_ios,color: AppColor.darkGreyColor,size: 20))
-      ],
-    ),
-  );
-
+      ));
 }
