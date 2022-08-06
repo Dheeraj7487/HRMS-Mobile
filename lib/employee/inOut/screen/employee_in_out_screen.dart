@@ -51,6 +51,7 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: AppColor.whiteColor,
       appBar: AppBar(
         title: const Text('Employee In Out'),
       ),
@@ -164,11 +165,11 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                 ),
                 const SizedBox(height: 10),
                 const Padding(
-                  padding: EdgeInsets.only(top: 10, bottom: 10),
+                  padding: EdgeInsets.only(top: 20, bottom: 10),
                   child: Center(
                     child: Text('Employee In Out List',
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 20,fontFamily: AppFonts.Medium)),
+                        style: TextStyle(fontSize: 18,fontFamily: AppFonts.Medium)),
                   ),
                 ),
                 StreamBuilder(
@@ -186,7 +187,7 @@ class _EmployeeInOutScreenState extends State<EmployeeInOutScreen> {
                             itemBuilder: (context, index) {
                               return Card(
                                   color: index.isOdd == true
-                                      ? AppColor.platinumColor
+                                      ? AppColor.whiteColor
                                       : AppColor.listingBgColor,
                                   child: Padding(
                                     padding:

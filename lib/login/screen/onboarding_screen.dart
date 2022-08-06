@@ -92,7 +92,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>{
                   onTap: _controller.forwardAction,
                   child: Container(
                       color: Colors.transparent,
-                      height:40,width:100,child: Center(child: Text(_controller.isLastPage ? 'Get Started' : 'Next -->',textAlign: TextAlign.center,style: TextStyle(fontFamily: AppFonts.Medium),))),
+                      height:40,width:100,child: Center(child: Text(_controller.isLastPage ? 'Get Started' : 'Next -->',textAlign: TextAlign.center,style: const TextStyle(fontFamily: AppFonts.Medium),))),
                 );
               }),
             ),

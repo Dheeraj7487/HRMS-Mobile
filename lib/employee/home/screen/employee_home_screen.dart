@@ -6,7 +6,6 @@ import 'package:employee_attendance_app/firebase/firebase_collection.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:employee_attendance_app/utils/app_fonts.dart';
 import 'package:employee_attendance_app/utils/app_images.dart';
-import 'package:employee_attendance_app/widget/employee_drawer_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -225,7 +224,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(left: 20,right: 20),
-                            child: DashboardDetailsWidget(AppImage.holidays,
+                            child: dashboardDetailsWidget(AppImage.holidays,
                                 'Public Holiday','Check allocated public holiday',Colors.green),
                           ),
                         ),
@@ -239,22 +238,48 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                   const SizedBox(height: 5),
                   Padding(
                     padding: const EdgeInsets.only(left: 20,right: 20),
-                    child: Row(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children:[
                         GestureDetector(
                           onTap: () {
-                            Get.to(PublicHolidayScreen());
+                            Get.to(PublicHolidayScreen(),
+                                transition: Transition.rightToLeftWithFade);
                           },
-                          child: DashboardDetailsWidget(AppImage.holidays,
-                              'Public\nHoliday','Check allocated public holiday',AppColor.greyColorLight),
+                          child: dashboardDetailsWidget(AppImage.holidays,
+                              'Public Holiday','Check allocated public holiday',AppColor.greyColorLight),
                         ),
                         GestureDetector(
                           onTap: () {
-                            Get.to(const EmployeeInOutScreen());
+                            Get.to(const EmployeeInOutScreen(),
+                                transition: Transition.rightToLeftWithFade);
                           },
-                          child: DashboardDetailsWidget(AppImage.entryExit,
-                              'Entry\nExit','Fill the attendance today is present or not',AppColor.appColor),
+                          child: dashboardDetailsWidget(AppImage.entryExit,
+                              'Entry Exit','Fill the attendance today is present or not',AppColor.appColor.withOpacity(0.4)),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20,right: 20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children:[
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(AttendanceDetailsScreen(passType: 'Employee', email: '',),
+                                transition: Transition.rightToLeftWithFade);
+                          },
+                          child: dashboardDetailsWidget(AppImage.timeSlot,
+                              'Attendance Details','Check your entry exit time details',Colors.amberAccent.withOpacity(0.4)),
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            Get.to(LeaveScreen(),
+                                transition: Transition.rightToLeftWithFade);
+                          },
+                          child: dashboardDetailsWidget(AppImage.leave, 'Apply Leave','Applying for a leave',Colors.green.withOpacity(0.4)),
                         ),
 
                       ],
@@ -263,55 +288,34 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
 
                   Padding(
                     padding: const EdgeInsets.only(left: 20,right: 20),
-                    child: Row(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children:[
                         GestureDetector(
                           onTap: () {
-                            Get.to(AttendanceDetailsScreen(passType: 'Employee', email: '',));
+                            Get.to(const LeaveStatusApplied(),
+                                transition: Transition.rightToLeftWithFade);
                           },
-                          child: DashboardDetailsWidget(AppImage.timeSlot,
-                              'Attendance\nDetails','Check your entry exit time details',AppColor.yellowColor),
+                          child: dashboardDetailsWidget(AppImage.leaveStatus,
+                              'Leave Status','Check your entry exit time details',Colors.red.withOpacity(0.4)),
                         ),
                         GestureDetector(
                           onTap: (){
-                            Get.to(LeaveScreen());
+                            Get.to(const ReportScreen(),
+                                transition: Transition.rightToLeftWithFade);
                           },
-                          child: DashboardDetailsWidget(AppImage.leave, 'Apply\nLeave','Apply for a leave',Colors.green),
-                        ),
-
-                      ],
-                    ),
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20,right: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children:[
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(const LeaveStatusApplied());
-                          },
-                          child: DashboardDetailsWidget(AppImage.leaveStatus,
-                              'Leave\nStatus','Check your entry exit time details',Colors.brown),
-                        ),
-                        GestureDetector(
-                          onTap: (){
-                            Get.to(const ReportScreen());
-                          },
-                          child: DashboardDetailsWidget(AppImage.reports, 'Reports','Reports',Colors.cyanAccent),
+                          child: dashboardDetailsWidget(AppImage.reports, 'Reports','Check your reports month wise',Colors.cyanAccent.withOpacity(0.4)),
                         ),
                       ],
                     ),
                   ),
-
+                  const SizedBox(height: 10)
                 ],
               ),
             ),
           ),
         ),
-        endDrawer: const EmployeeDrawerScreen(),
+       // endDrawer: const EmployeeDrawerScreen(),
       ),
     );
   }

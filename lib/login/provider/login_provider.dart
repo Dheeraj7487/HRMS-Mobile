@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 import '../../admin/home/screen/admin_home_screen.dart';
 import '../../employee/home/screen/employee_home_screen.dart';
 import '../../utils/app_utils.dart';
+import '../../widget/admin_bottom_navigationbar.dart';
+import '../../widget/employee_bottom_navigationbar.dart';
 import 'loading_provider.dart';
 
 class LoginProvider extends ChangeNotifier{
@@ -102,13 +104,13 @@ class LoginProvider extends ChangeNotifier{
       //  print(adminDataList[i].email);
         if (FirebaseAuth.instance.currentUser!.email == email) {
           if (FirebaseAuth.instance.currentUser!.displayName == 'Admin') {
-            Get.offAll(AdminHomeScreen());
+            Get.offAll(AdminBottomNavBarScreen());
             AppUtils.instance.showToast(toastMessage: "Login Successfully");
             print('Admin login');
             notifyListeners();
           }
           else {
-            Get.offAll(EmployeeHomeScreen());
+            Get.offAll(BottomNavBarScreen());
             AppUtils.instance.showToast(toastMessage: "Login Successfully");
             print('Employee login');
             notifyListeners();

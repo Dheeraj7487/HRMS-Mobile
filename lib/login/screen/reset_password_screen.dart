@@ -29,8 +29,8 @@ class ResetPasswordScreen extends StatelessWidget {
                     child: Image.asset(AppImage.resetPassword,
                      height: 100,width: 100,fit: BoxFit.fill),
                   ),
-                  SizedBox(height: 20,),
-                  Text('Reset Your Password',style: TextStyle(fontSize: 20,fontFamily: AppFonts.Medium)),
+                  const SizedBox(height: 20,),
+                  const Text('Reset Your Password',style: TextStyle(fontSize: 20,fontFamily: AppFonts.Medium)),
                   const SizedBox(height: 70,),
                   TextFieldMixin().textFieldCardWidget(
                     controller: emailController,
@@ -47,7 +47,7 @@ class ResetPasswordScreen extends StatelessWidget {
                       return null;
                     },
                   ),
-                  SizedBox(height: 50),
+                  const SizedBox(height: 50),
                   Align(
                     alignment: Alignment.bottomRight,
                     child: GestureDetector(
@@ -60,7 +60,7 @@ class ResetPasswordScreen extends StatelessWidget {
                           .stylishButton(onPress: () {}, text: 'Reset Password'),
                     ),
                   ),
-                  SizedBox(height: 20)
+                  const SizedBox(height: 20)
                 ],
               ),
             ),

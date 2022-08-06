@@ -7,6 +7,7 @@ class LeaveFireAuth{
   Future<void> applyLeave(
       {
         required String leaveEmail,
+        required String leaveEmployeeName,
         required String leaveFrom,
         required String leaveTo,
         required String leaveDays,
@@ -21,6 +22,7 @@ class LeaveFireAuth{
 
     Map<String, dynamic> data = <String, dynamic>{
       "leaveEmail": leaveEmail.toString(),
+      "leaveEmployeeName": leaveEmployeeName.toString(),
       "leaveForm": leaveFrom.toString(),
       "leaveTo": leaveTo.toString(),
       "leaveDays": leaveDays.toString(),

@@ -1,10 +1,7 @@
-import 'dart:io';
 import 'dart:typed_data';
-import 'package:dio/dio.dart';
 import 'package:employee_attendance_app/employee/reports/provider/reports_provider.dart';
 import 'package:employee_attendance_app/firebase/firebase_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:provider/provider.dart';
@@ -205,7 +202,7 @@ class PdfViewInOutSummary extends ChangeNotifier{
                                                 color: const PdfColor(0, 0, 0, 0), width: 1),
 
 
-              /*querySnapshots.docs.map((e) =>
+                                            /*querySnapshots.docs.map((e) =>
                                             e['currentDate']
 
                                                 ==  "${providerData.reportsFromDate.year}"
@@ -231,7 +228,7 @@ class PdfViewInOutSummary extends ChangeNotifier{
                                                         .toString().length != 1 ? providerData.reportsFromDate.month :
                                                     '0${providerData.reportsFromDate.month}'}"
                                                         "-${i.toString().length == 1 ? '0$i' : i}"
-                                                        ? outTime != '' ? pw.Text('${outTime}') : pw.Text('') : pw.Text('');
+                                                        ? outTime != '' ? pw.Text('$outTime') : pw.SizedBox(width: 29) : pw.Text('');
                                                   },),
                                                 ]
                                             ),
@@ -246,7 +243,7 @@ class PdfViewInOutSummary extends ChangeNotifier{
                                                         .toString().length != 1 ? providerData.reportsFromDate.month :
                                                     '0${providerData.reportsFromDate.month}'}"
                                                         "-${i.toString().length == 1 ? '0$i' : i}"
-                                                        ? duration != '' ? pw.Text('${duration}') : pw.Text('') : pw.Text('');
+                                                        ? duration != '' ? pw.Text('$duration') : pw.Text('') : pw.Text('');
                                                   },),
                                                 ]
                                             ),
@@ -267,13 +264,11 @@ class PdfViewInOutSummary extends ChangeNotifier{
                                     ),
                                   ]),
                             }
-
                           ]
                       ),
 
                     ])];
             }));
-     List<int> bytes = await pdf.save();
     return await pdf.save();
 
     //saveAndShared(bytes, 'In Out Summary Reports.pdf');

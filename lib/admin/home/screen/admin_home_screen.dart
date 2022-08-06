@@ -5,7 +5,6 @@ import 'package:employee_attendance_app/employee/home/widget/dashboard_details_w
 import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:employee_attendance_app/utils/app_fonts.dart';
 import 'package:employee_attendance_app/utils/app_images.dart';
-import 'package:employee_attendance_app/widget/admin_drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../employee/publicholiday/screen/public_holiday_screen.dart';
@@ -33,7 +32,7 @@ class AdminHomeScreen extends StatelessWidget {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        endDrawer:const AdminDrawerScreen(),
+        //endDrawer:const AdminDrawerScreen(),
         extendBodyBehindAppBar: true,
         body: NestedScrollView(
             headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -158,7 +157,7 @@ class AdminHomeScreen extends StatelessWidget {
                               onTap: () {
                                 Get.to(const AddHolidayScreen());
                               },
-                              child: DashboardDetailsWidget(AppImage.event,
+                              child: dashboardDetailsWidget(AppImage.event,
                                   'Add Holiday','Add public holiday only'),
                             ),
                           ),
@@ -172,22 +171,24 @@ class AdminHomeScreen extends StatelessWidget {
                     const SizedBox(height: 5),
                     Padding(
                       padding: const EdgeInsets.only(left: 20,right: 20),
-                      child: Row(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children:[
                           GestureDetector(
                             onTap: () {
-                              Get.to(const AddHolidayScreen());
+                              Get.to(const AddHolidayScreen(),
+                                  transition: Transition.rightToLeftWithFade);
                             },
-                            child: DashboardDetailsWidget(AppImage.event,
-                                'Add Holiday','Add public holiday only',AppColor.newOrangeColor),
+                            child: dashboardDetailsWidget(AppImage.event,
+                                'Add Holiday','Add public holiday only',AppColor.greyColorLight),
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.to(const AddEmployee());
+                              Get.to(const AddEmployee(),
+                                  transition: Transition.rightToLeftWithFade);
                             },
-                            child: DashboardDetailsWidget(AppImage.addEmployee,
-                                'Add\nEmployee','Add employee details',AppColor.appColor),
+                            child: dashboardDetailsWidget(AppImage.addEmployee,
+                                'Add Employee','Create an account employee',AppColor.appColor.withOpacity(0.4)),
                           ),
 
                         ],
@@ -195,38 +196,40 @@ class AdminHomeScreen extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 20,right: 20),
-                      child: Row(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children:[
                           GestureDetector(
                             onTap: () {
-                              Get.to(EmployeeDetailsScreen());
+                              Get.to(EmployeeDetailsScreen(),
+                                  transition: Transition.rightToLeftWithFade);
                             },
-                            child: DashboardDetailsWidget(AppImage.employee,
-                                'Employee\nDetails','List of registered employee details',
-                                AppColor.redColor),
+                            child: dashboardDetailsWidget(AppImage.employee,
+                                'Employee Details','List of registered employee details',
+                                Colors.amberAccent.withOpacity(0.4)),
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.to(const ViewEmployeeAttendance());
+                              Get.to(const ViewEmployeeAttendance(),
+                                  transition: Transition.rightToLeftWithFade);
                             },
-                            child: DashboardDetailsWidget(AppImage.attendance,
-                                'View\nAttendance','List of registered employee attendance',AppColor.backgroundColor),
+                            child: dashboardDetailsWidget(AppImage.attendance,
+                                'View Attendance','List of registered employee attendance',AppColor.backgroundColor.withOpacity(0.4)),
                           ),
 
                          /* GestureDetector(
                             onTap: (){
                               Get.to(const LeaveStatusScreen());
                             },
-                            child: DashboardDetailsWidget(AppImage.leaveStatus,
-                                'Leave\nStatus','Applied leave for approved or reject',
+                            child: dashboardDetailsWidget(AppImage.leaveStatus,
+                                'Leave Status','Applied leave for approved or reject',
                                 Colors.green),
                           ),*/
 
-                          /* DashboardDetailsWidget('https://images-platform.99static.com//ITYtWRJgMT53_-hlTb3l2faUrPU=/0x1500:1500x3000/fit-in/500x500/99designs-contests-attachments/127/127315/attachment_127315153',
+                          /* dashboardDetailsWidget('https://images-platform.99static.com//ITYtWRJgMT53_-hlTb3l2faUrPU=/0x1500:1500x3000/fit-in/500x500/99designs-contests-attachments/127/127315/attachment_127315153',
                               'Today Present Employee','Check date wise all registered employee presence of entry/exit'),
 
-                          DashboardDetailsWidget('https://thumbs.dreamstime.com/b/earn-money-vector-logo-icon-design-salary-symbol-hand-illustration-illustrations-152826410.jpg',
+                          dashboardDetailsWidget('https://thumbs.dreamstime.com/b/earn-money-vector-logo-icon-design-salary-symbol-hand-illustration-illustrations-152826410.jpg',
                               'Calculate Salary','Check your month wise attendance and calculate'),
                           const SizedBox(height: 20)*/
                         ],
@@ -234,22 +237,25 @@ class AdminHomeScreen extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 20,right: 20),
-                      child: Row(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children:[
                           GestureDetector(
                             onTap: () {
-                              Get.to(const LeaveStatusScreen());
+                              Get.to(const LeaveStatusScreen(),
+                                  transition: Transition.rightToLeftWithFade);
                             },
-                            child: DashboardDetailsWidget(AppImage.leaveStatus,
-                                'Leave\nStatus','',Colors.brown),
+                            child: dashboardDetailsWidget(AppImage.leaveStatus,
+                                'Leave Status','Check the leave status\napproved and reject the leave',Colors.green.withOpacity(0.4)),
                           ),
                           GestureDetector(
                             onTap: (){
-                              Get.to(PublicHolidayScreen());
+                              Get.to(PublicHolidayScreen(),
+                                  transition: Transition.rightToLeftWithFade);
                             },
-                            child: DashboardDetailsWidget(AppImage.reports, 'View\nHoliday','View holiday',Colors.cyanAccent),
+                            child: dashboardDetailsWidget(AppImage.reports, 'View Holiday','View the list of public holiday',Colors.red.withOpacity(0.4)),
                           ),
+                          const SizedBox(height: 10)
                         ],
                       ),
                     ),

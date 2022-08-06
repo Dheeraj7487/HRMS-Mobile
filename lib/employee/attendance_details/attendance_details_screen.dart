@@ -34,6 +34,7 @@ class _AttendanceDetailsScreenState extends State<AttendanceDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.whiteColor,
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Attendance Details'),
@@ -160,10 +161,10 @@ class _AttendanceDetailsScreenState extends State<AttendanceDetailsScreen> {
                     margin: const EdgeInsets.only(right: 20),
                     child: TextButton(onPressed: (){
                       setState((){
-                        print(DateFormat.yMMMM().format(DateTime.now()));
-                        print(Provider.of<AttendanceDetailsProvider>(context,listen: false).selectMonth);
-                        print(Provider.of<AttendanceDetailsProvider>(context,listen: false).selectYear);
-                        print('${Provider.of<AttendanceDetailsProvider>(context,listen: false).selectMonth} ${Provider.of<AttendanceDetailsProvider>(context,listen: false).selectYear}');
+                        debugPrint(DateFormat.yMMMM().format(DateTime.now()));
+                        debugPrint(Provider.of<AttendanceDetailsProvider>(context,listen: false).selectMonth);
+                        debugPrint(Provider.of<AttendanceDetailsProvider>(context,listen: false).selectYear);
+                        debugPrint('${Provider.of<AttendanceDetailsProvider>(context,listen: false).selectMonth} ${Provider.of<AttendanceDetailsProvider>(context,listen: false).selectYear}');
                         inOutTimeEmployee = FirebaseFirestore.instance.collection("employee")
                             .doc(FirebaseAuth.instance.currentUser!.email).collection('InOutTime').
                         where('yearMonth',isEqualTo: '${Provider.of<AttendanceDetailsProvider>(context,listen: false).selectMonth} ${Provider.of<AttendanceDetailsProvider>(context,listen: false).selectYear}').snapshots();

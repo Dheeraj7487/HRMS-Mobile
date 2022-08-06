@@ -1,26 +1,15 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:employee_attendance_app/admin/home/screen/admin_home_screen.dart';
-import 'package:employee_attendance_app/employee/home/screen/employee_home_screen.dart';
 import 'package:employee_attendance_app/firebase/firebase_collection.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_credit_card/flutter_credit_card.dart';
-import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-
-import '../../admin/employeeprofile/auth/add_employee_fire_auth.dart';
 import '../../login/provider/login_provider.dart';
 import '../../mixin/button_mixin.dart';
 import '../../mixin/textfield_mixin.dart';
 import '../../utils/app_utils.dart';
+import '../../widget/admin_bottom_navigationbar.dart';
 
 class AdminProfileScreen extends StatefulWidget {
   const AdminProfileScreen({Key? key}) : super(key: key);
@@ -42,6 +31,7 @@ class _AdminProfileScreen extends State<AdminProfileScreen> {
     final formKey = GlobalKey<FormState>();
 
     return Scaffold(
+      backgroundColor: AppColor.whiteColor,
       appBar: AppBar(
         title: const Text('Edit Profile'),
       ),
@@ -61,7 +51,7 @@ class _AdminProfileScreen extends State<AdminProfileScreen> {
                 Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
                 return Column(
                   children: [
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     Container(
                       margin: const EdgeInsets.only(top:5),
                       padding: const EdgeInsets.all(10),
@@ -100,7 +90,7 @@ class _AdminProfileScreen extends State<AdminProfileScreen> {
                                     Provider.of<LoginProvider>(context,listen: false).signUpAdmin(email: emailController.text.trim(),
                                         companyName: companyNameController.text.trim(),
                                         mobile: mobileController.text.trim(),type: 'Admin');
-                                    Get.offAll(AdminHomeScreen());
+                                    Get.offAll(AdminBottomNavBarScreen());
                                 }
                               },
                               child: ButtonMixin()

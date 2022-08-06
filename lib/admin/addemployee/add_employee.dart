@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:employee_attendance_app/admin/home/screen/admin_home_screen.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -9,7 +7,6 @@ import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 
 import '../../login/auth/login_employee_fire_auth.dart';
@@ -17,8 +14,8 @@ import '../../login/provider/loading_provider.dart';
 import '../../mixin/button_mixin.dart';
 import '../../mixin/textfield_mixin.dart';
 import '../../utils/app_colors.dart';
-import '../../utils/app_fonts.dart';
 import '../../utils/app_utils.dart';
+import '../../widget/admin_bottom_navigationbar.dart';
 
 class AddEmployee extends StatefulWidget {
   const AddEmployee({Key? key}) : super(key: key);
@@ -96,7 +93,7 @@ class _AddEmployeeState extends State<AddEmployee> {
             imageUrl: imageUrl,
             employmentType: employmentTypeController.text, exprience: exprienceGradeController.text,
             manager: managerController.text, type: 'Employee').then((value) {
-          Get.off(AdminHomeScreen());
+          Get.off(AdminBottomNavBarScreen());
           send();
         });
         //FirebaseAuth.instance.signOut();
@@ -116,13 +113,10 @@ class _AddEmployeeState extends State<AddEmployee> {
       recipients: [emailController.text],
     );
 
-    String platformResponse;
 
     try {
       await FlutterEmailSender.send(email);
-      platformResponse = 'success';
     } catch (error) {
-      platformResponse = error.toString();
     }
 
   }

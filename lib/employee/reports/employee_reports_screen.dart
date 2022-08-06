@@ -1,4 +1,3 @@
-import 'package:employee_attendance_app/employee/reports/attendancereports/attendance_register_screen.dart';
 import 'package:employee_attendance_app/employee/reports/attendancereports/employee_inout_present.dart';
 import 'package:employee_attendance_app/employee/reports/attendancereports/in_out_summary.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
@@ -21,6 +20,7 @@ class _ReportScreenState extends State<ReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.whiteColor,
       appBar: AppBar(
         title: const Text('Reports'),
       ),

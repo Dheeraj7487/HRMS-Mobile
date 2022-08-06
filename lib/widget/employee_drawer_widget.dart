@@ -15,6 +15,7 @@ class EmployeeDrawerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: AppColor.whiteColor,
       child: ListView(
         children: [
           DrawerHeader(
@@ -65,11 +66,13 @@ class EmployeeDrawerScreen extends StatelessWidget {
               }
             ),
           ),
+          Divider(height: 1,color: AppColor.darkGreyColor,),
           ListTile(
             leading: const Icon(Icons.home),
             title: const Text('Home',style: TextStyle(fontFamily: AppFonts.Medium)),
             onTap: () {
-              Navigator.pop(context);
+             // Navigator.pop(context);
+              Get.back();
             },
           ),
           ListTile(
@@ -77,7 +80,9 @@ class EmployeeDrawerScreen extends StatelessWidget {
             title: const Text('Profile',style: TextStyle(fontFamily: AppFonts.Medium)),
             onTap: () {
               Navigator.pop(context);
-              Get.to(const EmployeeProfileScreen());
+              Get.to(const EmployeeProfileScreen(),
+                  duration: const Duration(seconds: 1),
+                  transition: Transition.rightToLeftWithFade);
             },
           ),
 

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:employee_attendance_app/employee/home/screen/employee_home_screen.dart';
 import 'package:employee_attendance_app/firebase/firebase_collection.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:file_picker/file_picker.dart';
@@ -17,8 +16,8 @@ import 'package:get/get.dart';
 import '../../admin/employeeprofile/auth/add_employee_fire_auth.dart';
 import '../../mixin/button_mixin.dart';
 import '../../mixin/textfield_mixin.dart';
-import '../../utils/app_images.dart';
 import '../../utils/app_utils.dart';
+import '../../widget/employee_bottom_navigationbar.dart';
 
 class EmployeeProfileScreen extends StatefulWidget {
   const EmployeeProfileScreen({Key? key}) : super(key: key);
@@ -32,7 +31,7 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController employeeNameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
-  MaskedTextController dobController = MaskedTextController(mask: '00/00/0000');
+  TextEditingController dobController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
   TextEditingController departmentController = TextEditingController();
   TextEditingController designationController = TextEditingController();
@@ -162,7 +161,6 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                         ]
                       ),
 
-
                       Container(
                         margin: EdgeInsets.only(top:5),
                         padding: const EdgeInsets.all(10),
@@ -190,6 +188,22 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                               labelText: 'DOB',
                               controller: dobController..text = data['dob'],
                               keyboardType: TextInputType.number,
+                              /*onTap: () async{
+                                  datePicked = await showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime.now(),
+                                      lastDate: DateTime(2300));
+                                  setState((){
+                                    dobController = datePicked as TextEditingController;
+                                  });
+                              }*/
+                            ),
+                            const SizedBox(height: 10,),
+                            TextFieldMixin().textFieldProfileWidget(
+                              labelText: 'Mobile',
+                              controller: mobileController..text = data['mobile'],
+                              keyboardType: TextInputType.text,
                             ),
                             const SizedBox(height: 10,),
                             TextFieldMixin().textFieldProfileWidget(
@@ -266,7 +280,7 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                                           employmentType: employmentTypeController.text, exprience: exprienceGradeController.text,
                                           manager: managerController.text, type: 'Employee');
                                       //Navigator.push(context, MaterialPageRoute(builder: (context)=>EmployeeHomeScreen()));
-                                      Get.offAll(const EmployeeHomeScreen());
+                                      Get.offAll(BottomNavBarScreen());
                                     });
                                     // } else{
                                     //   print('Image Url is null = > $url');

@@ -22,7 +22,7 @@ class _ViewEmployeeAttendance extends State<ViewEmployeeAttendance> with SingleT
   FirebaseFirestore.instance.collection("admin").snapshots();
 
   static const List<Tab> registeredTab = <Tab>[
-    Tab(text: 'Employee',),
+    Tab(text: 'Employee'),
     Tab(text: 'Admin'),
   ];
 
@@ -37,11 +37,13 @@ class _ViewEmployeeAttendance extends State<ViewEmployeeAttendance> with SingleT
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        backgroundColor: AppColor.whiteColor,
         appBar: AppBar(
           title: const Text('View Registered Details'),
           bottom : const TabBar(
             indicatorColor: AppColor.appColor,
-            tabs: registeredTab
+            labelColor: AppColor.appColor,
+            tabs: registeredTab,
           ),
         ),
         body: TabBarView(

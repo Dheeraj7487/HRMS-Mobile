@@ -11,6 +11,7 @@ class LeaveStatusApplied extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.whiteColor,
       appBar: AppBar(
         title: const Text('Leave Status'),
       ),
@@ -34,7 +35,7 @@ class LeaveStatusApplied extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.only(left: 10.0,right: 10,top: 5),
                       child: Card(
-                        color: snapshot.data?.docs[index]['leaveType'] == 'Flexi Leave' ? AppColor.whiteColor : AppColor.platinumColor,
+                        color: snapshot.data?.docs[index]['leaveType'] != 'Flexi Leave' ? AppColor.whiteColor : Colors.white70.withOpacity(0.8),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10.0,right: 10,top: 10,bottom: 10),
                           child: Column(

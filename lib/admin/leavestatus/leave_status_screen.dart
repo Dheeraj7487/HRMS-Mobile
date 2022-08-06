@@ -10,6 +10,7 @@ class LeaveStatusScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.whiteColor,
       appBar: AppBar(
         title: const Text('Leave Status'),
       ),
@@ -38,7 +39,7 @@ class LeaveStatusScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('${snapshot.data?.docs[index]['leaveEmail']}',style: const TextStyle(color: AppColor.appColor,fontSize: 16,fontFamily: AppFonts.Medium)),
+                            Text('${snapshot.data?.docs[index]['leaveEmployeeName']}',style: const TextStyle(color: AppColor.appColor,fontSize: 16,fontFamily: AppFonts.Medium)),
                             const SizedBox(height: 5),
                             Visibility(
                                 visible: snapshot.data?.docs[index]['leaveType'] == 'Flexi Leave',
@@ -53,8 +54,8 @@ class LeaveStatusScreen extends StatelessWidget {
                                 Text('${snapshot.data?.docs[index]['leaveType'] == 'Flexi Leave' ?
                                 snapshot.data?.docs[index]['leaveToTime'] : snapshot.data?.docs[index]['leaveTo']}',
                                     style: const TextStyle(fontFamily: AppFonts.Medium)),
-                                Text('${snapshot.data?.docs[index]['leaveType'] == 'Flexi Leave' ?
-                                snapshot.data?.docs[index]['leaveHours'] : snapshot.data?.docs[index]['leaveDays']}',
+                                Text(snapshot.data?.docs[index]['leaveType'] == 'Flexi Leave' ?
+                                '${snapshot.data?.docs[index]['leaveHours']} hrs' : '${snapshot.data?.docs[index]['leaveDays']} day',
                                     style: const TextStyle(fontFamily: AppFonts.Medium)),
                               ],
                             ),
@@ -103,7 +104,8 @@ class LeaveStatusScreen extends StatelessWidget {
                                         leaveEmail: snapshot.data?.docs[index]['leaveEmail'],
                                         leaveFromTime: snapshot.data?.docs[index]['leaveFromTime'],
                                         leaveHours: snapshot.data?.docs[index]['leaveHours'],
-                                        leaveToTime: snapshot.data?.docs[index]['leaveToTime']
+                                        leaveToTime: snapshot.data?.docs[index]['leaveToTime'],
+                                        leaveEmployeeName: snapshot.data?.docs[index]['leaveEmployeeName']
                                     );
                                   },
                                   child: const Text('Approved',style: TextStyle(color: AppColor.appColor,fontFamily: AppFonts.Medium),),
@@ -121,7 +123,8 @@ class LeaveStatusScreen extends StatelessWidget {
                                         leaveEmail: snapshot.data?.docs[index]['leaveEmail'],
                                         leaveFromTime: snapshot.data?.docs[index]['leaveFromTime'],
                                         leaveHours: snapshot.data?.docs[index]['leaveHours'],
-                                        leaveToTime: snapshot.data?.docs[index]['leaveToTime']
+                                        leaveToTime: snapshot.data?.docs[index]['leaveToTime'],
+                                        leaveEmployeeName: snapshot.data?.docs[index]['leaveEmployeeName']
                                     );
                                   },
                                   child: const Text('Rejected',style: TextStyle(color: AppColor.appColor,fontFamily: AppFonts.Medium)),

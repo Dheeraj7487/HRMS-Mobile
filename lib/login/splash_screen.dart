@@ -1,17 +1,13 @@
 import 'dart:async';
-import 'package:employee_attendance_app/admin/home/screen/admin_home_screen.dart';
-import 'package:employee_attendance_app/login/provider/login_provider.dart';
 import 'package:employee_attendance_app/login/screen/onboarding_screen.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:employee_attendance_app/utils/app_images.dart';
+import 'package:employee_attendance_app/widget/employee_bottom_navigationbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../employee/home/screen/employee_home_screen.dart';
 import '../utils/app_preference_key.dart';
 import '../utils/app_utils.dart';
-
+import '../widget/admin_bottom_navigationbar.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -34,14 +30,14 @@ class _SplashScreenState extends State<SplashScreen>{
        // Provider.of<LoginProvider>(context,listen: false).getSharedPreferenceData(email);
         if(FirebaseAuth.instance.currentUser?.displayName == 'Admin'){
           Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => AdminHomeScreen()));
+              MaterialPageRoute(builder: (context) => AdminBottomNavBarScreen()));
         }else{
           Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => EmployeeHomeScreen()));
+              MaterialPageRoute(builder: (context) => BottomNavBarScreen()));
         }
       }else{
          Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => OnBoardingScreen()));
+            MaterialPageRoute(builder: (context) => const OnBoardingScreen()));
       }
       });
   }

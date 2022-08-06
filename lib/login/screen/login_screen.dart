@@ -1,13 +1,10 @@
 import 'package:employee_attendance_app/login/screen/admin_register_screen.dart';
-import 'package:employee_attendance_app/login/screen/employee_register_screen.dart';
 import 'package:employee_attendance_app/mixin/button_mixin.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:employee_attendance_app/utils/app_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:provider/provider.dart';
 import '../../mixin/textfield_mixin.dart';
 import '../../utils/app_preference_key.dart';

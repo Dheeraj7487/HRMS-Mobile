@@ -33,6 +33,7 @@ class _EmployeeInOutPresentState extends State<EmployeeInOutPresent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.whiteColor,
       appBar: AppBar(
         title: const Text('In Out Present'),
       ),

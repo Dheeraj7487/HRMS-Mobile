@@ -1,5 +1,4 @@
 import 'package:employee_attendance_app/admin/addholiday/auth/add_holiday_fire_auth.dart';
-import 'package:employee_attendance_app/mixin/textfield_mixin.dart';
 import 'package:employee_attendance_app/utils/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -47,6 +46,7 @@ class _AddHolidayScreenState extends State<AddHolidayScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 const SizedBox(height: 30),
+
                 Container(
                     padding: const EdgeInsets.only(left: 25,bottom: 5),
                     child: const Text('Holiday Date',style: TextStyle(fontFamily: AppFonts.Medium))),

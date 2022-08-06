@@ -11,6 +11,7 @@ class PublicHolidayScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.whiteColor,
       appBar: AppBar(
         title: const Text('Public Holiday'),
         centerTitle: true,
@@ -25,7 +26,7 @@ class PublicHolidayScreen extends StatelessWidget {
                   if(streamSnapshot.connectionState == ConnectionState.waiting){
                     return const Center(child: CircularProgressIndicator());
                   } if (streamSnapshot.hasError) {
-                    return Center(child: const Text("Something went wrong"));
+                    return const Center(child: Text("Something went wrong"));
                   } else if (streamSnapshot.connectionState == ConnectionState.done) {
                     return const Center(child: CircularProgressIndicator(),);
                   } else if (streamSnapshot.requireData.docChanges.isEmpty){
@@ -36,7 +37,7 @@ class PublicHolidayScreen extends StatelessWidget {
                         shrinkWrap: true,
                         itemBuilder: (context,index) {
                           return Card(
-                            color: AppColor.listingBgColor,
+                            color: AppColor.whiteColor,
                             child: SizedBox(
                               width: MediaQuery.of(context).size.width,
                               child: Column(

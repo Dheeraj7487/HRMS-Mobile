@@ -99,6 +99,7 @@ class TextFieldMixin {
         TextInputType? keyboardType,
         String? Function(String?)? validator,
         void Function(String)? onChanged,
+        void Function()? onTap,
         InputDecoration? decoration,
         Widget? prefixIcon,
         Widget? suffixIcon,
@@ -109,6 +110,7 @@ class TextFieldMixin {
         TextStyle? labelStyle}) {
     return Container(
       padding: const EdgeInsets.fromLTRB(10,0,10,0),
+      margin: const EdgeInsets.only(left: 10,right: 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           border: Border.all(color: Colors.grey)
@@ -117,10 +119,11 @@ class TextFieldMixin {
         decoration: InputDecoration(
           border: InputBorder.none,
           labelText: labelText,
-          labelStyle: TextStyle(color: AppColor.appColor)
+          labelStyle: const TextStyle(color: AppColor.appColor)
         ),
         readOnly: readOnly,
         controller: controller,
+        onTap: onTap,
         validator: validator,
       ),
     );

@@ -19,6 +19,7 @@ class _OpenPdfInOutSummaryState extends State<OpenPdfInOutSummary> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.whiteColor,
       body: widget.linked == null ? const Center(child: CircularProgressIndicator(strokeWidth: 4,color: Colors.indigo,),) :
       SfPdfViewer.memory(widget.linked),
       floatingActionButton: FloatingActionButton(

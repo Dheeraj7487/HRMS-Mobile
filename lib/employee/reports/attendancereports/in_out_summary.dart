@@ -34,6 +34,7 @@ class _InOutSummaryState extends State<InOutSummary> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.whiteColor,
       appBar: AppBar(
         title: const Text('In Out Summary'),
       ),

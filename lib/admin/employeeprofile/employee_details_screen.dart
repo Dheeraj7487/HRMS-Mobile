@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:employee_attendance_app/admin/employeeprofile/employee_profile_screen.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import '../../utils/app_fonts.dart';
 
 class EmployeeDetailsScreen extends StatelessWidget {

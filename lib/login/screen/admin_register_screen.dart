@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:employee_attendance_app/admin/home/screen/admin_home_screen.dart';
 import 'package:employee_attendance_app/login/auth/login_auth.dart';
 import 'package:employee_attendance_app/login/provider/login_provider.dart';
 import 'package:employee_attendance_app/login/screen/login_screen.dart';
 import 'package:employee_attendance_app/utils/app_colors.dart';
 import 'package:employee_attendance_app/utils/app_fonts.dart';
-// import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +10,6 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../mixin/button_mixin.dart';
 import '../../mixin/textfield_mixin.dart';
-import '../../utils/app_preference_key.dart';
 import '../../utils/app_utils.dart';
 import '../provider/loading_provider.dart';
 
